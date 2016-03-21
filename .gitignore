@@ -5,9 +5,7 @@ admin/config.php
 !index.html
 
 download/
-image/data/
-image/cache/
-system/cache/
-system/logs/
+/cache/
+/logs/
 
 system/storage/

@@ -1,0 +1,45 @@
+﻿/*******************global*********************/
+html,body,div,iframe,p,span,ul,ol,li,dl,dt,dd,h1,h2,h3,h4,h5,h6,form,input,label,button,a{margin:0;padding:0;font-size:12px;font-family:"Microsoft Yahei",arial,helvetica,sans-serif;color:#333;outline:none;}
+body, div, ul, ol, li, h1, h2, h3, h4, h5, h6, form, fieldset, legend, input, textarea, p, th, td, dl, dt, dd {margin: 0;padding: 0;}
+body, div, td {font-family:"Microsoft Yahei",arial,helvetica,sans-serif;;font-size: 12px;line-height: 1.4em;}
+body{min-width:1024px;}
+table{border-collapse:collapse;border-spacing:0px;}
+img{vertical-align:top;}
+button{border:none;background:none;}
+ul,ol,li{list-style:none;}
+h1,h2,h3,h4,h5,.bold{font-weight:bolder;}
+h1, .font1{font-size:24px;}
+h2, .font2{font-size:18px;}
+h3, .font3{font-size:16px;}
+h4, .font4{font-size:14px;}
+h5, .font5{font-size:12px;}
+.font6{font-size:10px;}
+.fl{float:left;}
+.fr{float:right;}
+.center{text-align:center;}
+.left{text-align:left;}
+.right{text-align:right;}
+.relative{position:relative;}
+.pointer{cursor:pointer;}
+.clear{clear:both;}
+.hide{display:none;}
+img{border:0px;}
+a:link,a:visited{text-decoration:none;}
+a:hover,.underline{text-decoration:none;}
+.default,a.default:hover{text-decoration:none;}
+.clearfix:after{content:".";display:block;height:0;clear:both;overflow:hidden;visibility:hidden;}
+.clearfix{zoom:1;}
+/**=透明层**/
+.overlay{display: none;position: fixed;_position:absolute;top: 0;left: 0;z-index: 90;width: 100%;height: 100%;
+background-color: #000;filter: alpha(opacity=60);-moz-opacity: .6;-khtml-opacity: 0.6;opacity: .6!important;}
+body,html{ background:#fff; overflow-x:hidden}
+/**省略号 注入相应的宽度**/
+.text-overflow{
+	width:200px;
+	height:20px;
+	overflow:hidden;;/* 内容超出宽度时隐藏超出部分的内容 */
+	text-overflow:ellipsis;;/* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+	white-space:nowrap;/* 不换行 */
+}
+.wapcenter{width:1200px;margin:0 auto;}
+
