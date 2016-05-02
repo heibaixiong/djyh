@@ -111,6 +111,13 @@ function _isiphone(){
     }
     return $isiphone;
 }
+function _isweixin(){
+    if ( strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false ) {
+        return true;
+    }
+
+    return false;
+}
 function _get($str=''){
     if(!$str)return $_GET;
     return array_key_exists($str,$_GET)?trim($_GET[$str]):null;
@@ -142,26 +149,26 @@ function _cookie($str='',$value='',$time=3600){
     setcookie($str,$value,time()+$time);
 }
 function _fun($str){
-    include(APP_PATH.'function/'.$str.'.php');
+    include_once(APP_PATH.'function/'.$str.'.php');
 }
 function _prefun($str){
     if(!AUTO_LOAD){
-        include(PROJECT_PRE.'function/'.$str.'.php');
+        include_once(PROJECT_PRE.'function/'.$str.'.php');
     }
 }
 function _prefig($str){
     if(!AUTO_LOAD){
-        include(PROJECT_PRE.'config/'.$str.'.php');
+        include_once(PROJECT_PRE.'config/'.$str.'.php');
     }
 }
 function _profun($str){
     if(!AUTO_LOAD){
-        include(PROJECT_PRE.V0.'/function/'.$str.'.php');
+        include_once(PROJECT_PRE.V0.'/function/'.$str.'.php');
     }
 }
 function _profig($str){
     if(!AUTO_LOAD){
-        include(PROJECT_PRE.V0.'/config/'.$str.'.php');
+        include_once(PROJECT_PRE.V0.'/config/'.$str.'.php');
     }
 }
 function _autofile($file,$str=''){
@@ -176,7 +183,7 @@ function _tpl($str='',$time=0){
         _autofile($url);
     }
     global $_;
-    include($url);
+    include_once($url);
     unset($_);
 }
 function _part($str=''){
@@ -186,7 +193,7 @@ function _part($str=''){
         exit;
     }else{
         global $_;
-        include($url);
+        include_once($url);
     }
 }
 function _c($key,$value){
@@ -369,8 +376,12 @@ function _toutf($str){
     return iconv('GB2312//IGNORE','UTF-8//IGNORE',$str);
 }
 function _left($str,$star,$len,$omit='',$charset='UTF-8'){
-    $s=mb_substr($str,$star,$len,$charset);
-    return $s!=$str?$s.$omit:$s;
+    //$s=mb_substr($str,$star,$len,$charset);
+    if (mb_strwidth($str, $charset) <= $len) {
+        return $str.str_repeat('&nbsp;', $len-mb_strwidth($str, $charset));
+    }
+    $s = mb_strimwidth($str, $star, $len, $omit, $charset);
+    return $s;
 }
 function _upper($str){
     return strtoupper($str);
@@ -392,11 +403,15 @@ function _iconv($value){
     }
 }
 function _phone($value){
-    if(((int)($value)!=$value)||($value<13000000000)||$value>19000000000){
+    if(((float)($value)!=$value)||($value<13000000000)||$value>19000000000){
         return false;
     }else{
         return true;
     }
+}
+function _maskPhone($value, $before=3, $after=2) {
+    if (strlen($value) < $before+$after) return $value;
+    return substr($value, 0 ,$before).str_repeat('*', strlen($value)-$before-$after).substr($value, strlen($value)-$after);
 }
 function _zipcode($value){
     if(((int)($value)!=$value)||($value<0)||$value>999999){

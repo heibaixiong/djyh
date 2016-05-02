@@ -76,7 +76,7 @@ table { border-collapse: collapse; border-spacing: 0; }
   background:url(../images/login_bg01.png) no-repeat;
   margin:auto;
   font-size:30px;
-  font-family:'黑体';
+  font-family:'微软雅黑';
   color:#fff;
   line-height:55px;
 }
@@ -86,7 +86,7 @@ table { border-collapse: collapse; border-spacing: 0; }
   background:url(../images/login_bg02.png) no-repeat;
   margin:auto;
   font-size:24px;
-  font-family:'黑体';
+  font-family:'微软雅黑';
   color:#fff;
   line-height:48px;
   cursor:pointer;
@@ -102,7 +102,7 @@ table { border-collapse: collapse; border-spacing: 0; }
   background:url(../images/login_bg03.png) no-repeat;
   margin:auto;
   font-size:30px;
-  font-family:'黑体';
+  font-family:'微软雅黑';
   color:#fff;
   line-height:55px;
 }
@@ -112,7 +112,7 @@ table { border-collapse: collapse; border-spacing: 0; }
   background:url(../images/login_bg04.png) no-repeat;
   margin:auto;
   font-size:24px;
-  font-family:'黑体';
+  font-family:'微软雅黑';
   color:#fff;
   line-height:48px;
   cursor:pointer;
@@ -185,8 +185,8 @@ table { border-collapse: collapse; border-spacing: 0; }
   height: 100%;
   left: 0;
   top: 0;/*FF IE7*/
-  filter: alpha(opacity=20);/*IE*/
-  opacity: 0.2;/*FF*/
+  filter: alpha(opacity=50);/*IE*/
+  opacity: 0.5;/*FF*/
   z-index: 1;
   position: fixed!important;/*FF IE7*/
   position: absolute;/*IE6*/
@@ -208,6 +208,44 @@ table { border-collapse: collapse; border-spacing: 0; }
 .O_pay .order_close *{float:left;}
 .O_pay .order_close .lss_login{float:right;margin-top:20px;font-size:14px;color:#a70001;cursor:pointer;padding-right:32px;}
 .O_pay .order_close .lss_login span{color:#000;}
+
+/** 视频弹出框 **/
+.O_pay03{
+  background: #fff no-repeat;
+  height:auto;
+  z-index: 998;
+  left: 50%;
+  top: 50%;
+  filter: alpha(opacity=100);/*IE*/
+  opacity: 1;/*FF*/
+  margin-left: -350px!important;/*FF IE7 该值为本身宽的一半 */
+  margin-top: -200px!important;/*FF IE7 该值为本身高的一半*/
+  position:fixed!important;/* FF IE7*/
+  position: absolute;/*IE6*/
+  _top:expression(eval(document.compatMode && document.compatMode=='CSS1Compat') ? documentElement.scrollTop + (document.documentElement.clientHeight-this.offsetHeight)/2 :/*IE6*/
+	document.body.scrollTop + (document.body.clientHeight - this.clientHeight)/2);/*IE5 IE5.5*/
+
+}
+.bg03, .popIframe03 {
+  background-color: #666;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;/*FF IE7*/
+  filter: alpha(opacity=50);/*IE*/
+  opacity: 0.5;/*FF*/
+  z-index: -1;
+  position: fixed!important;/*FF IE7*/
+  position: absolute;/*IE6*/
+  _top:expression(eval(document.compatMode && document.compatMode=='CSS1Compat') ? documentElement.scrollTop + (document.documentElement.clientHeight-this.offsetHeight)/2 :/*IE6*/
+	document.body.scrollTop + (document.body.clientHeight - this.clientHeight)/2);
+}
+.popIframe03 {
+  filter: alpha(opacity=60);/*IE*/
+  opacity: 0.6;/*FF*/
+}
+.O_pay03 .close{position:absolute;right:0px;top:-20px;}
+
 .fr{float: right;color: #3088dd;}
 .fl{float: left;}
 .select a{margin-top: 30px;display: inline-block;height: 20px;cursor: pointer;}
@@ -252,7 +290,7 @@ input[placeholder], [placeholder], *[placeholder] {
 .item02 ul li input.up_image{width: 80px;border:none;background: #dc1820;color: #FFF;padding: 0px;height: 36px;margin-right:1px;}
 .item02 ul li input.file{position: absolute;width: 80px;filter:alpha(opacity:0);opacity: 0;padding: 0px;border-top-left-radius: 0px;border-bottom-left-radius: 0px;height: 36px;}
 .item02 ul li#adress textarea{padding:10px;height:50px;width:324px;resize:none;border:none;border: 1px solid #ababab;font-size:14px;}
-.item02 ul .new_adress{height:80px;}
+.item02 ul .new_adress{height:80px;margin: 8px 0 0 0;}
 .item02 ul li#adress .det_adress{width: 344px;border: 1px solid #ababab;padding-top:7px;}
 .item02 ul li#adress .det_adress a{padding-left:15px;}
 .item02 ul li#adress select{margin-right: 5px;margin-bottom: 7px;width: 85px;height: 35px;line-height: 35px;}
@@ -345,7 +383,7 @@ input[placeholder], [placeholder], *[placeholder] {
 .item03 ul li input.up_image{width: 80px;border:none;background: #dc1820;color: #FFF;padding: 0px;height: 36px;margin-right:1px;}
 .item03 ul li input.file{position: absolute;width: 80px;filter:alpha(opacity:0);opacity: 0;padding: 0px;border-top-left-radius: 0px;border-bottom-left-radius: 0px;height: 36px;}
 .item03 ul li#adress textarea{padding:10px;height:50px;width:324px;resize:none;border:none;border: 1px solid #ababab;font-size:14px;}
-.item03 ul .new_adress{height:80px;margin:5px 0;}
+.item03 ul .new_adress{height:80px;margin:8px 0 0 0;}
 .item03 ul li#adress .det_adress{width: 344px;border: 1px solid #ababab;padding-top:7px;}
 .item03 ul li#adress .det_adress a{padding-left:15px;}
 .item03 ul li#adress select{margin-right: 5px;margin-bottom: 7px;width: 85px;height: 35px;line-height: 35px;}

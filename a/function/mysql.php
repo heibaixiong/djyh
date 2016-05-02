@@ -9,6 +9,15 @@ function _sql($host,$dbuser,$dbpwd,$dbname){
 function _pre($table){
 	return PRE.$table;
 }
+
+function _escape($value = '') {
+	global $_wrap;
+	if(empty($_wrap['mysqli_conn'])){
+		$_wrap['mysqli_conn']=_sql($_wrap['db']['host'],$_wrap['db']['user'],$_wrap['db']['pass'],$_wrap['db']['database']);
+	}
+	return mysql_real_escape_string($value, $_wrap['mysqli_conn']);
+}
+
 function _sqldo($sql,$str=''){
 	_logs($sql,'mysql');
 	if($str){
@@ -73,6 +82,7 @@ function _sqlupdate($table,$data,$condition,$str=''){
 	}
 	$s='';
 	foreach($data as $key=>$value){
+		$value = _escape($value);
 		$s.=!empty($s)?(',`'.$key.'`=\''.$value.'\''):('`'.$key.'`=\''.$value.'\'');
 	}
 	_sqldo('update '.PRE.$table.' set '.$s.' where '.$condition,$str);
@@ -85,6 +95,7 @@ function _sqlinsert($table,$data,$str=''){
 	$str1='';
 	$str2='';
 	foreach($data as $key=>$value){
+		$value = _escape($value);
 		$str1.=!empty($str1)?(',`'.$key.'`'):'`'.$key.'`';
 		$str2.=!empty($str2)?(',\''.$value.'\''):('\''.$value.'\'');
 	}

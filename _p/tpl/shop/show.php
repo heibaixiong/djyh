@@ -50,25 +50,39 @@ _part('nav');
 				        <div class="show_info">
 				            <div class="jifen-details-riCon">
 				                <div class="goodsName"><a style="text-decoration: none; cursor: default" href="javascript:void(0)"><?php echo $_['rs']['title'];?></a></div>
-				                <div class="deteils_shop_div1">
+				                <div class="deteils_shop_div1" style="padding: 0 0 15px;">
 				                    <div class="priceNew">
 				                        <div class="priceTop">
 				                            <div class="fl priceTag mt-10">
 				                                <p><span class="priceSpan fl typeRight">价格：</span><span class="priceSpan1 fl"><strong>￥</strong><?php echo _rmb($_['rs']['mark']/100);?></span></p>
 				                            </div>
 				                        </div>
-				                        <p class="clear"></p>
 				                    </div>
+									<div class="priceNew">
+										<p class="fl"><span class="priceSpan fl typeRight">销量：</span><span class="red fl"><?php echo $_['rs']['sale'];?></span></p>
+										<div class="clear"></div>
+									</div>
 				                </div>
 				            </div>
-				            <div class="pro-Sales">
-				                <p class="fl"><span class="Sales-left fl">总销量：</span><span class="red fl"><?php echo $_['rs']['sale'];?></span></p>
-				                <div class="clear"></div>
-				            </div>
+
 				            <div class="quantity">
-				                <span class="fl iname">数量：</span>
+								<?php
+								$_group = '';
+								foreach ($_['attr_info'] as $attr) {
+									if ($attr['wname'] <> $_group) {
+										if ($_group <> '') echo '</p>';
+										$_group = $attr['wname'];
+										echo '<p style="margin-bottom: 10px;" class="attr-options-select"><label style="font-weight: bold;">'.$_group.'：</label>';
+									}
+									?>
+									<span style="margin-right: 5px; line-height: 30px; border: 1px solid #aaa; padding: 5px; cursor: pointer;" data-toggle="false" data-attr="<?php echo $attr['id']; ?>"><?php echo $attr['model']; ?></span>
+									<?php
+								}
+								if (!empty($_['attr_info'])) echo '</p>';
+								?>
+				                <span class="fl iname" style="font-weight: bold;">数量：</span>
 				                <div class="fl quantityfr input-div">
-				                    <input type="text" minnum="1" maxnum="<?php echo $_['rs']['stock'];?>" orinum="1" value="1" id="goodsnum" class="fl atext">
+				                    <input type="text" minnum="1" maxnum="<?php echo $_['rs']['stock'];?>" orinum="1" value="1" id="goodsnum" class="fl atext" style="margin-left: 3px;">
 				                    <div class="fl ml-5">
 				                        <a class="addbtn ibtn" href="javaScript:void(0);"></a>
 				                        <a class="cutbtn ibtn" href="javaScript:void(0);"></a>
@@ -79,7 +93,7 @@ _part('nav');
 				            </div>
 				                <div class="shopBtnBox">
 				                    <p class="fl btn-1 join">
-				                        <a class="btn-jhd livebuy" href="javaScript:void(0)" data="<?php echo $_['rs']['id'];?>">加入购物车</a>
+				                        <a class="btn-jhd livebuy" href="javaScript:void(0)" data="<?php echo $_['rs']['id'];?>" data-option="">加入购物车</a>
 				                    </p>
 				                </div>
 				        </div>
@@ -126,10 +140,20 @@ _part('nav');
                     </div>
                     <div class="clear"></div>
                     <div id="sameGoods"></div>
-                    <div class="show_description">
+                    <div class="show_description" style="padding: 10px 0 10px 0; border: none; border-top: 1px solid #eee;">
                         <div class="prod_descrit clearfix">
-                            <h3>商品描述</h3>
-                            <?php echo $_['rs']['content'];?>
+							<?php if (!empty($_['para_info'])) { ?>
+								<h3 style="float: left; clear: both;">商品参数</h3>
+								<ul style="float: left; clear: both; margin-bottom: 10px; width: 100%; border-bottom: 1px solid #eee;">
+									<?php foreach ($_['para_info'] as $para) { ?>
+									<li style="float: left; margin: 0px 10px 5px 10px;"><?php echo $para['paraname'].'：'.$para['value']; ?></li>
+									<?php } ?>
+								</ul>
+							<?php } ?>
+                            <h3 style="float: left; clear: both;">商品描述</h3>
+                            <div style="float: left; clear: both; padding: 0 10px 0 10px; width: 100%;">
+							<?php echo $_['rs']['content'];?>
+							</div>
                         </div>
                     </div>
                 </div>
@@ -192,7 +216,7 @@ _part('nav');
 		                                            <input type="text" minnum="1" maxnum="0" orinum="1" value="1" id="goodsId_0" class="atext minicart_num">
 		                                            <input type="button" class="addbtn plusDisable  num-ico">
 		                                        </div>
-		                                        <input type="submit" class="buy-btn fr livebuy" value="加入购物车" id="submit" name="submit" data="<?php echo $v['id'];?>">
+		                                        <input type="submit" class="buy-btn fr" value="加入购物车" id="submit" name="submit" data="<?php echo $v['id'];?>">
 		                                        <div class="clear"></div>
 		                                    </div>
 		                                    <p class="pro_address"><a href="<?php echo _u('/user/'.$_['rs']['uid'].'/');?>"><?php echo $_['rs']['uname'];?></a></p>
@@ -209,6 +233,29 @@ _part('nav');
 			</div>
         </div>
 </div>
+
+<script type="text/javascript">
+	$('.attr-options-select span').on('click', function(){
+		if ($(this).data('toggle') === false) {
+			$(this).closest('p').find('span').data('toggle', false);
+			$(this).closest('p').find('span').css('border-color', '#aaa').css('background-color', '#fff').css('color', '#333');
+			$(this).data('toggle', true);
+			$(this).css('border-color', '#ff7300').css('background-color', '#f1f1f1').css('color', '#ff7300');
+		} else {
+			$(this).data('toggle', false);
+			$(this).css('border-color', '#aaa').css('background-color', '#fff').css('color', '#333');
+		}
+
+		var _select = '';
+		$('.attr-options-select span').each(function(){
+			if ($(this).data('toggle') === true) {
+				if (_select != '') _select += ',';
+				_select += $(this).data('attr');
+			}
+		});
+		$('.shopBtnBox .livebuy').data('option', _select);
+	});
+</script>
 <!-- //主体 --> 
 <?php
 _part('footer1');

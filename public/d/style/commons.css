@@ -1,0 +1,39 @@
+.dev_main{
+    width:15.6rem;
+    margin:auto;
+}
+/*ͷ��*/
+.dev_top{
+    padding:0 0.71rem;
+    background: #ff0000;
+    overflow: hidden;
+    position: relative;
+    z-index: 100;
+}
+.dev_top {
+    text-align: center;
+    line-height:2.22rem;
+}
+.dev_top .dev_tittle{
+    font-size:0.71rem;
+    font-weight: bold;
+    color:#fff;
+
+}
+.dev_top .dev_top_list{
+    float: left;
+    padding-top:0.51rem;
+}
+.dev_top .dev_top_list a{
+    display: block;
+    width:0.69rem;
+    height:1.23rem;
+    background: url('../images/icon20.png') no-repeat center center ;
+    background-size: 0.69rem 1.23rem;
+
+}
+.dev_top .dev_order{
+    float: right;
+    font-size:0.6rem;
+    color:#f0f0f0;
+}

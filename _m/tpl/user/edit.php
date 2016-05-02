@@ -58,7 +58,12 @@ $(function(){
             ?>
             </select></li>
     <li><label>排序</label><input name="px" type="text" class="ninput" value="<?php echo $_['rs']['px'];?>" /></li>
-    <li><label>启用/关闭</label><input type="radio" name="state" value="0" <?php if($_['rs']['state']==0)echo 'checked'?> /> 开 <input type="radio" name="state" value="1" <?php if($_['rs']['state']==1)echo 'checked'?> /> 关</li>
+    <li>
+        <label>启用/关闭</label>
+        <input type="radio" name="state" value="0" <?php if($_['rs']['state']==0)echo 'checked'?> /> 开&nbsp;&nbsp;
+        <input type="radio" name="state" value="1" <?php if($_['rs']['state']==1)echo 'checked'?> /> 关
+        <input type="hidden" value="<?php echo $_['rs']['state'];?>" name="orig_state" />
+    </li>
     <li><label>&nbsp;</label><input name="" id="btn" type="button" class="btn" value="确认保存"/></li>
     </ul>
     </form>

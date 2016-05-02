@@ -1,26 +1,27 @@
 <?php
 if(!defined('PART'))exit;
 function __index(){
-	$r=_v(3);
+	$r = intval(_v(3));
 	if(empty($r)){
 		$r=0;
 	}
-	$p=_v(3);
+	$p = intval(_v(4));
 	if(empty($p)){
 		$p=0;
 	}
 	global $_;
 	if(0==$r){
-		_c('title','新闻中心-'.$_['config']['title']);
+		_c('title','新闻中心');
 		Page::start('news',$p);
 	}else{
-		_c('title',_sqlfield('newsclass','title','id='.$r).'-'.$_['config']['title']);
+		_c('title',_sqlfield('newsclass','title','id='.$r));
 		Page::start('news',$p,'classid='.$r);
 	}	
 	_tpl('/index');
 }
 function __show(){
-	_c('rs',_sqlone('news','id='._v(3)));
+	_c('rs',_sqlone('news','id='.floatval(_v(3))));
+	_c('title','新闻中心');
 	_tpl();
 }
 ?>

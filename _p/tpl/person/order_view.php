@@ -35,17 +35,27 @@ _part('nav');
 						<thead>
 						<tr><th colspan="5" style="background-color: #fff; text-align: left;">
 								订单编号：#<?php echo $_['order']['id']; ?><br/>
-								订单金额：￥<?php echo _rmb($_['order']['total']); ?><br/>
 								收 货 人：<?php echo $_['order']['nam']; ?><br/>
 								收货地址：<?php echo $_['order']['pro_n']; ?><?php echo $_['order']['cit_n']; ?><?php echo $_['order']['cou_n']; ?><?php echo $_['order']['adr']; ?><br/>
 								手　　机：<?php echo $_['order']['phn']; ?><br/>
 								电　　话：<?php echo $_['order']['tel']; ?><br/>
-								付款方式：<?php echo $_['order']['payment']; ?><br/>
 								下单时间：<?php echo _time($_['order']['addtime']); ?><br/>
-								订单状态：<?php echo $_['order']['status']; ?>
-								<?php if ($_['order']['state'] == '3') { ?>
-									<br/>发货时间：<?php echo _time($_['order']['ship_time']); ?>
+								<?php if ($_['order']['state'] <> '1') { ?>
+									付款方式：<?php echo $_['order']['payment']; ?><br/>
+									付款时间：<?php echo _time($_['order']['pay_time']); ?><br/>
 								<?php } ?>
+								订单状态：<?php echo $_['order']['status']; ?><br/>
+								<?php if ($_['order']['goods'][0]['state'] == '3') { ?>
+									物流名称：<?php echo $_['order']['goods'][0]['express']; ?><br/>
+									物流单号：<?php echo $_['order']['goods'][0]['expressid']; ?><br/>
+									发货时间：<?php echo _time($_['order']['goods'][0]['ship_time']); ?><br/>
+								<?php } elseif ($_['order']['goods'][0]['state'] == '4') { ?>
+									物流名称：<?php echo $_['order']['goods'][0]['express']; ?><br/>
+									物流单号：<?php echo $_['order']['goods'][0]['expressid']; ?><br/>
+									发货时间：<?php echo _time($_['order']['goods'][0]['ship_time']); ?><br/>
+									确认发货：<?php echo _time($_['order']['goods'][0]['receipt_time']); ?><br/>
+								<?php } ?>
+								卖家名称：<?php echo $_['order']['goods'][0]['company']; ?>
 							</th></tr>
 						<tr>
 							<th width="40%">
@@ -54,7 +64,6 @@ _part('nav');
 							<th width="10%">单价(元)</th>
 							<th width="10%">数量</th>
 							<th width="10%">小计</th>
-							<th width="10%">状态</th>
 						</tr>
 						</thead>
 
@@ -72,7 +81,9 @@ _part('nav');
 										</div>
 										<div class="proDetails" style="width: 75%;">
 											<a href="<?php echo _u('/shop/show/'.$good['wid'].'/');?>" target="_blank"><?php echo $good['wtitle']?></a>
-
+											<p style="clear: both;margin-top: 25px;">给卖家留言：
+												<?php echo $good['content']; ?>
+											</p>
 										</div>
 									</div>
 								</td>
@@ -85,17 +96,11 @@ _part('nav');
 									</p>
 								</td>
 								<td width="10%"><b class="red GoodsTotalPrice">￥<?php echo _rmb($good['mark']/100*$good['num']);?></b></td>
-								<td width="10%">
-									<p class="">
-										<?php echo $_['order_state'][$good['state']]; ?>
-										<?php if ($good['state'] == '3') echo '<br/>'._time($good['ship_time']); ?>
-									</p>
-								</td>
 							</tr>
 						<?php
 						}
 						?>
-						<tr><td colspan="3">&nbsp;</td><td><b class="red GoodsTotalPrice">￥<?php echo _rmb($total);?></b></td><td></td></tr>
+						<tr style="height: 45px;"><td colspan="3">&nbsp;</td><td><b class="red GoodsTotalPrice">￥<?php echo _rmb($total);?></b></td></tr>
 						</tbody>
 					</table>
 

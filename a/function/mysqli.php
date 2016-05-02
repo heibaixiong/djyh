@@ -9,6 +9,15 @@ function _sql($host,$dbuser,$dbpwd,$dbname){
 function _pre($table){
 	return PRE.$table;
 }
+
+function _escape($value = '') {
+	global $_wrap;
+	if(empty($_wrap['mysqli_conn'])){
+		$_wrap['mysqli_conn']=_sql($_wrap['db']['host'],$_wrap['db']['user'],$_wrap['db']['pass'],$_wrap['db']['database']);
+	}
+	return mysqli_real_escape_string($_wrap['mysqli_conn'], $value);
+}
+
 function _sqldo($sql,$str=''){
 	_logs($sql,'mysqli');
 	if($str){
@@ -79,6 +88,7 @@ function _sqlupdate($table,$data,$condition='',$str=''){
 	}
 	$s='';
 	foreach($data as $key=>$value){
+		$value = _escape($value);
 		$s.=!empty($s)?(',`'.$key.'`=\''.$value.'\''):('`'.$key.'`=\''.$value.'\'');
 	}
 	_sqldo('update '.PRE.$table.' set '.$s.' where '.$condition,$str);
@@ -93,6 +103,7 @@ function _sqlinsert($table,$data,$str=''){
 	$str1='';
 	$str2='';
 	foreach($data as $key=>$value){
+		$value = _escape($value);
 		$str1.=!empty($str1)?(',`'.$key.'`'):'`'.$key.'`';
 		$str2.=!empty($str2)?(',\''.$value.'\''):('\''.$value.'\'');
 	}
@@ -154,11 +165,9 @@ class Page{
 		self::$arr=_sqlselect('select * from '.PRE.$table.' where '.$action.' order by '.$index.' limit '.(self::$p-1)*$enum.','.$enum,$str);
 	}
 
-	public static function select($sql, $fields='*', $page=1, $enum=16, $str=''){
-		$q = _sqldo('select count(*) from '.$sql);
-		$rs=mysqli_fetch_row($q);
-		mysqli_free_result($q);
-		self::$num = $rs[0];
+	public static function select($sql, $fields='*', $group='', $order='', $page=1, $enum=16, $str=''){
+		$total = _sqlselect('select count(DISTINCT '.$group.') as total from '.$sql);
+		self::$num = $total[0]['total'];
 		self::$pnum=ceil(self::$num/$enum);
 		if(!$page){
 			self::$p=1;
@@ -180,6 +189,8 @@ class Page{
 		if(self::$p<2){
 			self::$p=1;
 		}
+		$sql .= empty($group) ? '' : ' group by ' . $group;
+		$sql .= empty($order) ? '' : ' order by ' . $order;
 		self::$arr=_sqlselect('select ' . $fields . ' from ' . $sql . ' limit '.(self::$p-1)*$enum.','.$enum, $str);
 	}
 }

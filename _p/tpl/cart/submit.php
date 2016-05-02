@@ -10,6 +10,7 @@ if(!defined('PART'))exit;
 _css('default');
 _css('v1.0');
 _css('style');
+_jq();
 ?>
 </head>
 <body>
@@ -22,13 +23,22 @@ _part('nav');
 <div class="main-Body">
     <div class="main-content">
         <div class="main-body-w">
-            <h4 class="hBorder">我的进货单</span>
+            <h4 class="hBorder">订单提交成功</span>
                 <div class="progress-jhd3"></div>
             </h4>
             <div id="orderTotalInfo" class="gross-price-js">
                 <div class="fl gross-left">
-                您的订单已成功提交！我们会尽快为您配送！
+                您的订单已成功提交！我们会尽快为您安排处理！
                 </div>
+                <?php if (isset($_['payment_data'])) { ?>
+                <div class="fr gross-right">
+                    <div class="fl">
+                        <p class="fl">总金额：<b class="red font18"><strong>￥<?php echo _rmb($_['order']['total']); ?></strong></b></p>
+                    </div>
+                    <?php echo $_['payment_data']; ?>
+                    <p class="fl"><a class="return-btn" href="<?php echo _u('/cart/checkout/');?>" id="btn-cart-wait">稍后支付</a></p>
+                </div>
+                <?php } ?>
             </div>
         </div>
     </div>

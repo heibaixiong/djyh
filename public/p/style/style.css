@@ -438,8 +438,18 @@ button, input, select, textarea {
 .list-affirm-data .list-name1 {
     display: block;
 }
-.fl {
+.table-orderList .fl {
     float: left;
+    width: 100%;
+}
+.table-orderList .pay-form-btn {
+    width: 100px;
+}
+.table-orderList .pay-form-btn a{
+    color: #fff;
+}
+.table-orderList .pay-form-btn a:hover{
+    color: #fff;
 }
 .list-affirm-data .list-tel {
     display: block;
@@ -565,7 +575,7 @@ button, input, select, textarea {
     float: left;
     margin: 10px;
     text-align: left;
-    width: 200px;
+    width: 75%;
 }
 
 .table-orderList .proDetails a {
@@ -1075,7 +1085,7 @@ button, input, select, textarea {
     display: inline;
     float: left;
     margin-right: 0;
-    width: 68px;
+    width: 65px;
 }
 #spec-list ul li img {
     border: 1px solid #ccc;
@@ -1892,7 +1902,7 @@ button, input, select, textarea {
     padding: 18px 0;
 }
 .CommodityDetail-Note {
-    background: rgba(0, 0, 0, 0) url("../images/left-point.png") no-repeat scroll 0 9px;
+    /*background: rgba(0, 0, 0, 0) url("../images/left-point.png") no-repeat scroll 0 9px;*/
     color: #3c3a3a;
     float: left;
     font-size: 14px;
@@ -2155,7 +2165,7 @@ button, input, select, textarea {
     margin-bottom: 8px;
     overflow: hidden;
     word-break: break-all;
-	width:150px;
+	/*width:150px;*/
 	margin-top:5px;
 }
 .prod_title a {
@@ -3901,4 +3911,25 @@ table {
     line-height: 2em;
     margin: 10px auto;
 	font-weight:100;
+}
+
+/* order status style */
+.order-status-1 {
+    color: #ff7300;
+}
+.order-status-2 {
+    color: #ff7300;
+}
+.order-status-3 {
+    color: #ff7300;
+}
+.order-status-4 {
+    color: #000;
+}
+.order-status-12 {
+    color: #999;
+}
+
+#tab_basic input[type=text],#tab_basic select,#tab_attr input[type=text],#tab_para input[type=text] {
+    padding-left: 5px;
 }

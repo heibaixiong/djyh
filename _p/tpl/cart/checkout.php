@@ -10,6 +10,7 @@ if(!defined('PART'))exit;
 _css('default');
 _css('v1.0');
 _css('style');
+_jq();
 ?>
 </head>
 <body>
@@ -24,53 +25,82 @@ _part('nav');
         <div class="main-body-w">
             <h4 class="hBorder">我的进货单</span>
                 <div class="progress-jhd2"></div>
-            </h4>            
+            </h4>
+            <form action="<?php echo _u('//submit/'); ?>" method="post" id="checkout-form">
             <table class="table-orderList">
-                <thead>
-                    <tr>
-                    <th width="30%">
-                        <span class="ml-40 fl">商品</span>
-                    </th>
-                    <th width="10%">单价(元)</th>
-                    <th width="15%">数量</th>
-                    <th width="10%">小计</th>
-                    </tr>
-                </thead>
-            </table>
-            <table class="table-orderList">
-                    <tbody>
-                    	<?php
-	                    foreach($_['arr'] as $k=>$v){
-	                    ?>
+                <tbody>
+                <tr style="height:35px;">
+                    <td width="30%" style="background-color: #eee;">
+                        <span class="fl">商品</span>
+                    </td>
+                    <td style="background-color: #eee;" width="10%">单价(元)</td>
+                    <td style="background-color: #eee;" width="10%">数量</td>
+                    <td style="background-color: #eee;" width="10%">小计</td>
+                </tr>
+                    <?php
+                    $cid = -1;
+                    foreach ($_['arr'] as $k=>$v) {
+                        if ($v['company_id'] <> $cid) {
+                            $cid = $v['company_id'];
+                            ?>
+                            <tr style="height:40px;">
+                                <td colspan="4" style="text-align:left;border: 0px;vertical-align: bottom;padding-bottom: 5px;">
+                                        <span style="color:#d31a26;font-weight:bold;">
+                                            [<?php echo $v['company']; ?>]
+                                        </span>
+                                </td>
+                            </tr>
+
+                    <?php
+                        }
+                    ?>
                     	<tr>
-                        <td width="30%">
-                            <div class="fl">
-                                <div class="proImg">
-                                    <img src="<?php echo $v['img']?>">
+                            <td width="30%">
+                                <div class="fl">
+                                    <div class="proImg">
+                                        <img src="<?php echo _resize($v['img'], 60, 60); ?>">
+                                    </div>
+                                    <div class="proDetails">
+                                        <a id="GoodsName865912" href="<?php echo _u('/shop/show/'.$v['wid'].'/');?>" style="float: left;" target="_blank"><?php echo $v['wtitle']?></a>
+                                        <?php
+                                        if (!empty($options = unserialize($v['model']))) {
+                                            echo '<label style="float: left;clear: both; margin-top: 5px;">';
+                                            foreach ($options as $option) {
+                                                echo $option['name'].'：'.$option['value'].'&nbsp;&nbsp;';
+                                            }
+                                            echo '</label>';
+                                        }
+                                        ?>
+                                        <p style="clear: both;float:left;width:100%;margin-top: 5px;">给卖家留言：
+                                            <?php echo $v['content']; ?>
+                                        </p>
+                                    </div>
                                 </div>
-                                <div class="proDetails">
-                                    <a id="GoodsName865912" href="<?php echo _u('/shop/show/'.$v['wid'].'/');?>" target="_blank"><?php echo $v['wtitle']?></a>
-                                    
-                                </div>
-                            </div>
-                        </td>
-                        <td width="10%">                            
-                            <span price="42.50" id="865912" class="red block GoodsPrice">￥<?php echo _rmb($v['mark']/100);?></span>                            
-                        </td>
-                        <td width="15%">
-                            <p class="">
-                                <?php echo $v['num']?>
-                            </p>
-                        </td>
-                        <td width="10%"><b class="red GoodsTotalPrice">￥<?php echo _rmb($v['mark']/100*$v['num']);?></b></td>
-                    </tr>
+                            </td>
+                            <td width="10%">
+                                <span price="42.50" id="865912" class="red block GoodsPrice">￥<?php echo _rmb($v['mark']/100);?></span>
+                            </td>
+                            <td width="10%">
+                                <p class="">
+                                    <?php echo $v['num']?>
+                                </p>
+                            </td>
+                            <td width="10%"><b class="red GoodsTotalPrice">￥<?php echo _rmb($v['mark']/100*$v['num']);?></b></td>
+                        </tr>
                     <?php
                     }
                     ?>
                 </tbody>
             </table>
             <br/>
-            <p class="fl">支付方式：货到付款</p><br/><br/>
+            <p class="fl">
+                支付方式：
+                <input type="radio" name="payment_method" value="cod" id="payment_cod" checked="checked" /> <label for="payment_cod">货到付款</label> &nbsp;&nbsp;
+                <input type="radio" name="payment_method" value="alipay" id="payment_alipay" /> <label for="payment_alipay">支付宝</label> &nbsp;&nbsp;
+                <input type="radio" name="payment_method" value="<?php echo _isweixin()?'weixin':'wxcode'; ?>" id="payment_weixin" /> <label for="payment_weixin">微信</label> &nbsp;&nbsp;
+            </p>
+            </form>
+            <br/><br/>
             <p class="fl">
                 <?php
                 echo '收货地址：'.$_['address']['pro_n'].$_['address']['cit_n'].$_['address']['cou_n'].$_['address']['adr'].', '.$_['address']['nam'];
@@ -88,12 +118,22 @@ _part('nav');
                         <p class="fl">已选了商品总计:<b class="red font18"> <span class="red"><?php echo $_['num'];?></span></b></p>
                         <p class="fl">总金额：<b class="red font18"><strong>￥<?php echo _rmb($_['mark']/100);?></strong></b></p>
                     </div>
-                    <p class="fl"><a class="return-btn" href="<?php echo _u('/cart/submit/');?>">确认订单</a></p>
+                    <p class="fl"><a class="return-btn" href="<?php echo _u('/cart/submit/');?>" id="btn-cart-submit">确认订单</a></p>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).delegate('#btn-cart-submit', 'click', function(e) {
+        e.preventDefault();
+        if ($('input[name="payment_method"]:checked').length <= 0) {
+            alert('请选择支付方式！');
+        } else {
+            $('#checkout-form').submit();
+        }
+    });
+</script>
 <!-- //主体 -->
 <?php
 _part('footer1');

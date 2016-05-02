@@ -26,19 +26,41 @@ _part('nav');
     ?>
     <div class="prod_return khfwrightCon">
 		<div class="cont">
-			<div class="zhjf-title">订单列表</div>
+			<div class="zhjf-title">
+				订单列表
+				<div style="float: right; margin-top: 10px; font-weight: normal;">
+					<span style="margin-left: 5px;<?php if (empty(_v(4))) echo 'font-weight: bold;'; ?>"><a href="<?php echo _u('///'); ?>">全部(<?php echo $_['total_all']; ?>)</a></span>
+					<span style="margin-left: 5px;<?php if (_v(4)=='1') echo 'font-weight: bold;'; ?>"><a href="<?php echo _u('///1/1/'); ?>">待付款(<?php echo $_['total_1']; ?>)</a></span>
+					<span style="margin-left: 5px;<?php if (_v(4)=='2') echo 'font-weight: bold;'; ?>"><a href="<?php echo _u('///1/2/'); ?>">待发货(<?php echo $_['total_2']; ?>)</a></span>
+					<span style="margin-left: 5px;<?php if (_v(4)=='3') echo 'font-weight: bold;'; ?>"><a href="<?php echo _u('///1/3/'); ?>">已发货(<?php echo $_['total_3']; ?>)</a></span>
+					<span style="margin-left: 5px;<?php if (_v(4)=='4') echo 'font-weight: bold;'; ?>"><a href="<?php echo _u('///1/4/'); ?>">已完成(<?php echo $_['total_4']; ?>)</a></span>
+					<span style="margin-left: 5px;<?php if (_v(4)=='12') echo 'font-weight: bold;'; ?>"><a href="<?php echo _u('///1/12/'); ?>">已关闭(<?php echo $_['total_12']; ?>)</a></span>
+				</div>
+			</div>
 			<div class="userinfo">
-
 				<?php
+				$i = 0;
 				foreach (Page::$arr as $k=>$v) {
+				$i++;
 				?>
 					<table class="table-orderList">
 						<thead>
 						<tr>
 							<th colspan="4" style="background-color: #fff; text-align: left;">
-								<a href="<?php echo _u('//order_view/'.$v['id'].'/'.Page::$p.'/'); ?>">#<?php echo $v['id']; ?>, ￥<?php echo _rmb($v['total']); ?>, <?php echo _time($v['addtime']); ?> [<?php echo $_['order_state'][$v['state']]; ?>]</a>
-								<?php if (count($v['goods']) > 1) { ?>
-								<a href="javascript:void(0);" class="a-open-btn" data-state="false" >[展开]</a>
+								<span style="float: left;">
+									#<?php echo $v['id']; ?>, ￥<?php echo _rmb($v['total']); ?>, <?php echo _time($v['addtime']); ?>
+									<span class="order-status-<?php echo $v['goods'][0]['state']; ?>">[<?php echo $_['order_state'][$v['goods'][0]['state']]; ?>]</span>
+									<a href="<?php echo _u('//order_view/'.$v['id'].'/'.Page::$p.'/'); ?>">[详细]</a>
+								</span>
+								<?php if (1<>1&&count($v['goods']) > 1) { ?>
+									<span style="float: left; padding-left: 0px;">
+									<a href="javascript:void(0);" class="a-open-btn" data-state="<?php echo 1==1||$i<=3?'true':'false'; ?>" >[<?php echo 1==1||$i<=3?'收起':'展开'; ?>]</a>
+									</span>
+								<?php } ?>
+								<?php if ($v['goods'][0]['state'] == '2') { ?>
+									<span style="float: right;">
+										<a href="<?php echo _u('//order_view/'.$v['id'].'/'.Page::$p.'/'); ?>#ship" class="return-btn" style="color: #fff;">发货</a>
+									</span>
 								<?php } ?>
 							</th>
 						</tr>
@@ -58,15 +80,26 @@ _part('nav');
 						foreach ($v['goods'] as $good){
 							$ii++;
 						?>
-							<tr<?php if($ii>1) echo ' style="display:none;"'; ?>>
+							<tr<?php if(1<>1&&$i>3&&$ii>1) echo ' style="display:none;"'; ?>>
 								<td width="30%">
 									<div class="fl" style="width: 100%;">
 										<div class="proImg">
 											<img src="<?php echo _resize($good['img'], 60, 60); ?>">
 										</div>
 										<div class="proDetails" style="width: 75%;">
-											<a href="<?php echo _u('/shop/show/'.$good['wid'].'/');?>" target="_blank"><?php echo $good['wtitle']?></a>
-
+											<a href="<?php echo _u('/shop/show/'.$good['wid'].'/');?>" style="float: left;" target="_blank"><?php echo $good['wtitle']?></a>
+											<?php
+											if (!empty($options = unserialize($good['model']))) {
+												echo '<label style="float: left;clear: both; margin-top: 5px;">';
+												foreach ($options as $option) {
+													echo $option['name'].'：'.$option['value'].'&nbsp;&nbsp;';
+												}
+												echo '</label>';
+											}
+											?>
+											<p style="clear: both;float:left;width:100%;margin-top: 5px;">买家留言：
+												<?php echo $good['content']; ?>
+											</p>
 										</div>
 									</div>
 								</td>
@@ -91,7 +124,7 @@ _part('nav');
 
 				<div style="float: right" class="pageWrap">
 					<div class='turn_page clearfix'>
-						<div class="fr"><a disabled="disabled" href="<?php echo _u('///1/');?>">首页</a><a disabled="disabled" href="<?php echo _u('///'.Page::$pre.'/');?>">上一页</a><a class="page_cur"><?php echo Page::$p.'/'.Page::$pnum;?></a><a href="<?php echo _u('///'.Page::$next.'/');?>">下一页</a><a href="<?php echo _u('///'.Page::$pnum.'/');?>">尾页</a></div>
+						<div class="fr"><a disabled="disabled" href="<?php echo _u('///1/'._v(4).'/');?>">首页</a><a disabled="disabled" href="<?php echo _u('///'.Page::$pre.'/'._v(4).'/');?>">上一页</a><a class="page_cur"><?php echo Page::$p.'/'.Page::$pnum;?></a><a href="<?php echo _u('///'.Page::$next.'/'._v(4).'/');?>">下一页</a><a href="<?php echo _u('///'.Page::$pnum.'/'._v(4).'/');?>">尾页</a></div>
 					</div>
 				</div>
 
@@ -100,7 +133,7 @@ _part('nav');
 	</div>
 </div>
 <script type="text/javascript">
-	$('.a-open-btn').click(function(){ console.log($(this).data('state'));
+	$('.a-open-btn').click(function(){
 		if ($(this).data('state') === false) {
 			$(this).html('[收起]');
 			$(this).data('state', true);
@@ -111,7 +144,7 @@ _part('nav');
 			$(this).closest('table').find('tbody tr').each(function(e, b){
 				if (e > 0) $(b).hide();
 			});
-		}console.log($(this).data('state'));
+		}
 	});
 </script>
 <!-- //主体 -->

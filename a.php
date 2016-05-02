@@ -3,7 +3,7 @@ define('PART',1);
 define('DIR',dirname(__FILE__).'/');
 define('DOSQL','');
 define('APP_PATH','a/');
-define('PROJECT','p,m');
+define('PROJECT','p,m,d,c');
 define('PROJECT_PRE','_');
 define('PUB','public/');
 define('UPLOAD','upload/');
@@ -30,7 +30,15 @@ $_wrap['db']['database']='hb_dev';
 $_wrap['sms']['user'] = 'hnhbx';
 $_wrap['sms']['pass'] = 'heibaixiong0201';
 
+$_wrap['payment_method'] = array(
+    'cod' => array('code' => 'cod', 'title' => '货到付款', 'state' => 2),
+    'alipay' => array('code' => 'alipay_direct', 'title' => '支付宝', 'state' => 1),
+    'weixin' => array('code' => 'wxpay', 'title' => '微信', 'state' => 1),
+    'wxcode' => array('code' => 'wxpay_qrcode', 'title' => '微信', 'state' => 1),
+);
+
 $_wrap['order_state'] = array(
+    '1' => '等待付款',
     '2' => '已付款',
     '3' => '已发货',
     '4' => '已完成',
@@ -50,5 +58,26 @@ $_wrap['user_rank'] = array(
     '6' => '线下营销人员',
 );
 
+$_wrap['alipay_config'] = array(
+    'partner' => '2088711440026023',
+    'key' => 'vfqnizrbr9wjp665zrc7h2tj7yojdpqz',
+    'sign_type' => strtoupper('MD5'),
+    'input_charset' => strtolower('utf-8'),
+    'cacert' => getcwd().'\\cacert.pem',
+    'transport' => 'http://www.dongjiayaohuo.com/',
+    'seller_email' => 'm18503781888@163.com'
+);
+
+$_wrap['wxpay_config'] = array(
+    'wxpay_appid' => 'wx0ef6fc99d449bfe6',
+    'wxpay_mchid' => '1319862501',
+    'wxpay_key' => 'c8564671e3ef3dtd7fb6262a5da56698',
+    'wxpay_appsecret' => 'd8568671e3ef3ded7fb6265a5da56691',
+    'sslcert_path' => DIR . APP_PATH . 'cert/apiclient_cert.pem',
+    'sslkey_path' => DIR . APP_PATH . 'cert/apiclient_key.pem',
+    'curl_proxy_host' => '',
+    'curl_proxy_port' => '',
+    'report_level' => '',
+);
+
 include(DIR.APP_PATH.'a.php');
-?>

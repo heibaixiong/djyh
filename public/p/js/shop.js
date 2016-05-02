@@ -48,8 +48,9 @@ $(function(){
 	$('.shopBtnBox .livebuy').click(function(){
 		var id=parseInt($(this).attr('data'));
 		var num=parseInt($('#goodsnum').val());
+		var option = $(this).data('option');
 		if(num>0){
-			$.get(public_url+"cart/add/"+id+"/"+num+"/",function(data,status){
+			$.get(public_url+"cart/add/"+id+"/"+num+"/"+option+'/',function(data,status){
 				var _result = $.parseJSON(data);
 				$('#shopping-amount').html(_result['total']);
 				//alert('添加成功！');

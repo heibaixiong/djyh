@@ -43,14 +43,21 @@ _part('nav');
 								收货地址：<?php echo $_['order']['pro_n']; ?><?php echo $_['order']['cit_n']; ?><?php echo $_['order']['cou_n']; ?><?php echo $_['order']['adr']; ?><br/>
 								手　　机：<?php echo $_['order']['phn']; ?><br/>
 								电　　话：<?php echo $_['order']['tel']; ?><br/>
-								付款方式：<?php echo $_['order']['payment']; ?><br/>
 								下单时间：<?php echo _time($_['order']['addtime']); ?><br/>
-								订单状态：<?php echo $_['order']['status']; ?>
-								<?php if ($_['order']['state'] == '2') { ?>
-								<a href="<?php echo _u('//order_ship/'.$_['order']['id'].'/'._v(4).'/'); ?>"><b class="red GoodsTotalPrice">[发货]</b></a>
+								<?php if ($_['order']['state'] <> '1') { ?>
+									付款方式：<?php echo $_['order']['payment']; ?><br/>
+									付款时间：<?php echo _time($_['order']['pay_time']); ?><br/>
 								<?php } ?>
-								<?php if ($_['order']['state'] == '3') { ?>
-									<br/>发货时间：<?php echo _time($_['order']['goods'][0]['ship_time']); ?>
+								订单状态：<?php echo $_['order']['status']; ?>
+								<?php if ($_['order']['state'] == '3') { ?><br/>
+									物流名称：<?php echo $_['order']['goods'][0]['express']; ?><br/>
+									物流单号：<?php echo $_['order']['goods'][0]['expressid']; ?><br/>
+									发货时间：<?php echo _time($_['order']['goods'][0]['ship_time']); ?>
+								<?php } elseif ($_['order']['state'] == '4') { ?><br/>
+									物流名称：<?php echo $_['order']['goods'][0]['express']; ?><br/>
+									物流单号：<?php echo $_['order']['goods'][0]['expressid']; ?><br/>
+									发货时间：<?php echo _time($_['order']['goods'][0]['ship_time']); ?><br/>
+									确认发货：<?php echo _time($_['order']['goods'][0]['receipt_time']); ?>
 								<?php } ?>
 							</th></tr>
 						<tr>
@@ -77,7 +84,9 @@ _part('nav');
 										</div>
 										<div class="proDetails" style="width: 75%;">
 											<a href="<?php echo _u('/shop/show/'.$good['wid'].'/');?>" target="_blank"><?php echo $good['wtitle']?></a>
-
+											<p style="clear: both;margin-top: 25px;">买家留言：
+												<?php echo $good['content']; ?>
+											</p>
 										</div>
 									</div>
 								</td>
@@ -97,6 +106,14 @@ _part('nav');
 						<tr><td colspan="3">&nbsp;</td><td><b class="red GoodsTotalPrice">￥<?php echo _rmb($total);?></b></td></tr>
 						</tbody>
 					</table>
+
+				<?php if ($_['order']['state'] == '2') { ?>
+					<form action="<?php echo _u('//order_ship/'.$_['order']['id'].'/'._v(4).'/'); ?>" method="post" id="ship">
+					<span style="float: left; padding-top: 10px;"><label>物流名称：</label><input type="text" name="ship_name" value="" style="height: 30px;" /></span>
+					<span style="float: left; padding-top: 10px; padding-left: 10px;"><label>物流单号：</label><input type="text" name="ship_number" value="" style="height: 30px;" /></span>
+					<a href="javascript:void(0);" onclick="$(this).closest('form').submit();" class="return-btn" style="50px; float: left; margin-top: 10px; margin-left: 10px;">确认发货</a>
+					</form>
+				<?php } ?>
 
 			</div>
 		</div>

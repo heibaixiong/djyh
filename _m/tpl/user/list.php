@@ -64,11 +64,11 @@ $(document).ready(function(){
         <td><?php echo $v['user']?></td>
         <td><?php echo $v['name']?></td>
         <td><?php echo $_['rank'][$v['rank']]?></td>
-        <td><?php echo date('Y-m-d H:i:s',$v['regtime'])?></td>
-        <td><?php echo date('Y-m-d H:i:s',$v['updatetime'])?></td>
-        <td><?php echo $_['state'][$v['state']]?></td>
+        <td><?php echo _time($v['regtime']); ?></td>
+        <td><?php echo _time($v['updatetime']); ?></td>
+        <td><?php echo $_['status'][$v['state']]?></td>
         <td><?php echo $v['hits']?></td>
-        <td><a href="<?php echo _u('/user/edit/'.$v['id'].'/');?>" class="tablelink">编辑</a> <a href="<?php echo _u('/user/del/'.$v['id'].'/');?>" class="tablelink">删除</a></td>
+        <td><a href="<?php echo _u('/user/edit/'.$v['id'].'/'._v(3).'/'._v(4).'/');?>" class="tablelink">编辑</a> <a href="<?php echo _u('/user/del/'.$v['id'].'/'._v(3).'/'._v(4).'/');?>" class="tablelink a-delete-btn">删除</a></td>
         </tr>
         <?php
         }
@@ -78,15 +78,24 @@ $(document).ready(function(){
     <div class="pagin">
         <div class="message">共<i class="blue"><?php echo Page::$num;?></i>条记录，当前显示第&nbsp;<i class="blue"><?php echo Page::$p;?>&nbsp;</i>页</div>
         <ul class="paginList">
-        <li class="paginItem"><a href="<?php echo _u('///0/');?>"><span class="pagepre"></span></a></li>
-        <li class="paginItem"><a href="<?php echo _u('///'.Page::$pre.'/');?>">上页</a></li>
-        <li class="paginItem"><a href="<?php echo _u('///'.Page::$next.'/');?>">下页</a></li>
-        <li class="paginItem"><a href="<?php echo _u('///'.Page::$pnum.'/');?>"><span class="pagenxt"></span></a></li>
+        <li class="paginItem"><a href="<?php echo _u('///'._v(3).'/1/');?>"><span class="pagepre"></span></a></li>
+        <li class="paginItem"><a href="<?php echo _u('///'._v(3).'/'.Page::$pre.'/');?>">上页</a></li>
+        <li class="paginItem"><a href="<?php echo _u('///'._v(3).'/'.Page::$next.'/');?>">下页</a></li>
+        <li class="paginItem"><a href="<?php echo _u('///'._v(3).'/'.Page::$pnum.'/');?>"><span class="pagenxt"></span></a></li>
         </ul>
     </div>
     </div>
     <script type="text/javascript">
 	$('.tablelist tbody tr:odd').addClass('odd');
+
+    $(document).delegate('a.a-delete-btn', 'click', function(e) {
+        e.preventDefault();
+        if (confirm('确定要删除吗？')) {
+            window.location.href = $(this).attr('href');
+        }
+
+        return false;
+    });
 	</script>
 </body>
 </html>

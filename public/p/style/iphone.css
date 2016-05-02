@@ -1,0 +1,164 @@
+.navbar-right02{
+    display: none;
+}
+.nav_logo02{
+    display: none;
+}
+/*@media (min-width:1200px){*/
+    /*.container{*/
+        /*width:1200px;*/
+    /*}*/
+/*}*/
+@media (max-width:992px) {
+    .h_nav{
+        min-width:auto;
+        margin:0 5%;
+    }
+    .foot_box{
+        min-width:auto;
+    }
+}
+@media (max-width:768px) {
+
+    .foot_box .foot_box_03{
+        margin-top:20px;
+    }
+}
+@media (max-width:1200px){
+
+   .nav_hright .nav_line01{
+    display: none;
+}
+    .nav_hright .nav_line02{
+        display: none;
+    }
+    .nav_hright .nav_line05{
+        display: block;
+        width:9%;
+    }
+}
+@media (max-width:1199px){
+
+    .big_nav_top .left_box{
+        float:left;
+    }
+    .big_nav_top .right_box{
+        float:right;
+    }
+
+    .nav_hright{
+        width:80%;
+    }
+
+    .nav_hright .new_nav_line03{
+        width:70%;
+        float:right;
+
+    }
+    .nav_hright .nav_line05{
+        display: block;
+        width:30%;
+}
+    .nav_hright .new_nav_line03 a{
+        width:62px;
+        padding:0;
+        height:50px;
+        line-height:50px;
+
+    }
+
+    .nav_hright .nav_line03 input{
+        width:60%;
+    }
+    .nav_hright .nav_line04 {
+        display: none;
+    }
+    /*.nav_new02 .nav_hright .nav_line06 {*/
+        /*display:block;*/
+    /*}*/
+
+
+
+    .small_pro a{
+        margin-right:0;
+    }
+    /*����*/
+    .nav_new01{
+        padding-right:4%;
+    }
+    .navbar-right02{
+        width:50%;
+        display: block;
+        float:right;
+        margin:auto;
+        min-width:260px;
+        margin:auto;
+        text-align: center;
+
+    }
+    .nav_new01 .navbar-right02   li{
+        width:13%;
+        float:left;
+        padding-top:7px;
+        margin-left:5px;
+        min-width:38px;
+    }
+    .nav_new01 .navbar-right02   li a{
+        display: block;
+    }
+    .nav_icon01  a{
+
+        height:12px;
+    }
+    .nav_icon02 a{
+
+        height:13px;
+    }
+    .nav_icon03 a{
+
+        height:13px;
+    }
+    .nav_icon04 a{
+
+        height:13px;
+    }
+    .nav_icon05 a{
+
+        height:13px;
+    }
+    .nav_icon06 a{
+        background: url('../images/new/nav_icon06.png') no-repeat left center ;;
+        height:13px;
+    }
+
+
+
+    /*�ֲ�*/
+    .carousel-inner .item img{
+        height:auto;
+    }
+    .my_lb{
+        bottom:5px;
+    }
+    /*ȫ������*/
+    .big_nav  .big_nav_top{
+        text-align: left;
+    }
+    .small_pro a{
+        width:48%;
+        margin-left:1%;
+
+    }
+    .lou_01_boxright{
+        float:right;
+    }
+}
+@media (max-width:950px){
+    .nav_logo img{
+        display: none;
+    }
+    .nav_logo02{
+        display: block;
+    }
+
+}

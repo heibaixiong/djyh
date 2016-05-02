@@ -10,8 +10,12 @@ function _alert($str){
 	echo '<script>alert(\''.$str.'\');</script>';
 	exit;
 }
+function _alertclose($str){
+	echo '<script>alert(\''.$str.'\');window.close();</script>';
+	exit;
+}
 function _alertback($str){
-	echo '<script>alert(\''.$str.'\');history.go(-1);</script>';
+	echo '<script>alert(\''.$str.'\');if(history.length>1){history.go(-1);}else{window.close();}</script>';
 	exit;
 }
 function _alertback2($str){

@@ -1,5 +1,6 @@
 ﻿<?php
 if(!defined('PART'))exit;
+die('Access Denied!');
 $id=V1;
 $form=V2;
 function _upmovie($id,$form){

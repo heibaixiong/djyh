@@ -104,9 +104,21 @@ function __edit(){
 	    $data['rate']=_post('rate');
 	    $data['state']=_post('state');
 	    $data['px']=_post('px');
-	    _sqlupdate('admin',$data,'id='._post('id'));
-	    _adminlogs('编辑会员 '._post('user'));
-	    _alerturl('成功编辑会员！',_u('//list/'));
+
+		if (_sqlupdate('admin',$data,'id='._post('id'))) {
+
+			$phone = _phone(_post('tel')) ? _post('tel') : (_phone(_post('user')) ? _post('user') : false);
+
+			if ($phone && _post('orig_state') == '1' && _post('state') == '0') {
+				$_sms = '【东家要货】您的账号：' . _post('user') . ' 已审核通过，请登录www.dongjiayaohuo.com开始使用吧！';
+				_sms_send($phone, $_sms);
+				_adminlogs('发送审核通过短信：'.$phone);
+			}
+
+			_adminlogs('编辑会员 '._post('user'));
+			_alerturl('成功编辑会员！',_u('//list/'));
+		}
+
 	}else{
 		_c('rs',_sqlone('admin','id='._v(3)));
 		_c('company',_sqlone('compony','aid='._v(3)));
@@ -138,16 +150,14 @@ function __add(){
 	}
 }
 function __del(){
-	exit;
-	global $_vew,$_wrap,$_;
-	$id=$_vew[3];
-	if(!empty($id)){
-		$rs=_sqlone(_pre('admin'),'id='.$id);
-		_adminlogs('删除公司员工 '.$rs['title']);
-	    _sqldelete(_pre('admin'),'id='.$id);
-	    _alerturl('成功删除公司员工！',$_wrap['ctrl_url'].$_vew[1].'/list');
+	$id = intval(_v(3));
+	$rs=_sqlone('admin', 'id='.$id);
+	if(!empty($rs)){
+		_adminlogs('删除会员： '.$rs['user'] . ' - ' . $rs['id']);
+	    _sqldelete('admin', 'id='.$id);
+	    _alerturl('成功删除会员！', _u('/user/list/'._v(4).'/'._v(5).'/'));
 	}else{
-		_tpl('/list');
+		_alerturl('会员不存在！', _u('/user/list/'._v(4).'/'._v(5).'/'));
 	}
 }
 ?>

@@ -1,0 +1,143 @@
+/*����*/
+.cosig_top_box{
+    padding:0 0rem;
+    border-bottom: solid 1px #d2d2d2 ;
+    overflow: hidden;
+    padding-left:0;
+}
+.cosig_top_box a{
+    float: left;
+    line-height: 1.77rem;
+    padding:0 0.2rem;
+    /*margin-left:0.7rem;*/
+    color:#3c3c3c;
+    font-size:0.6rem;
+}
+.cosig_top_box .current_cosiga{
+    border-bottom:solid 0.12rem #fb0d1c;
+    color:#ff0000;
+}
+.cosig_main_list li{
+    padding:0 0.44rem;
+}
+.cosig_main_list .cosig_lin01{
+    overflow: hidden;
+    line-height:1.88rem;
+
+}
+.cosig_main_list .cosig_lin01 .cosig_lin01_in01{
+    margin-top:0.7rem;
+    width:0.92rem;
+    height:0.69rem;
+    float: left;
+    background: url('../images/consig_icon01.png') no-repeat left center;
+    background-size: 0.72rem 0.69rem;
+}
+.cosig_main_list .cosig_lin01 .cosig_lin01_in02{
+    float: left;
+    background: url('../images/consig_icon02.png') no-repeat right 0.74rem;
+    /*background-size: 0.72rem 0.69rem;*/
+    background-size: 0.27rem 0.47rem;
+    padding-right:0.86rem;
+    color:#3c3c3c;
+    font-size:0.53rem;
+}
+.cosig_main_list .cosig_lin01 span{
+    float:right;
+    color:#ff0000;
+    font-size:0.53rem;
+}
+.cosig_main_list .cosig_lin02{
+    background: #f0f0f0;
+    padding-top:0.29rem ;
+    padding-bottom:0.29rem ;
+}
+.cosig_main_list .cosig_lin02 .cosig_lin02_in01 img{
+    width:3.89rem;
+    height:3.89rem;
+    background-color: #fff;
+    border: 1px solid #CCCCCC;
+}
+.cosig_main_list .cosig_lin02 .cosig_lin02_in02{
+    float: right;
+    width:70%;
+}
+.cosig_main_list .cosig_lin02 .cosig_lin02_in02 .cosig_pro_title{
+    height:2.8rem;
+    overflow: hidden;
+    word-break:break-all;
+
+}
+.cosig_main_list .cosig_lin02 .cosig_lin02_in02 .cosig_pro_title a{
+    font-size:0.4rem;
+    color:#3c3c3c;
+
+}
+.cosig_pro_txt{
+    overflow: hidden;
+
+}
+.cosig_pro_txt a{
+    float: left;
+    font-size:0.4rem;
+    color:#3c3c3c;
+}
+.cosig_pro_txt .cosig_pro_sl{
+    margin-top:0.4rem;
+}
+.cosig_pro_txt .cosig_pro_yf{
+    float: right;
+}
+.cosig_pro_txt .cosig_pro_yf span{
+    font-size:0.8rem;
+    color:#ff0000;
+}
+.cosig_main_list .cosig_lin03{
+    overflow: hidden;
+    border-bottom:solid 1px #f0f0f0;
+}
+.cosig_main_list .cosig_lin03 .cosig_lin03_in01{
+    float: left;
+    line-height:1.88rem;
+    font-size:0.4rem;
+    color:#3c3c3c;
+}
+.cosig_main_list .cosig_lin03 .cosig_lin03_in02{
+    float: right;
+    line-height:1.88rem;
+    color:#ff0000;
+    font-size:0.4rem;
+
+}
+.cosig_main_list .cosig_lin04{
+    overflow: hidden;
+    border-bottom:solid 0.25rem #f0f0f0;
+}
+.cosig_main_list .cosig_lin04 .cosig_lin04_in01{
+    float: right;
+    text-align: center;
+    padding: 0.44rem 0;
+}
+.cosig_main_list .cosig_lin04 .cosig_lin04_in01 a{
+    float: left;
+    line-height:0.95rem;
+    width:2.4rem;
+    border: solid 1px #d2d2d2;
+    font-size:0.4rem;
+    background:#3c3c3c;
+    color: #ffffff;
+    margin-left:0.44rem;
+}
+.cosig_main_list .cosig_lin04 .cosig_lin04_in01 .current_qr{
+    color:#ff0000;
+    border-color:#ff0000 ;
+}
+.dev_top .dev_top_list {
+    padding-top: 0rem;
+}
+.dev_top .dev_top_list a{
+    font-size:0.6rem;
+    color:#fff;
+    background: none;
+    width: auto;
+}

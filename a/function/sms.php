@@ -5,6 +5,9 @@ if(!defined('PART'))exit;
 // }
 function _sms_send($phone,$content){
 	global $_wrap;
+
+	if (!_phone($phone)) return false;
+
 	$back=_curlget('http://api.smsbao.com/sms?u='.$_wrap['sms']['user'].'&p='.md5($_wrap['sms']['pass']).'&m='.$phone.'&c='.urlencode($content));
 	if(0==$back){
 		return true;

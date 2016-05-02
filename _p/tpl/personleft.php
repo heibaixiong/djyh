@@ -8,7 +8,7 @@ if(!defined('PART'))exit;
             <span class="kh9"></span>
             <a href="<?php echo _u('/person/account/');?>">基本信息</a>
         </dd>
-        <dd hurl="payinstruction" class="li<?php if(_v(2) == 'order') echo ' active'; ?>" p="J">
+        <dd hurl="payinstruction" class="li<?php if(_v(1) == 'person' && (_v(2) == 'order' || _v(2) == 'order_view')) echo ' active'; ?>" p="J">
             <span class="kh9"></span>
             <a href="<?php echo _u('/person/order/');?>">我的订单</a>
         </dd>
@@ -28,11 +28,11 @@ if(!defined('PART'))exit;
     <?php if ($_['member']['rank'] == '3') { ?>
         <dl>
             <dt class="khtitle">卖家中心</dt>
-            <dd hurl="payinstruction" class="li" p="J">
+            <dd hurl="payinstruction" class="li<?php if(preg_match('/^goods.*/i', _v(2))) echo ' active'; ?>" p="J">
                 <span class="kh9"></span>
                 <a href="<?php echo _u('/seller/goods/');?>">商品管理</a>
             </dd>
-            <dd hurl="payinstruction" class="li" p="J">
+            <dd hurl="payinstruction" class="li<?php if(_v(1) == 'seller' && (_v(2) == 'order' || _v(2) == 'order_view')) echo ' active'; ?>" p="J">
                 <span class="kh9"></span>
                 <a href="<?php echo _u('/seller/order/');?>">订单管理</a>
             </dd>
