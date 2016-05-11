@@ -1,4 +1,5 @@
 <?php
+//version 2.0.2
 define('PART',1);
 define('DIR',dirname(__FILE__).'/');
 define('DOSQL','');
