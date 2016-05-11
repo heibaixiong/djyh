@@ -4,8 +4,7 @@ admin/config.php
 
 !index.html
 
-download/
 /cache/
 /logs/
-
-system/storage/
+/upload/
+/.idea/
