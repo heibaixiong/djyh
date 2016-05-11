@@ -20,19 +20,28 @@ function __list(){
 		$key=_session('key');
 	}
 	$_['key']=$key;
-	$sql = "status >= '3'";
+	$sql = "o.status >= '3'";
 	if(!empty($key)){
-		$sql .= ' and (ship_number like \'%'._escape($key).'%\' or ship_phone like \'%'._escape($key).'%\' or ship_name like \'%'._escape($key).'%\')';
+		$sql .= ' and (o.ship_number like \'%'._escape($key).'%\' or o.ship_phone like \'%'._escape($key).'%\' or o.ship_name like \'%'._escape($key).'%\')';
 	}
 	if ($s <> '') {
-		$sql .= ' and status = \''.$s.'\'';
+		$sql .= ' and o.status = \''.$s.'\'';
 	}
-	Page::start('ship_order', $p, $sql, 'id desc');
+
+	$sql = _pre('ship_order')." as o " .
+		   "inner join "._pre('ship_user')." as u on o.wx_open_id=o.rob_open_id " .
+		   "left join "._pre('ship_user_info')." as ui on u.id=ui.uid " .
+		   "where " . $sql
+	;
+	if (!(strlen(_session('adminrank')) > 0 && _session('adminrank') == '0')) $sql .= " ui.mid='".floatval(_session('code'))."'";
+
+	//Page::start('ship_order', $p, $sql, 'id desc');
+	Page::select($sql, 'o.*, ui.real_name as rob_name', '', 'o.id desc', $p);
 
 	foreach (Page::$arr as $k => $order) {
-		$sql = "select u.*, ui.* from "._pre('ship_user')." u left join "._pre('ship_user_info')." ui on u.id=ui.uid where u.wx_open_id='{$order['rob_open_id']}'";
-		$rob_user = _sqlselect($sql);
-		Page::$arr[$k]['rob_user'] = $rob_user?$rob_user[0]:array();
+		//$sql = "select u.*, ui.* from "._pre('ship_user')." u left join "._pre('ship_user_info')." ui on u.id=ui.uid where u.wx_open_id='{$order['rob_open_id']}'";
+		//$rob_user = _sqlselect($sql);
+		//Page::$arr[$k]['rob_user'] = $rob_user?$rob_user[0]:array();
 		Page::$arr[$k]['ship_status'] = '';
 		if ($order['status'] > 3) {
 			$sql = "select s.status from "._pre('ship_to_stowage')." as s2s inner join "._pre('ship_stowage')." as s on s2s.stowage_id=s.id where s2s.ship_number='{$order['ship_number']}' and s.status>0 order by s.id desc";

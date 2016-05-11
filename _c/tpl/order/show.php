@@ -25,6 +25,14 @@ if(!defined('PART'))exit;
             });
         });
     </script>
+    <script type=text/javascript>
+        function selectTag(a,b,d,e){
+            $(a).attr('class', 'selected');
+            $(b).attr('class', '');
+            $(d).show();
+            $(e).hide();
+        }
+    </script>
 </head>
 <body>
 <div class="place">
@@ -37,6 +45,14 @@ if(!defined('PART'))exit;
 </div>
 <div class="formbody">
     <div id="usual1" class="usual">
+        <div class="itab">
+            <ul>
+                <li><a href="javascript:void(0);" id='a' class="selected" onClick="selectTag('#a','#b','#tab1','#tab2')">订单信息</a></li>
+                <?php if (isset($_['order']['id'])) { ?>
+                    <li><a href="javascript:void(0);" id='b' onClick="selectTag('#b','#a','#tab2','#tab1')">物流信息</a></li>
+                <?php } ?>
+            </ul>
+        </div>
         <div id="tab1" class="tabson">
             <ul class="forminfo">
                 <li><label>订单编号：</label><p style="padding-top: 10px;"><?php echo str_repeat('0', 12-strlen($_['order']['id'])).$_['order']['id']; ?></p></li>
@@ -80,6 +96,43 @@ if(!defined('PART'))exit;
                             <tfoot>
                             <tr><td colspan="6" style="text-align: right; padding-right: 10px;"></td></tr>
                             </tfoot>
+                        </table>
+                    </li>
+                <?php } ?>
+            </ul>
+        </div>
+        <div id="tab2" class="tabson">
+            <ul class="forminfo" style="padding-left: 0px;">
+                <?php if (isset($_['order']['status']) && $_['order']['status'] >= 3) { ?>
+                    <li>
+                        <table class="tablelist">
+                            <thead>
+                            <th width="25%">时间</th>
+                            <th width="55%">内容</th>
+                            <th width="20%">状态</th>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td><?php echo _time($_['order']['rob_time']); ?></td>
+                                <td><?php echo $_['order']['rob_name']; ?> -> 接单</td>
+                                <td>已接单</td>
+                            </tr>
+                            <tr>
+                                <td><?php echo _time($_['order']['pick_time']); ?></td>
+                                <td><?php echo $_['order']['rob_name']; ?> -> 揽件</td>
+                                <td>已揽件</td>
+                            </tr>
+                            <?php foreach ($_['order']['ship_status'] as $_state) { ?>
+                                <tr>
+                                    <td><?php echo _time($_state['mod_time']); ?></td>
+                                    <td>
+                                        发往 -> <?php echo $_state['prov_e'].'/'.$_state['city_e'].'/'.$_state['area_e']; ?><br/>
+                                        上一站：<?php echo $_state['prov_s'].'/'.$_state['city_s'].'/'.$_state['area_s']; ?>
+                                    </td>
+                                    <td><?php echo $_['stowage_status'][$_state['status']]; ?></td>
+                                </tr>
+                            <?php } ?>
+                            </tbody>
                         </table>
                     </li>
                 <?php } ?>

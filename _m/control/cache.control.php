@@ -15,6 +15,7 @@ function __index(){
 }
 function __indexad(){
 	_fdel('indexad');
+	_fdel('flash');
 	_tpl('/cache');
 }
 function __duilian(){
@@ -29,4 +30,3 @@ function __temai(){
 	_fdel('temai');
 	_tpl('/cache');
 }
-?>

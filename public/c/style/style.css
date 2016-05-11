@@ -320,6 +320,7 @@ textarea{border:1px solid #a7b5bc;padding:3px;}
 .formtext b{color:#d70101;}
 .forminfo b{color:#ea2020; padding-left:3px;}
 #tab2{display:none;}
+#tab3{display:none;}
 #attri1 span{display:inline;padding:5px 10px;width:100px;font-weight:bold;}
 #attri2 span{display:inline;padding:5px 10px;font-weight:bold;}
 .button{padding:10px 15px;border:#fff 1px solid;}

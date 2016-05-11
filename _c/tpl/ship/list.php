@@ -61,9 +61,9 @@ $(document).ready(function(){
             <td><?php echo $v['ship_name']; ?></td>
             <td><?php echo $v['ship_prov'].'/'.$v['ship_city'].'/'.$v['ship_area']; ?></td>
             <td><?php echo $v['consignee_prov'].'/'.$v['consignee_city'].'/'.$v['consignee_area']; ?></td>
-            <td><?php echo $v['ship_quantity']?></td>
+            <td><?php echo $v['ship_quantity']?> 件</td>
             <td>￥<?php echo _rmb($v['ship_amount']);?> 元</td>
-            <td><?php echo $v['rob_user']?($v['rob_user']['real_name']):''; ?></td>
+            <td><?php echo $v['rob_name']; ?></td>
             <td><?php echo _time($v['pick_time']);?></td>
             <td>
                 <?php echo $_['order_status'][$v['status']]; ?>

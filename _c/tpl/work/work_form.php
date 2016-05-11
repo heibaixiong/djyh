@@ -17,16 +17,16 @@ if(!defined('PART'))exit;
     <span>位置：</span>
     <ul class="placeul">
         <li>首页</li>
-        <li>员工管理</li>
+        <li>业务小哥</li>
         <li><?php echo isset($_['user']['id'])?'编辑':'新增'; ?></li>
     </ul>
 </div>
 <div class="formbody">
-    <div class="formtitle"><span>员工信息</span></div>
+    <div class="formtitle"><span>小哥信息</span></div>
     <form action="<?php echo $_['form_action']; ?>" method="post" id="form1">
         <ul class="forminfo">
             <?php if (!isset($_['user']['id'])) { ?>
-            <li>新增员工请先关注微信公众平台，点击微信菜单【我要抢单】，提交员工资料！</li>
+            <li>新增小哥请先关注微信公众平台，点击微信菜单【我要抢单】，提交小哥资料！</li>
             <?php } ?>
             <li><label>姓　　名</label><input name="real_name" type="text" class="dfinput" value="<?php echo isset($_['user']['real_name'])?$_['user']['real_name']:''; ?>" /></li>
             <li><label>身 份 证</label><input name="id_card" type="text" class="dfinput" value="<?php echo isset($_['user']['id_card'])?$_['user']['id_card']:''; ?>" /></li>
@@ -53,7 +53,16 @@ if(!defined('PART'))exit;
             <li><label>经　　验：</label><p><input type="text" name="exp" value="<?php echo isset($_['user']['exp']) ? $_['user']['exp'] : ''; ?>" class="dfinput" /></p></li>
             <li><label>备　　注：</label><p><input type="text" name="note" value="<?php echo isset($_['user']['note']) ? $_['user']['note'] : ''; ?>" class="dfinput" /></p></li>
             <li>
-                <label>状态</label>
+                <label>网　　点</label>
+                <select name="mid">
+                    <option value="">请选择</option>
+                    <?php foreach ($_['company'] as $company) { ?>
+                        <option value="<?php echo $company['id']; ?>"<?php echo isset($_['user']['mid'])&&$_['user']['mid']==$company['id']?' selected="selected"':''; ?>><?php echo $company['name']; ?></option>
+                    <?php } ?>
+                </select>
+            </li>
+            <li>
+                <label>状　　态</label>
                 <p style="padding-top: 10px;">
                 <?php if (isset($_['user']['status']) && $_['user']['status']==1) { ?>
                     <input type="radio" name="status" value="1" checked="checked" /> 启用&nbsp;&nbsp;

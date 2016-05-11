@@ -43,7 +43,7 @@ _part('nav');
 					});
 				</script>
             <div class="list_main mt10">
-                <div id="tabList" class="mod_search_crumb clearfix"><span class="crumb_ico bg_sprite"></span><span class="crumb_list"><?php echo $_['classtitle']?></span><span class="crumb_triangle bg_sprite"></span><span class="crumb_list"><?php echo $_['title']?></span></div>
+                <div id="tabList" class="mod_search_crumb clearfix"><span class="crumb_ico bg_sprite"></span><span class="crumb_list"><?php echo $_['classtitle']?></span><span class="crumb_triangle bg_sprite"></span><span class="crumb_list"><?php echo $_['cate_title']?></span></div>
                 <div>
                     <div class="list_condition clearfix mt10">
                         <ul id="ulTab" class="list_condition_main clearfix">

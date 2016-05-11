@@ -14,7 +14,7 @@ function __index(){
 	_c('classtitle','所有分类');
 	_c('title',$arr['compony']);
 	_c('shopclass',_f('oneclass'));
-	Page::start('ware',$p,'uid='.$r,'px,id desc');
+	Page::start('ware',$p,'state=0 and uid='.$r,'px,id desc');
 	_tpl();
 }
 function __login(){
@@ -57,10 +57,10 @@ function __reg(){
     if (!_phone($loginuser)) {
         //_alerturl('手机号码格式不正确！',_u('/index/login/'));
         $json['error'] = '手机号码格式不正确！';
-    } elseif (_session('sms_phone') <> md5($loginuser) || _session('sms_code') <> md5(_post('acode')) || _session('sms_time') < time()) {
+    } /*elseif (_session('sms_phone') <> md5($loginuser) || _session('sms_code') <> md5(_post('acode')) || _session('sms_time') < time()) {
         //_alerturl('验证码错误或已过期！',_u('/index/login/'));
         $json['error'] = '验证码错误或已过期！';
-    } elseif (empty(_post('apass')) || $loginpwd<>$loginpwd2){
+    }*/ elseif (empty(_post('apass')) || $loginpwd<>$loginpwd2){
         //lerturl('两次密码不一样！',_u('/index/login/'));
         $json['error'] = '密码为空或两次密码不一致！';
     } elseif (!in_array(_post('atype'), array('3', '5'))) {

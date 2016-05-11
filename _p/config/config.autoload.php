@@ -23,7 +23,10 @@ if(_ftime('duilian')>CACHETIME){
 _c('duilian',_f('duilian'));
 
 if(_ftime('indexad')>CACHETIME){
-	_f('indexad',_sqlall('ad','postion="首页通栏" and state=0 order by px limit 5'));
+	$index_ad = array();
+	$index_ad['index_top_1'] = _sqlall('ad', 'postion="index_top_1" and state=0 order by px limit 4');
+	$index_ad['index_top_2'] = _sqlall('ad', 'postion="index_top_2" and state=0 order by px limit 2');
+	_f('indexad', $index_ad);
 }
 _c('indexad', _f('indexad'));
 

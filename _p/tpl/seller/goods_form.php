@@ -44,7 +44,7 @@ _part('nav');
 					<ul style="width: auto; height: auto; border: none;" id="tab_basic">
 						<li style="clear: both; margin: 0 0 5px 0; cursor: auto; height: auto; width: auto; padding-bottom: 3px;">
 							<label>名称：</label>
-							<input type="text" class="" style="width: 400px; height: 25px; line-height: 25px;" name="title" value="<?php echo $_['goods']['title']; ?>" />
+							<input type="text" class="" style="width: 400px; height: 25px; line-height: 25px;" name="title" value="<?php echo htmlspecialchars($_['goods']['title']); ?>" />
 						</li>
 						<li style="clear: both; margin: 0 0 5px 0; cursor: auto; height: auto; width: auto; padding-bottom: 3px;">
 							<label>分类：</label>

@@ -43,11 +43,11 @@ $('#rightFrame', window.parent.document).attr('src', '<?php echo _u('/work/list/
 </script>
 </head>
 <body style="background:#f0f9fd;">
-	<div class="lefttop"><span></span>员工管理</div>
+	<div class="lefttop"><span></span>小哥管理</div>
     <dl class="leftmenu">
     <dd>
     <div class="title">
-    <span><img src="<?php echo _img('leftico02.png');?>" /></span>业务员
+    <span><img src="<?php echo _img('leftico02.png');?>" /></span>业务小哥
     </div>
         <ul class="menuson">
         <li><cite></cite><a href="<?php echo _u('/work/list/');?>" target="rightFrame">全部</a><i></i></li>

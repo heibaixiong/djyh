@@ -166,7 +166,7 @@ class Page{
 	}
 
 	public static function select($sql, $fields='*', $group='', $order='', $page=1, $enum=16, $str=''){
-		$total = _sqlselect('select count(DISTINCT '.$group.') as total from '.$sql);
+		$total = _sqlselect('select count('.($group?'DISTINCT '.$group:'*').') as total from '.$sql);
 		self::$num = $total[0]['total'];
 		self::$pnum=ceil(self::$num/$enum);
 		if(!$page){

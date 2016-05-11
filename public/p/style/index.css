@@ -210,7 +210,11 @@ a, a:focus, a:hover, a:active {
     border:none;
     margin-right: 5px;
 }
-
+.carousel_lb{
+    width:1920px;
+    left:50%;
+    margin-left:-960px;
+}
 .carousel-inner .item img{
     height:599px;
 }
@@ -291,29 +295,30 @@ a, a:focus, a:hover, a:active {
     font-weight: bold;
     line-height:40px;
 }
+
 .f_zk01 .f_zk01_icon01{
-    background:url('../images/new/left_bar01.png') no-repeat left center  ;
+    background:url('../images/new/new_left_bar01.png') no-repeat left center  ;
 }
 .f_zk01 .f_zk01_icon02{
-    background:url('../images/new/left_bar02.png') no-repeat left center  ;
+    background:url('../images/new/new_left_bar02.png') no-repeat left center  ;
 }
 .f_zk01 .f_zk01_icon03{
-    background:url('../images/new/left_bar03.png') no-repeat left center  ;
+    background:url('../images/new/new_left_bar03.png') no-repeat left center  ;
 }
 .f_zk01 .f_zk01_icon04{
-    background:url('../images/new/left_bar04.png') no-repeat left center  ;
+    background:url('../images/new/new_left_bar04.png') no-repeat left center  ;
 }
 .f_zk01 .f_zk01_icon05{
-    background:url('../images/new/left_bar05.png') no-repeat left center  ;
+    background:url('../images/new/new_left_bar05.png') no-repeat left center  ;
 }
 .f_zk01 .f_zk01_icon06{
-    background:url('../images/new/left_bar06.png') no-repeat left center  ;
+    background:url('../images/new/new_left_bar01.png') no-repeat left center  ;
 }
 .f_zk01 .f_zk01_icon07{
-    background:url('../images/new/left_bar07.png') no-repeat left center  ;
+    background:url('../images/new/new_left_bar01.png') no-repeat left center  ;
 }
 .f_zk01 .f_zk01_icon08{
-    background:url('../images/new/left_bar08.png') no-repeat left center  ;
+    background:url('../images/new/new_left_bar01.png') no-repeat left center  ;
 }
 
 .banner {
@@ -347,28 +352,38 @@ a, a:focus, a:hover, a:active {
     padding-left:20px;
     font-weight: bold;
 }
+
 #nav h3 .big_nav_icon01{
-    background:url('../images/new/big_nav_icon01.png') no-repeat left center ;
+    background:url('../images/new/new_lou_icon01.png') no-repeat left center ;
+    background-size: 18px 18px;
 }
 #nav h3 .big_nav_icon02{
-    background:url('../images/new/big_nav_icon02.png') no-repeat left center ;
+    background:url('../images/new/new_lou2_icon01.png') no-repeat left center ;
+    background-size: 18px 18px;
 }
 #nav h3 .big_nav_icon03{
-    background:url('../images/new/big_nav_icon03.png') no-repeat left center ;
+    background:url('../images/new/new_lou3_icon01.png') no-repeat left center ;
+    background-size: 18px 18px;
 }
 #nav h3 .big_nav_icon04{
-    background:url('../images/new/big_nav_icon04.png') no-repeat left center ;
+    background:url('../images/new/new_lou4_icon01.png') no-repeat left center ;
+    background-size: 18px 18px;
 }
 #nav h3 .big_nav_icon05{
-    background:url('../images/new/big_nav_icon05.png') no-repeat left center ;
+    background:url('../images/new/new_lou5_icon01.png') no-repeat left center ;
+    background-size: 18px 18px;
 }
 #nav h3 .big_nav_icon06{
-    background:url('../images/new/big_nav_icon06.png') no-repeat left center ;
+    background:url('../images/new/new_lou5_icon01.png') no-repeat left center ;
+    background-size: 18px 18px;
 }
 #nav h3 .big_nav_icon07{
-    background:url('../images/new/big_nav_icon07.png') no-repeat left center ;
-}#nav h3 .big_nav_icon08{
-     background:url('../images/new/big_nav_icon08.png') no-repeat left center ;
+    background:url('../images/new/new_lou5_icon01.png') no-repeat left center ;
+    background-size: 18px 18px;
+}
+#nav h3 .big_nav_icon08{
+     background:url('../images/new/new_lou5_icon01.png') no-repeat left center ;
+     background-size: 18px 18px;
  }
 
 
@@ -586,36 +601,45 @@ a, a:focus, a:hover, a:active {
     width:12.5%;
     height:49px;
 }
+
 .new_h_nav .h_nav_icon01{
-    background:url('../images/new/big_nav_icon01.png') no-repeat center center ;
+    background:url('../images/new/new_lou_icon01.png') no-repeat center center ;
+    background-size: 18px 18px;
+
 }
 .new_h_nav .h_nav_icon02{
-    background:url('../images/new/big_nav_icon02.png') no-repeat center center ;
+    background:url('../images/new/new_lou2_icon01.png') no-repeat center center ;
+    background-size: 18px 18px;
 }
 
 .new_h_nav .h_nav_icon03{
-    background:url('../images/new/big_nav_icon03.png') no-repeat center center ;
+    background:url('../images/new/new_lou3_icon01.png') no-repeat center center ;
+    background-size: 18px 18px;
 }
 
 .new_h_nav .h_nav_icon04{
-    background:url('../images/new/big_nav_icon04.png') no-repeat center center ;
+    background:url('../images/new/new_lou4_icon01.png') no-repeat center center ;
+    background-size: 18px 18px;
 }
 
 .new_h_nav .h_nav_icon05{
-    background:url('../images/new/big_nav_icon05.png') no-repeat center center ;
+    background:url('../images/new/new_lou5_icon01.png') no-repeat center center ;
+    background-size: 18px 18px;
 }
 
 .new_h_nav .h_nav_icon06{
-    background:url('../images/new/big_nav_icon06.png') no-repeat center center ;
+    background:url('../images/new/new_lou2_icon01.png') no-repeat center center ;
+    background-size: 18px 18px;
 }
 
 .new_h_nav .h_nav_icon07{
-    background:url('../images/new/big_nav_icon07.png') no-repeat center center ;
+    background:url('../images/new/new_lou2_icon01.png') no-repeat center center ;
+    background-size: 18px 18px;
 }
 
 .new_h_nav .h_nav_icon08{
-    background:url('../images/new/big_nav_icon08.png') no-repeat center center ;
-
+    background:url('../images/new/new_lou2_icon01.png') no-repeat center center ;
+    background-size: 18px 18px;
 }
 
 
@@ -648,29 +672,29 @@ a, a:focus, a:hover, a:active {
     font-size:24px;
     color:#646464;
     font-weight: bold;
-    background:url('../images/new/lou_icon01.png') no-repeat left center ;
+    background:url('../images/new/new_lou_icon01.png') no-repeat left center ;
     padding-left:45px;
 }
  #pro02 .lou_01_top .lou_01_title{
-     background:url('../images/new/lou2_icon01.png') no-repeat left center ;
+     background:url('../images/new/new_lou2_icon01.png') no-repeat left center ;
  }
 #pro03 .lou_01_top .lou_01_title{
-     background:url('../images/new/lou3_icon01.png') no-repeat left center ;
+     background:url('../images/new/new_lou3_icon01.png') no-repeat left center ;
  }
 #pro04 .lou_01_top .lou_01_title{
-    background:url('../images/new/lou8_icon01.png') no-repeat left center ;
+    background:url('../images/new/new_lou_icon01.png') no-repeat left center ;
 }
 #pro05 .lou_01_top .lou_01_title{
-    background:url('../images/new/lou4_icon01.png') no-repeat left center ;
+    background:url('../images/new/new_lou4_icon01.png') no-repeat left center ;
 }
 #pro06 .lou_01_top .lou_01_title{
-    background:url('../images/new/lou5_icon01.png') no-repeat left center ;
+    background:url('../images/new/new_lou5_icon01.png') no-repeat left center ;
 }
 #pro07 .lou_01_top .lou_01_title{
-    background:url('../images/new/lou6_icon01.png') no-repeat left center ;
+    background:url('../images/new/new_lou_icon01.png') no-repeat left center ;
 }
 #pro08 .lou_01_top .lou_01_title{
-    background:url('../images/new/lou7_icon01.png') no-repeat left center ;
+    background:url('../images/new/new_lou_icon01.png') no-repeat left center ;
 }
 .lou_01_top .lou_01_more{
     float:right;
@@ -715,7 +739,13 @@ a, a:focus, a:hover, a:active {
     margin-bottom:10px;
     padding:0;
 }
-
+.lou_01_fl li a{
+    display: block;
+    width:71px;
+    overflow: hidden;
+    height:71px;
+    margin: auto;
+}
 .lou_01_fl li:hover{
     background:url('../images/new/lou_icon03_b.png') no-repeat center center ;
 
@@ -847,7 +877,7 @@ a, a:focus, a:hover, a:active {
 }
 .lou_01_bom_text05 a{
      color:#ff0000;
-     font-size:28px;
+     font-size:26px;
      font-weight: bold;
  }
 .text_box02 .lou_01_bom_text06 a{
@@ -912,8 +942,8 @@ a, a:focus, a:hover, a:active {
     height:312px;
     top:20%;
     z-index:1999;
-    background-color:#e5e5e5;
-    background-image:url(../images/new/left_bar09.png);
+    /*background-color:#e5e5e5;*/
+    /*background-image:url(../images/new/left_bar09.png);*/
     float:left;
     *margin-left:15px;
     margin-left:10px;
@@ -934,28 +964,28 @@ a, a:focus, a:hover, a:active {
     font-size:18px;
    }
 .left_nav li .pro01{
-    background: url(../images/new/left_bar01.png) no-repeat center center #ff0000;
+    background: url(../images/new/new_left_bar01.png) no-repeat center center #ff0000;
 }
 .left_nav li .pro02{
-    background: url(../images/new/left_bar02.png) no-repeat center center #ff0000;
+    background: url(../images/new/new_left_bar02.png) no-repeat center center #ff0000;
 }
 .left_nav li .pro03{
-    background: url(../images/new/left_bar03.png) no-repeat center center #ff0000;
+    background: url(../images/new/new_left_bar03.png) no-repeat center center #ff0000;
 }
 .left_nav li .pro04{
-    background: url(../images/new/left_bar04.png) no-repeat center center #ff0000;
+    background: url(../images/new/new_left_bar04.png) no-repeat center center #ff0000;
 }
 .left_nav li .pro05{
-    background: url(../images/new/left_bar05.png) no-repeat center center #ff0000;
+    background: url(../images/new/new_left_bar05.png) no-repeat center center #ff0000;
 }
 .left_nav li .pro06{
-    background: url(../images/new/left_bar06.png) no-repeat center center #ff0000;
+    background: url(../images/new/new_left_bar01.png) no-repeat center center #ff0000;
 }
 .left_nav li .pro07{
-    background: url(../images/new/left_bar07.png) no-repeat center center #ff0000;
+    background: url(../images/new/new_left_bar01.png) no-repeat center center #ff0000;
 }
 .left_nav li .pro08{
-    background: url(../images/new/left_bar08.png) no-repeat center center #ff0000;
+    background: url(../images/new/new_left_bar01.png) no-repeat center center #ff0000;
 }
 .left_nav .pro09{
     background: #3c3c3c;
@@ -968,3 +998,32 @@ a, a:focus, a:hover, a:active {
 .left_nav li a:hover{
     background:none;
 }
+.left_nav .left_nav_wz{
+    width:38px;
+    position:absolute;
+    height:312px;
+    top:0;
+    z-index: -10;
+
+}
+.left_nav .left_nav_wz  span{
+    display:block;
+    height:38px;
+    line-height:38px;
+    width:38px;
+    background-color:#3c3c3c;
+    text-align:center;
+    margin-bottom:1px;
+    padding-top:4px;
+}
+.left_nav .left_nav_wz  span a{
+    width:32px;
+    height:32px;
+    display:block;
+    margin: auto;
+    font-size:12px;
+    color:#fff;
+    line-height: 15px;
+    overflow: hidden;
+}
+

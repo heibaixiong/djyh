@@ -11,7 +11,7 @@ _css('style');
 </head>
 <body>
 	<div class="footer">
-    <i>版权所有 2015 <?php echo $_['config']['title']?></i>
+    <i>版权所有 2015 <?php echo $_['config']['name']?></i>
     </div>
 </body>
 </html>

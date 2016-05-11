@@ -199,7 +199,7 @@ function _part($str=''){
 function _c($key,$value){
     global $_;
     $_[$key]=$value;
-    if (_v(0) == 'p' && $key == 'title') $_[$key] .= ' - 东家要货';
+    if (_v(0) == 'p' && $key == 'title') $_[$key] .= ' - ' . $_['config']['title'];
 }
 function _mkdir($str){
     if(!is_dir($str)){

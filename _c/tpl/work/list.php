@@ -32,7 +32,7 @@ if(!defined('PART'))exit;
     <span>位置：</span>
     <ul class="placeul">
         <li>首页</li>
-        <li>员工管理</li>
+        <li>业务小哥</li>
         <li><?php echo $_['title'];?></li>
     </ul>
 </div>
@@ -51,6 +51,7 @@ if(!defined('PART'))exit;
             <th>电话</th>
             <th>所在地</th>
             <th>登记时间</th>
+            <th>网点</th>
             <th>状态</th>
             <th>操作</th>
         </tr>
@@ -65,6 +66,7 @@ if(!defined('PART'))exit;
                 <td><?php echo $v['phone']; ?></td>
                 <td><?php echo $v['prov'].'/'.$v['city'].'/'.$v['area']; ?></td>
                 <td><?php echo _time($v['add_time']);?></td>
+                <td><?php echo $v['user_company']; ?></td>
                 <td>
                     <?php echo $_['status'][$v['status']]; ?>
                 </td>

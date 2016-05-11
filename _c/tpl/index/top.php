@@ -26,7 +26,7 @@ $(function(){
     <ul class="nav">
     <li><a href="<?php echo _u('/index/query/');?>" target="leftFrame"><img src="<?php echo _img('icon14.png');?>" title="查询统计" /><h2>查询统计</h2></a></li>
         <li><a href="<?php echo _u('/index/order/');?>"  target="leftFrame"><img src="<?php echo _img('icon16.png');?>" title="业务管理" /><h2>业务管理</h2></a></li>
-        <li><a href="<?php echo _u('/index/work/');?>"  target="leftFrame"><img src="<?php echo _img('icon13.png');?>" title="员工管理" /><h2>员工管理</h2></a></li>
+        <li><a href="<?php echo _u('/index/work/');?>"  target="leftFrame"><img src="<?php echo _img('icon13.png');?>" title="小哥管理" /><h2>小哥管理</h2></a></li>
     <?php
     if(_session('adminrank')<5){
     ?>

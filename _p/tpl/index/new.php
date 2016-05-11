@@ -30,9 +30,13 @@ _part('top_new');
     <div class="container visible-lg" style="height:599px;position:absolute;width:1200px;left:50%;margin-left:-600px;">
         <div class="row" >
             <div class="banner_sz">
-                <a href="#"><img src="<?php echo _img('new/banner_s01.png'); ?>"></a>
-                <a href="#"><img src="<?php echo _img('new/banner_s01.png'); ?>"></a>
-                <a href="#"><img src="<?php echo _img('new/banner_s01.png'); ?>"></a>
+                <?php $i=0; ?>
+                <?php foreach($_['indexad']['index_top_1'] as $k => $ad) { ?>
+                    <?php if (!is_file(DIR.$ad['img'])) continue; ?>
+                    <?php if ($i > 2) break; ?>
+                    <a href="<?php echo $ad['url']?$ad['url']:'javascript:void(0);'; ?>" ><img src="<?php echo _resize($ad['img'], 238, 140); ?>"></a>
+                    <?php $i++; ?>
+                <?php } ?>
             </div>
             <div class="banner_sy_bg">
                 <div class="banner_sy" style="min-height: 440px;">
@@ -63,7 +67,9 @@ _part('top_new');
                     </li>
                 </ul>
                 <div style="margin-top:11px;">
-                    <a href="#"><img src="<?php echo _img('new/banner_s01.png'); ?>"></a>
+                    <?php if (isset($_['indexad']['index_top_1'][$i]) && is_file(DIR.$_['indexad']['index_top_1'][$i]['img'])) { ?>
+                    <a href="<?php echo $_['indexad']['index_top_1'][$i]['url']?$_['indexad']['index_top_1'][$i]['url']:'javascript:void(0);'; ?>"><img src="<?php echo _resize($_['indexad']['index_top_1'][$i]['img'], 238, 140); ?>"></a>
+                    <?php } ?>
                 </div>
             </div>
             <div class="banner">
@@ -75,7 +81,7 @@ _part('top_new');
                         if ($_i > 8) break;
                     ?>
                         <li id="mainCate-<?php echo $_i; ?>" class="mainCate">
-                            <h3><a href="<?php echo _u('/shop/index/'.$v['id'].'/'); ?>" class="big_nav_icon0<?php echo $_i; ?>"><?php echo $v['title']; ?></a></h3>
+                            <h3><a href="<?php echo _u('/shop/index/'.$v['id'].'/'); ?>" class="big_nav_icon0<?php echo $_i; ?>"<?php if (is_file(DIR.$v['img'])) echo ' style="background:url(\''._resize($v['img'],18,18).'\') no-repeat left center;"'; ?>><?php echo $v['title']; ?></a></h3>
                             <p>
                                 <?php foreach ($v['child'] as $child) { ?>
                                     <a href="<?php echo _u('/shop/index/'.$child['id'].'/'); ?>"><?php echo $child['title']; ?></a>
@@ -115,13 +121,13 @@ _part('top_new');
         ?>
     </ol>
     <!-- 轮播（Carousel）项目 -->
-    <div class="carousel-inner">
+    <div class="carousel-inner carousel_lb">
         <?php
         foreach ($_['flash'] as $k => $flash) {
             //echo '<a href="'.$flash['url'].'" class="bg-1" title="'.$flash['title'].'"><img src="'.$flash['img'].'" /></a>';
         ?>
             <div class="item<?php echo $k==0?' active':''; ?>">
-                <img src="<?php echo _resize($flash['img'], 1920, 604); ?>" />
+                <a href="<?php echo empty($flash['url'])?'javascript:void(0);':$flash['url']; ?>"><img src="<?php echo _resize($flash['img'], 1904, 599); ?>" /></a>
             </div>
         <?php
         }
@@ -142,7 +148,7 @@ _part('top_new');
         <div class="row new_h_nav hidden-md hidden-lg">
             <?php
             foreach($_['index'] as $k=>$v) {
-                echo '<a href="#floor_' . ($k + 1) . '" class="h_nav_icon0'.($k+1).'"></a>';
+                echo '<a href="#floor_' . ($k + 1) . '" class="h_nav_icon0'.($k+1).'"'.(is_file(DIR.$v['img'])?' style="background:url(\''._resize($v['img'],18,18).'\') no-repeat center center;"':'').'></a>';
             }
             ?>
         </div>
@@ -153,8 +159,9 @@ _part('top_new');
 <div class="container">
     <div class="row big_pro">
         <div class="col-sm-12 col-xs-12" style="padding:0 8px;">
-            <?php foreach($_['indexad'] as $ad) { ?>
-                <a href="<?php echo $ad['url']?$ad['url']:'/'; ?>" ><img class="img-responsive" src="<?php echo _resize($ad['img'], 1200, 146); ?>"></a>
+            <?php foreach($_['indexad']['index_top_2'] as $ad) { ?>
+                <?php if (!is_file(DIR.$ad['img'])) continue; ?>
+                <a href="<?php echo $ad['url']?$ad['url']:'javascript:void(0);'; ?>" ><img class="img-responsive" src="<?php echo _resize($ad['img'], 1200, 146); ?>"></a>
             <?php } ?>
         </div>
     </div>
@@ -172,13 +179,20 @@ _part('top_new');
 <!--全楼-->
 <div class="container big_lou"  id="main" style="padding:0;position: relative;">
     <div style="float:right;">
-        <ul class="left_nav ">
+        <ul class="left_nav "<?php if (count($_['index'])<8) echo ' style="height:'.floor(count($_['index'])/8*312).'px;"';?>>
             <?php
             foreach($_['index'] as $k=>$v){
             ?>
-            <li><a class="pro0<?php echo $k+1;?>" data-floor="floor_<?php echo $k+1;?>"></a></li>
+            <li><a class="pro0<?php echo $k+1;?>" data-floor="floor_<?php echo $k+1;?>"<?php if (is_file(DIR.$v['img'])) echo ' style="background:url(\''._resize($v['img'],18,18).'\') no-repeat center center #ff0000;"'; ?>></a></li>
             <?php } ?>
             <li class="pro09"></li>
+            <div class="left_nav_wz">
+                <?php
+                foreach($_['index'] as $k=>$v){
+                ?>
+                    <span><a><?php echo $v['title']?></a></span>
+                <?php } ?>
+            </div>
         </ul>
     </div>
 
@@ -190,7 +204,7 @@ _part('top_new');
         <div class="row">
             <div class="col-xs-12 col-md-12" style="padding:0 5px;">
                 <div class="lou_01_top">
-                    <a class="lou_01_title"><?php echo $v['title']?></a>
+                    <a class="lou_01_title"<?php if (is_file(DIR.$v['img'])) echo ' style="background:url(\''._resize($v['img'],36,36).'\') no-repeat left center;"'; ?>><?php echo $v['title']?></a>
                     <a href="<?php echo _u('/shop/index/'.$v['id'].'/'); ?>" class="lou_01_more">更多好货</a>
                 </div>
             </div>
@@ -198,7 +212,7 @@ _part('top_new');
         <div class="row" >
             <div class="col-xs-12  col-md-3 col-sm-6 lou_01_boxleft" >
                 <div style=" background:#fff;">
-                    <a href="#" ><img style="width:288px;min-height:329px;margin:auto;"  class="img-responsive" src="<?php echo _img('new/lou_pro03.png'); ?>" ></a>
+                    <a href="<?php echo empty($v['url_ad_1']) ? 'javascript:void(0);':$v['url_ad_1']; ?>" ><img style="width:288px;min-height:329px;margin:auto;"  class="img-responsive" src="<?php echo is_file(DIR.$v['img_ad_1'])?_resize($v['img_ad_1'], 288, 329):_img('new/lou_pro03.png'); ?>" ></a>
                     <ul class="row lou_01_fl">
                         <?php
                         foreach ($_['oneclass'][$v['id']]['child'] as $ky => $class) {
@@ -209,7 +223,7 @@ _part('top_new');
                     </ul>
                 </div>
             </div>
-            <div class="col-md-6  lou_01_boxcenter visible-md visible-lg " ><a href="#" ><img  style="min-height:501px;"  class="img-responsive"  src="<?php echo _img('new/lou_pro01.png'); ?>"></a></div>
+            <div class="col-md-6  lou_01_boxcenter visible-md visible-lg " ><a href="<?php echo empty($v['url_ad_2']) ? 'javascript:void(0);':$v['url_ad_2']; ?>" ><img  style="min-height:501px;"  class="img-responsive"  src="<?php echo is_file(DIR.$v['img_ad_2'])?_resize($v['img_ad_2'], 592, 491):_img('new/lou_pro01.png'); ?>"></a></div>
             <div class="col-xs-12 col-md-3 col-sm-6 lou_01_boxright">
                 <div style="background:#fff;">
                     <ul  class="store_list">
@@ -218,7 +232,9 @@ _part('top_new');
                             <li class="store_box">
                                 <a href="<?php echo _u('/shop/show/'.$hot['id'].'/'); ?>" class="store_photo"><img src="<?php echo _resize($hot['img'], 75, 75); ?>"></a>
                                 <div class="store_sm">
-                                    <p class="store_sm_text01"><?php echo _left($hot['title'], 0, 26); ?></p>
+                                    <p class="store_sm_text01">
+                                        <a href="<?php echo _u('/shop/show/'.$hot['id'].'/'); ?>"><?php echo _left($hot['title'], 0, 26); ?></a>
+                                    </p>
                                     <p class="store_sm_text02">
                                         <a class="pice_01">￥<?php echo _rmb($hot['mark']/100);?></a>
                                         <a class="pice_02">￥<?php echo _rmb($hot['mark']*1.24/100);?></a>

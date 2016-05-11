@@ -47,7 +47,6 @@ $(document).ready(function(){
         <th>编号</th>
         <th>文字</th>
         <th>图片地址</th>
-        <th>连接</th>
         <th>点击次数</th>
         <th>状态</th>
         <th>排序</th>
@@ -63,9 +62,8 @@ $(document).ready(function(){
         <td><?php echo $v['id']?></td>
         <td><?php echo $v['title']?></td>
         <td><?php echo $v['img']?></td>
-        <td><?php echo $v['url']?></td>
         <td><?php echo $v['hits']?></td>
-        <td><?php echo $_['state'][$v['state']]?></td>
+        <td><?php echo $_['status'][$v['state']]?></td>
         <td><?php echo $v['px']?></td>
         <td><a href="<?php echo _u('/ad/flashedit/'.$v['id'].'/');?>" class="tablelink">编辑</a> <a href="<?php echo _u('/ad/del/'.$v['id'].'/');?>" class="tablelink">删除</a></td>
         </tr>

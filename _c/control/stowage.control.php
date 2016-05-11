@@ -20,7 +20,7 @@ function __list() {
         $key=_session('key');
     }
     $_['key']=$key;
-    $sql = "1=1";
+    $sql = (strlen(_session('adminrank')) > 0 && _session('adminrank') == '0') ? "1=1" : "(mid='".intval(_session('code'))."' OR to_mid='".intval(_session('code'))."')";
     if(!empty($key)){
         $sql .= ' and (prov like \'%'._escape($key).'%\' or city like \'%'._escape($key).'%\' or area like \'%'._escape($key).'%\')';
     }
@@ -39,6 +39,8 @@ function __list() {
             Page::$arr[$k]['total_weight'] = $res[0]['total_weight'];
         }
         Page::$arr[$k]['car_number'] = _sqlfield('ship_car', 'number', "id='{$stowage['car_id']}'");
+        Page::$arr[$k]['from_company'] = _sqlfield('ship_company', 'name', "id='{$stowage['mid']}'");
+        Page::$arr[$k]['to_company'] = _sqlfield('ship_company', 'name', "id='{$stowage['to_mid']}'");
     }
 
     _c('title', $s==''?'全部':$_['order_status'][$s]);
@@ -57,6 +59,8 @@ function __add() {
     _c('drivers', $drivers);
     _c('cars', $cars);
 
+    _c('company', _sqlall('ship_company', 'status=1', 'id asc'));
+
     $ship_order = _sqlall('ship_order', 'status in (3,4)', 'id');
     _c('ship_order', $ship_order);
 
@@ -73,11 +77,18 @@ function __edit() {
         die();
     }
 
+    if (!(strlen(_session('adminrank')) > 0 && _session('adminrank') == '0') && $stowage && $stowage['mid'] <> _session('code') && $stowage['to_mid'] <> _session('code')) {
+        _alerturl('您暂无权限进行此操作！', _u('//list/'._v(4).'/'._v(5).'/'));
+        die();
+    }
+
     $drivers = _sqlall('ship_driver', 'status=1', 'id');
     $cars = _sqlall('ship_car', 'status=1', 'id');
 
     _c('drivers', $drivers);
     _c('cars', $cars);
+
+    _c('company', _sqlall('ship_company', 'status=1', 'id asc'));
 
     $ship_order = _sqlall('ship_order', 'status in (3,4)', 'id');
     _c('ship_order', $ship_order);
@@ -111,7 +122,13 @@ function __save() {
 
     $stowage = _sqlone('ship_stowage', "id='".intval(_v(3))."'");
 
+    if (!(strlen(_session('adminrank')) > 0 && _session('adminrank') == '0') && $stowage && $stowage['mid'] <> _session('code') && $stowage['to_mid'] <> _session('code')) {
+        _alerturl('您暂无权限进行此操作！', _u('//list/'._v(4).'/'._v(5).'/'));
+        die();
+    }
+
     $data = array();
+    $data['to_mid'] = floatval(_post('to_mid'));
     $data['driver_id'] = floatval(_post('driver'));
     $data['car_id'] = floatval(_post('car'));
     $data['prov_s'] = _post('prov_s');
@@ -126,7 +143,7 @@ function __save() {
 
     if (empty($stowage)) {
         $data['add_time'] = time();
-        $data['mid'] = floatval(_session('adminid'));
+        $data['mid'] = floatval(_session('code'));
         if ($id = _sqlinsert('ship_stowage', $data)) {
             if (is_array(_post('ship_order')) && !empty(_post('ship_order'))) {
                 foreach (_post('ship_order') as $value) {
@@ -172,7 +189,7 @@ function __save() {
                         }
 
                     }
-                    if ($data['status'] == '3') {
+                    /*if ($data['status'] == '3') {
                         _sqlinsert('ship_order_status', array(
                             'ship_number' => floatval($value),
                             'status_before' => 4,
@@ -185,6 +202,28 @@ function __save() {
                         $order = _sqlone('ship_order', 'status=4 and ship_number=\''.floatval($value).'\'');
                         if ($order) {
                             _sendWxMsg($order['wx_open_id'], '您的订单：['.str_repeat('0', 12-strlen($order['id'])).$order['id'].'], 已到达：【'.$data['prov_e'].'/'.$data['city_e'].'/'.$data['area_e'].'】');
+                        }
+                    }*/
+                    if ($data['status'] == '3') {
+                        $done = _sqlupdate('ship_order', array(
+                            //'status' => 5,
+                            'mid' => floatval($data['to_mid']),
+                            'arrive_time' => time()
+                        ), 'status=4 and ship_number=\''.floatval($value).'\'');
+                        if ($done) {
+                            _sqlinsert('ship_order_status', array(
+                                'ship_number' => floatval($value),
+                                'status_before' => 4,
+                                'status_after' => 4,
+                                'content' => '已到达：【'.$data['prov_e'].'/'.$data['city_e'].'/'.$data['area_e'].'】',
+                                'mid' => floatval(_session('adminid')),
+                                'add_time' => time(),
+                                'sys' => 0
+                            ));
+                            $order = _sqlone('ship_order', 'status=5 and ship_number=\''.floatval($value).'\'');
+                            if ($order) {
+                                _sendWxMsg($order['wx_open_id'], '您的订单：['.str_repeat('0', 12-strlen($order['id'])).$order['id'].'], 已到达：【'.$data['prov_e'].'/'.$data['city_e'].'/'.$data['area_e'].'】');
+                            }
                         }
                     }
                 }

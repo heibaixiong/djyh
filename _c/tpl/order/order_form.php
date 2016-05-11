@@ -194,7 +194,7 @@ if(!defined('PART'))exit;
             </ul>
         </div>
         <div id="tab2" class="tabson">
-            <ul class="forminfo">
+            <ul class="forminfo" style="padding-left: 0px;">
                 <?php if (isset($_['order']['status']) && $_['order']['status'] >= 3) { ?>
                     <li>
                         <table class="tablelist">

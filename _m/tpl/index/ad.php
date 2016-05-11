@@ -67,7 +67,7 @@ $(function(){
     <span><img src="<?php echo _img('leftico03.png');?>" /></span>更新广告缓存
     </div>
         <ul class="menuson">
-        <li><cite></cite><a href="<?php echo _u('/cache/ad/');?>" target="rightFrame">更新广告缓存</a><i></i></li>
+        <li><cite></cite><a href="<?php echo _u('/cache/indexad/');?>" target="rightFrame">更新广告缓存</a><i></i></li>
         </ul>
     </dd>
     </dl>

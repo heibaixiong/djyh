@@ -30,11 +30,14 @@ function __index(){
 	global $_;
 	if(0==$r){
 		_c('title','所有商品');
+		_c('cate_title','所有商品');
 		_c('classtitle','所有分类');
 		_c('shopclass',_f('oneclass'));
 		Page::start('ware',$p,'state=0',$pxsql);
 	}else{
-		_c('title',_sqlfield('class','title','id='.$r));
+		$title = _sqlfield('class','title','id='.$r);
+		_c('title', $title);
+		_c('cate_title', $title);
 		$pid=_sqlfield('class','pid','id='.$r);
 		if(0==$pid){
 			_c('shopclass',_sqlall('class','pid='.$r,'px'));
@@ -70,7 +73,8 @@ function __search(){
 	$pxsql = ltrim($pxsql, ',');
 
 	$key=urldecode(_v(3));
-    _c('title',$key);
+	_c('title',$key);
+	_c('cate_title',$key);
 	_c('classtitle','所有分类');
 	_c('shopclass',_f('oneclass'));
 	$sql='';
@@ -100,6 +104,7 @@ function __special(){
 	$pxsql = ltrim($pxsql, ',');
 
 	_c('title','推荐商品');
+	_c('cate_title','推荐商品');
 	_c('classtitle','所有分类');
 	_c('shopclass',_f('oneclass'));
 	Page::start('ware',$p,'recommend=1 and state=0', $pxsql);
@@ -125,6 +130,7 @@ function __hot(){
 	$pxsql = ltrim($pxsql, ',');
 
 	_c('title','热销商品');
+	_c('cate_title','热销商品');
 	_c('classtitle','所有分类');
 	_c('shopclass',_f('oneclass'));
 	Page::start('ware',$p,'hot=1 and state=0', $pxsql);
@@ -150,6 +156,7 @@ function __new(){
 	$pxsql = ltrim($pxsql, ',');
 
 	_c('title','最新上架');
+	_c('cate_title','最新上架');
 	_c('classtitle','所有分类');
 	_c('shopclass',_f('oneclass'));
 	Page::start('ware',$p,'new=1 and state=0', $pxsql);
@@ -189,4 +196,3 @@ function __show(){
 	_c('list',_sqlall('ware', 'state=0 and uid='.$arr['uid'].' and id !='.$arr['id'], 'px,id desc', 10));
 	_tpl('/show');
 }
-?>

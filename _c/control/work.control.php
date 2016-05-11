@@ -21,6 +21,8 @@ function __list(){
 	}
 	$_['key']=$key;
 	$sql = "tobe='1'";
+	if (!(strlen(_session('adminrank')) > 0 && _session('adminrank') == '0')) $sql .= " and (mid='"._session('code')."' OR status=0)";
+
 	if(!empty($key)){
 		$sql .= ' and (real_name like \'%'._escape($key).'%\' or phone like \'%'._escape($key).'%\' or id_card like \'%'._escape($key).'%\')';
 	}
@@ -29,9 +31,9 @@ function __list(){
 	}
 	Page::start('ship_user_info', $p, $sql, 'id desc');
 
-/*	foreach (Page::$arr as $k => $order) {
-
-	}*/
+	foreach (Page::$arr as $k => $worker) {
+		Page::$arr[$k]['user_company'] = _sqlfield('ship_company', 'name', "id='{$worker['mid']}'");
+	}
 
 	_c('title', $s==''?'全部':$_['order_status'][$s]);
 	_c('order_status', $_['order_status']);
@@ -42,6 +44,12 @@ function __list(){
 function __add() {
 	_c('user', array());
 	_c('form_action', _u('//save//'._v(3).'/'._v(4).'/'));
+
+	if (!(strlen(_session('adminrank')) > 0 && _session('adminrank') == '0')) {
+		_c('company', _sqlall('ship_company', "id='".floatval(_session('code'))."'", 'id asc'));
+	} else {
+		_c('company', _sqlall('ship_company', '1=1', 'id asc'));
+	}
 
 	_tpl('/work_form');
 }
@@ -54,14 +62,29 @@ function __edit() {
 		die();
 	}
 
+	if (!(strlen(_session('adminrank')) > 0 && _session('adminrank') == '0') && $user && $user['status'] == '1' && $user['mid'] <> _session('code')) {
+		_alerturl('您暂无权限进行此操作！', _u('//list/'._v(4).'/'._v(5).'/'));
+		die();
+	}
+
 	_c('user', $user);
 	_c('form_action', _u('//save/'._v(3).'/'._v(4).'/'._v(5).'/'));
 
+	if (!(strlen(_session('adminrank')) > 0 && _session('adminrank') == '0')) {
+		_c('company', _sqlall('ship_company', "id='".floatval(_session('code'))."'", 'id asc'));
+	} else {
+		_c('company', _sqlall('ship_company', '1=1', 'id asc'));
+	}
 	_tpl('/work_form');
 }
 
 function __save(){
 	$user = _sqlone('ship_user_info', "id='".intval(_v(3))."'");
+
+	if (!(strlen(_session('adminrank')) > 0 && _session('adminrank') == '0') && $user && $user['status'] == '1' && $user['mid'] <> _session('code')) {
+		_alerturl('您暂无权限进行此操作！', _u('//list/'._v(4).'/'._v(5).'/'));
+		die();
+	}
 
 	if (empty(_post('real_name'))) {
 		_alertback('请输入姓名！');
@@ -75,12 +98,12 @@ function __save(){
 		_alertback('请选择完整所在地！');
 		die();
 	}
-	if (empty(_post('address'))) {
-		_alertback('请输入地址！');
-		die();
-	}
 	if (empty(_post('phone'))) {
 		_alertback('请输入电话！');
+		die();
+	}
+	if (empty(_post('mid'))) {
+		_alertback('请选择所属网点！');
 		die();
 	}
 
@@ -96,13 +119,18 @@ function __save(){
 	$data['phone'] = _post('phone');
 	$data['id_card'] = _post('id_card');
 	$data['note'] = _post('note');
+
+	if (!(strlen(_session('adminrank')) > 0 && _session('adminrank') == '0')) {
+		$data['mid'] = floatval(_session('code'));
+	} else {
+		$data['mid'] = floatval(_post('mid'));
+	}
 	$data['status'] = _post('status');
 	$data['mod_time'] = time();
 
 	if (empty($user)) {
 		$data['add_time'] = time();
 		$data['tobe'] = 1;
-		$data['mid'] = floatval(_session('adminid'));
 //		if ($id = _sqlinsert('ship_user_info', $data)) {
 //			_alerturl('保存成功！', _u('//list/'._v(4).'/'._v(5).'/'));
 //		} else {

@@ -52,6 +52,7 @@ $(document).ready(function(){
             <th>数量</th>
             <th>重量</th>
             <th>时间</th>
+            <th>接收网点</th>
             <th>状态</th>
             <th>操作</th>
         </tr>
@@ -68,6 +69,7 @@ $(document).ready(function(){
                 <td><?php echo $v['total_quantity']; ?> 件</td>
                 <td><?php echo $v['total_weight']?> kg</td>
                 <td><?php echo _time($v['mod_time']);?></td>
+                <td><?php echo $v['to_company']; ?></td>
                 <td><?php echo $_['stowage_status'][$v['status']]; ?></td>
                 <td><a href="<?php echo _u('/stowage/edit/'.$v['id'].'/'); ?>" class="tablelink">查看</a></td>
             </tr>

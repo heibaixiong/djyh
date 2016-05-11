@@ -49,8 +49,8 @@ $(function(){
 				<span><img src="<?php echo _img('leftico01.png');?>" /></span>订单
 			</div>
 			<ul class="menuson">
-				<li><cite></cite><a href="<?php echo _u('/order/list//');?>" target="rightFrame">查询</a></li>
-				<li><cite></cite><a href="<?php echo _u('/order/list//');?>" target="rightFrame">统计</a></li>
+				<li><cite></cite><a href="<?php echo _u('/order/search/');?>" target="rightFrame">查询</a></li>
+				<li><cite></cite><a href="<?php echo _u('/order/statics/');?>" target="rightFrame">统计</a></li>
 			</ul>
 		</dd>
 		<dd>

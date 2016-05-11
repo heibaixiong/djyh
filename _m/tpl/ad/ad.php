@@ -48,7 +48,6 @@ $(document).ready(function(){
         <th>位置</th>        
         <th>文字</th>
         <th>图片地址</th>
-        <th>连接</th>
         <th>点击次数</th>
         <th>状态</th>
         <th>排序</th>
@@ -62,10 +61,9 @@ $(document).ready(function(){
         <tr>
         <td><?php echo $v['id']?></td>
         <td><?php echo $v['code']?></td>
-        <td><?php echo $v['postion']?></td>
+        <td><?php echo isset($_['ad_position'][$v['postion']]) ? $_['ad_position'][$v['postion']] : '未选择' ?></td>
         <td><?php echo $v['title']?></td>
         <td><?php echo $v['img']?></td>
-        <td><?php echo $v['url']?></td>
         <td><?php echo $v['hits']?></td>
         <td><?php echo $_['state'][$v['state']]?></td>
         <td><?php echo $v['px']?></td>

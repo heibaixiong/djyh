@@ -40,8 +40,8 @@ $(function(){
 
         $('div[id^=floor_]').each(function(i,e){
             if (scroH >= $(e).offset().top) {
-                $(".left_nav a").removeClass("cur");
-                $(".left_nav a").eq(i).addClass('cur');
+                $(".left_nav >li a").removeClass("cur");
+                $(".left_nav >li a").eq(i).addClass('cur');
                 $(".lou_01_top .lou_01_title").css("color","#646464");
                 $(e).find(".lou_01_title").css("color","#ff0000");
             }
@@ -50,14 +50,14 @@ $(function(){
     //��ť����
 
     $(window).scroll(function(){
-        if($(window).scrollTop()>850&&$(window).width()>=1200){
+        if($(window).scrollTop()>650&&$(window).width()>=1200){
             $(".left_nav").fadeIn(500);
 
         }
     });
     //��ť����
     $(window).scroll(function(){
-        if($(window).scrollTop()<850){
+        if($(window).scrollTop()<650){
             $(".left_nav").fadeOut(500);
         }
     });

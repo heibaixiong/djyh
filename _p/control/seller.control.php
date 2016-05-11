@@ -142,9 +142,24 @@ function __goods() {
         $p=0;
     }
 
-    Page::start('ware', $p, 'uid='.intval($uid), 'id desc');
+    $s = !is_null(_post('search')) ? _post('search') : _session('seller_search_key');
+
+    if (empty($s)) {
+        _session('seller_search_key', null);
+    } else {
+        _session('seller_search_key', $s);
+    }
+
+
+    $sql = "uid='".intval($uid)."'";
+    if (!empty($s)) {
+        $sql .= " and (title like '%"._escape($s)."%' OR number like '%"._escape($s)."%')";
+    }
+
+    Page::start('ware', $p, $sql, 'id desc');
 
     _c('title', '商品管理');
+    _c('search_key', $s);
     _tpl();
 }
 
@@ -237,7 +252,7 @@ function __goods_add() {
                     _sqlinsert('para_info', $data);
                 }
             }
-            _alerturl('商品发布成功！', _u('//goods/'));
+            _alerturl('商品发布成功！', _u('//goods/'._v(4).'/'));
             _weblogs('商品发布成功！'.$uid.' - '.$id);
         } else {
             _alerturl('商品发布失败！', _u('////'._v(4).'/'));
@@ -347,7 +362,7 @@ function __goods_edit() {
                     _sqlinsert('para_info', $data);
                 }
             }
-            _alerturl('商品编辑成功！', _u('//goods/'));
+            _alerturl('商品编辑成功！', _u('//goods/'._v(4).'/'));
             _weblogs('商品编辑成功！'.$uid.' - '.intval(_v(3)));
         } else {
             _alerturl('商品编辑失败！', _u('///'._v(3).'/'._v(4).'/'));

@@ -20,7 +20,7 @@ function __driver(){
 		$key=_session('key');
 	}
 	$_['key']=$key;
-	$sql = "1=1";
+	$sql = (strlen(_session('adminrank')) > 0 && _session('adminrank') == '0') ? "1=1" : "mid='".intval(_session('code'))."'";
 	if(!empty($key)){
 		$sql .= ' and (real_name like \'%'._escape($key).'%\' or phone like \'%'._escape($key).'%\')';
 	}
@@ -29,9 +29,9 @@ function __driver(){
 	}
 	Page::start('ship_driver', $p, $sql, 'id desc');
 
-	/*foreach (Page::$arr as $k => $order) {
-
-	}*/
+	foreach (Page::$arr as $k => $driver) {
+		Page::$arr[$k]['user_company'] = _sqlfield('ship_company', 'name', "id='{$driver['mid']}'");
+	}
 
 	_c('title', $s==''?'全部':$_['order_status'][$s]);
 	_c('order_status', $_['order_status']);
@@ -68,6 +68,11 @@ function __save_driver() {
 
 	$driver = _sqlone('ship_driver', "id='".intval(_v(3))."'");
 
+	if (!(strlen(_session('adminrank')) > 0 && _session('adminrank') == '0') && $driver && $driver['mid'] <> _session('code')) {
+		_alerturl('您暂无权限进行此操作！', _u('//car/'._v(4).'/'._v(5).'/'));
+		die();
+	}
+
 	$data = array();
 	$data['real_name'] = _post('real_name');
 	$data['prov'] = _post('prov');
@@ -85,7 +90,7 @@ function __save_driver() {
 
 	if (empty($driver)) {
 		$data['add_time'] = time();
-		$data['mid'] = floatval(_session('adminid'));
+		$data['mid'] = floatval(_session('code'));
 		if ($id = _sqlinsert('ship_driver', $data)) {
 			_alerturl('操作成功！', _u('//driver/'._v(4).'/'._v(5).'/'));
 		} else {
@@ -119,7 +124,7 @@ function __car() {
 		$key=_session('key');
 	}
 	$_['key']=$key;
-	$sql = "1=1";
+	$sql = (strlen(_session('adminrank')) > 0 && _session('adminrank') == '0') ? "1=1" : "mid='".intval(_session('code'))."'";
 	if(!empty($key)){
 		$sql .= ' and (number like \'%'._escape($key).'%\')';
 	}
@@ -128,9 +133,9 @@ function __car() {
 	}
 	Page::start('ship_car', $p, $sql, 'id desc');
 
-	/*foreach (Page::$arr as $k => $order) {
-
-	}*/
+	foreach (Page::$arr as $k => $car) {
+		Page::$arr[$k]['user_company'] = _sqlfield('ship_company', 'name', "id='{$car['mid']}'");
+	}
 
 	_c('title', $s==''?'全部':$_['order_status'][$s]);
 	_c('order_status', $_['order_status']);
@@ -167,6 +172,11 @@ function __save_car() {
 
 	$driver = _sqlone('ship_car', "id='".intval(_v(3))."'");
 
+	if (!(strlen(_session('adminrank')) > 0 && _session('adminrank') == '0') && $driver && $driver['mid'] <> _session('code')) {
+		_alerturl('您暂无权限进行此操作！', _u('//car/'._v(4).'/'._v(5).'/'));
+		die();
+	}
+
 	$data = array();
 	$data['number'] = _post('number');
 	$data['prov'] = _post('prov');
@@ -179,7 +189,7 @@ function __save_car() {
 
 	if (empty($driver)) {
 		$data['add_time'] = time();
-		$data['mid'] = floatval(_session('adminid'));
+		$data['mid'] = floatval(_session('code'));
 		if (!isset($data['status'])) $data['status'] = 0;
 		if ($id = _sqlinsert('ship_car', $data)) {
 			_alerturl('操作成功！', _u('//car/'._v(4).'/'._v(5).'/'));

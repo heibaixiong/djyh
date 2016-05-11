@@ -1,7 +1,7 @@
 <?php
 if(!defined('PART'))exit;
 
-function __list(){
+function __search(){
 	global $_;
 	$s=_v(3);
 	$p=_v(4);
@@ -34,7 +34,56 @@ function __list(){
 	}
 
 	_c('title', $s==''?'全部':$_['order_status'][$s]);
-	_c('order_status', $_['order_status']);
+
+	_tpl('/search');
+}
+
+function __statics() {
+	_c('title', '');
+
+	$days = array();
+	for ($i=14;$i>=0;$i--) {
+		$days[] = date('m.d', strtotime('-'.$i.' days'));
+	}
+
+	_c('x-labels', "'".join("', '", $days)."'");
+
+	_tpl('/statics');
+}
+
+function __list(){
+	global $_;
+	$s=_v(3);
+	$p=_v(4);
+	if(strlen($s) > 0 && !array_key_exists(intval($s), $_['order_status'])){
+		$s = '';
+	}
+	if(empty($p)){
+		$p=0;
+	}
+	$key=_post('key');
+	$session_key=_session('key');
+	if(!empty($key)){
+		_session('key',$key);
+	}
+	if(empty($key)&&!empty($session_key)){
+		$key=_session('key');
+	}
+	$_['key']=$key;
+	$sql = '1=1';
+	if(!empty($key)){
+		$sql .= ' and (ship_number like \'%'._escape($key).'%\' or ship_phone like \'%'._escape($key).'%\' or ship_name like \'%'._escape($key).'%\')';
+	}
+	if ($s <> '') {
+		$sql .= ' and status = \''.$s.'\'';
+	}
+	Page::start('ship_order', $p, $sql, 'id desc');
+
+	foreach (Page::$arr as $k => $order) {
+		Page::$arr[$k]['detail_url'] = strlen(_session('adminrank'))>0 && _session('adminrank')=='0' ? _u('/order/edit/'.$order['id'].'/'._v(3).'/'._v(4).'/') : _u('/order/show/'.$order['id'].'/'._v(3).'/'._v(4).'/');
+	}
+
+	_c('title', $s==''?'全部':$_['order_status'][$s]);
 
 	_tpl('/list');
 }
@@ -47,6 +96,11 @@ function __add() {
 }
 
 function __edit(){
+	if (!(strlen(_session('adminrank')) > 0 && _session('adminrank') == '0')) {
+		_header(_u('/order/view/'._v(3).'/'._v(4).'/'._v(5).'/'));
+		die();
+	}
+
 	$order =  _sqlone('ship_order','id='.intval(_v(3)));
 
 	if (empty($order)) {
@@ -80,6 +134,11 @@ function __edit(){
 
 function __save() {
 	$order =  _sqlone('ship_order','id='.intval(_v(3)));
+
+	if (!(strlen(_session('adminrank')) > 0 && _session('adminrank') == '0') && $order) {
+		_header(_u('/order/view/'._v(3).'/'._v(4).'/'._v(5).'/'));
+		die();
+	}
 
 	if (empty(_post('ship_prov')) || empty(_post('ship_city')) || empty(_post('ship_area'))) {
 		_alertback('请选择完整发货地！');
@@ -181,6 +240,19 @@ function __show(){
 	if (empty($order)) {
 		_alerturl('记录不存在', _u('//list/'._v(4).'/'._v(5).'/'));
 		die();
+	}
+
+	$order['rob_name'] = '';
+	if (!empty($order['rob_open_id'])) {
+		$uid = _sqlfield('ship_user', 'id', "wx_open_id='{$order['rob_open_id']}'");
+		$order['rob_name'] = _sqlfield('ship_user_info', 'real_name', "uid='{$uid}'");
+	}
+
+	$order['ship_status'] = array();
+	if ($order['status'] > 3) {
+		$sql = "select s.* from "._pre('ship_to_stowage')." as s2s inner join "._pre('ship_stowage')." as s on s2s.stowage_id=s.id where s2s.ship_number='{$order['ship_number']}' and s.status>0 order by s.id";
+		$res = _sqlselect($sql);
+		$order['ship_status'] = $res;
 	}
 
 	_c('order', $order);

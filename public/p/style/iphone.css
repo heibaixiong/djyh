@@ -132,7 +132,11 @@
     }
 
 
-
+    .carousel_lb{
+        width:auto;
+        left:0;
+        margin-left:0;
+    }
     /*�ֲ�*/
     .carousel-inner .item img{
         height:auto;

@@ -7,7 +7,9 @@ if(!defined('PART'))exit;
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <?php
     _css('style');
+    _css('jquery.datetimepicker');
     _jq();
+    _js('jquery.datetimepicker');
     _js('distpicker.data');
     _js('distpicker');
     ?>
@@ -34,11 +36,13 @@ if(!defined('PART'))exit;
         });
     </script>
     <script type=text/javascript>
-        function selectTag(a,b,d,e){
+        function selectTag(a,b,c,d,e,f){
             $(a).attr('class', 'selected');
             $(b).attr('class', '');
+            $(c).attr('class', '');
             $(d).show();
             $(e).hide();
+            $(f).hide();
         }
     </script>
 </head>
@@ -56,9 +60,10 @@ if(!defined('PART'))exit;
         <form action="<?php echo $_['form_action']; ?>" method="post">
             <div class="itab">
                 <ul>
-                    <li><a href="javascript:void(0);" id='a' class="selected" onClick="selectTag('#a','#b','#tab1','#tab2')">基本信息</a></li>
+                    <li><a href="javascript:void(0);" id='a' class="selected" onClick="selectTag('#a','#b','#c','#tab1','#tab2','#tab3')">基本信息</a></li>
+                    <li><a href="javascript:void(0);" id='b' onClick="selectTag('#b','#c','#a','#tab2','#tab3','#tab1')">配载信息</a></li>
                     <?php if (isset($_['driver']['id'])) { ?>
-                        <li><a href="javascript:void(0);" id='b' onClick="selectTag('#b','#a','#tab2','#tab1')">状态信息</a></li>
+                        <li><a href="javascript:void(0);" id='c' onClick="selectTag('#c','#b','#a','#tab3','#tab2','#tab1')">状态信息</a></li>
                     <?php } ?>
                     <li style="float: right;"><input id="btn-save" type="button" class="btn" value="确认保存" /></li>
                 </ul>
@@ -93,6 +98,15 @@ if(!defined('PART'))exit;
 
                             </select>
                         </p></li>
+                    <li>
+                        <label>接收网点</label>
+                        <select name="to_mid">
+                            <option value="">请选择</option>
+                            <?php foreach ($_['company'] as $company) { ?>
+                                <option value="<?php echo $company['id']; ?>"<?php echo isset($_['driver']['to_mid'])&&$_['driver']['to_mid']==$company['id']?' selected="selected"':''; ?>><?php echo $company['name']; ?></option>
+                            <?php } ?>
+                        </select>
+                    </li>
                     <li><label>承 运 人：</label>
                         <p>
                             <select name="driver">
@@ -127,31 +141,6 @@ if(!defined('PART'))exit;
                             </select>
                         </p>
                     </li>
-                    <li><label>配载运单：</label>
-                        <p style="float: left;">
-                            <select name="ship_select" multiple="multiple" style="width: 200px; height: 200px;">
-                                <optgroup label="待装载">
-                                    <?php foreach ($_['ship_order'] as $order) { ?>
-                                        <?php if (array_key_exists($order['ship_number'], $_['stowage_ship'])) continue; ?>
-                                        <option value="<?php echo $order['ship_number']; ?>"><?php echo $order['ship_number']; ?></option>
-                                    <?php } ?>
-                                </optgroup>
-                            </select>
-                        </p>
-                        <p style="float: left;margin: 0 10px 0 10px;">
-                            <input type="button" value=">>加入" id="btn-ship-add" class="btn" style="background: #CCCCCC; width: 80px; color: #000; margin-top: 30px; float: left;" />
-                            <input type="button" value="<<移出" id="btn-ship-sub" class="btn" style="background: #CCCCCC; width: 80px; color: #000; margin-top: 30px; float: left; clear: both;" />
-                        </p>
-                        <p style="float: left;">
-                            <select name="stowage_ship" multiple="multiple" style="width: 200px; height: 200px;">
-                                <optgroup label="已装载">
-                                    <?php foreach ($_['stowage_ship'] as $order) { ?>
-                                        <option value="<?php echo $order['ship_number']; ?>"><?php echo $order['ship_number']; ?></option>
-                                    <?php } ?>
-                                </optgroup>
-                            </select>
-                        </p>
-                    </li>
                     <li><label>通知用户：</label>
                         <p style="padding-top: 10px;">
                             <input type="radio" name="notice" value="1" /> 是&nbsp;&nbsp;
@@ -161,6 +150,48 @@ if(!defined('PART'))exit;
                 </ul>
             </div>
             <div id="tab2" class="tabson">
+                <div class="tools">
+                    <ul class="toolbar" style="margin-bottom: 5px;">
+                        <li style="margin-bottom: 5px;padding: 0 5px 0 5px;">发件人：<input type="text" name="" value="" class="dfinput" style="width: 150px;" /></li>
+                        <li style="margin-bottom: 5px;padding: 0 5px 0 5px;">发件人电话：<input type="text" name="" value="" class="dfinput" style="width: 150px;" /></li>
+                        <li style="margin-bottom: 5px;padding: 0 5px 0 5px;">发货地址：<input type="text" name="" value="" class="dfinput" style="width: 200px;" /></li>
+                        <li style="margin-bottom: 5px;padding: 0 5px 0 5px;">揽件时间：<input type="text" name="" value="" class="dfinput" style="width: 100px;" id="date-picker-start" /> - <input type="text" name="" value="" class="dfinput" style="width: 100px;" id="date-picker-end" /></li>
+
+                        <li style="margin-bottom: 5px;padding: 0 5px 0 5px; clear: both;">收件人：<input type="text" name="" value="" class="dfinput" style="width: 150px;" /></li>
+                        <li style="margin-bottom: 5px;padding: 0 5px 0 5px;">收件人电话：<input type="text" name="" value="" class="dfinput" style="width: 150px;" /></li>
+                        <li style="margin-bottom: 5px;padding: 0 5px 0 5px;">收货地址：<input type="text" name="" value="" class="dfinput" style="width: 200px;" /></li>
+                        <li class="click"><a href="javascript:void(0);"><span><img src="<?php echo _img('ico06.png');?>" /></span>搜索</a></li>
+                    </ul>
+                </div>
+                <ul class="forminfo" style="padding-left: 0px;">
+                    <li>
+                        <p style="float: left;">
+                            <select name="ship_select" multiple="multiple" style="width: 400px; height: 400px;">
+                                <optgroup label="待装载">
+                                    <?php foreach ($_['ship_order'] as $order) { ?>
+                                        <?php if (array_key_exists($order['ship_number'], $_['stowage_ship'])) continue; ?>
+                                        <option value="<?php echo $order['ship_number']; ?>"><?php echo $order['ship_number']; ?></option>
+                                    <?php } ?>
+                                </optgroup>
+                            </select>
+                        </p>
+                        <p style="float: left;margin: 0 10px 0 10px;">
+                            <input type="button" value=">>加入" id="btn-ship-add" class="btn" style="background: #CCCCCC; width: 80px; color: #000; margin-top: 100px; float: left;" />
+                            <input type="button" value="<<移出" id="btn-ship-sub" class="btn" style="background: #CCCCCC; width: 80px; color: #000; margin-top: 60px; float: left; clear: both;" />
+                        </p>
+                        <p style="float: left;">
+                            <select name="stowage_ship" multiple="multiple" style="width: 400px; height: 400px;">
+                                <optgroup label="已装载">
+                                    <?php foreach ($_['stowage_ship'] as $order) { ?>
+                                        <option value="<?php echo $order['ship_number']; ?>"><?php echo $order['ship_number']; ?></option>
+                                    <?php } ?>
+                                </optgroup>
+                            </select>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+            <div id="tab3" class="tabson">
                 <ul class="forminfo" style="padding-left: 0px;">
                     <li><label>操作内容：</label>
                         <p style="padding-top: 10px;">
@@ -173,28 +204,28 @@ if(!defined('PART'))exit;
                         </p>
                     </li>
                     <?php if (isset($_['driver']['id'])) { ?>
-                    <li>
-                        <table class="tablelist">
-                            <thead>
-                            <th width="20%">时间</th>
-                            <th width="10%">前状态</th>
-                            <th width="10%">后状态</th>
-                            <th width="35%">内容</th>
-                            <th width="25%">操作人</th>
-                            </thead>
-                            <tbody>
-                            <?php foreach ($_['driver']['status_history'] as $_state) { ?>
-                                <tr>
-                                    <td><?php echo _time($_state['add_time']); ?></td>
-                                    <td><?php echo $_['stowage_status'][$_state['status_before']]; ?></td>
-                                    <td><?php echo $_['stowage_status'][$_state['status_after']]; ?></td>
-                                    <td><?php echo $_state['content']; ?></td>
-                                    <td><?php echo $_state['admin_name'].'['.$_state['admin_part'].']'; ?></td>
-                                </tr>
-                            <?php } ?>
-                            </tbody>
-                        </table>
-                    </li>
+                        <li>
+                            <table class="tablelist">
+                                <thead>
+                                <th width="20%">时间</th>
+                                <th width="10%">前状态</th>
+                                <th width="10%">后状态</th>
+                                <th width="35%">内容</th>
+                                <th width="25%">操作人</th>
+                                </thead>
+                                <tbody>
+                                <?php foreach ($_['driver']['status_history'] as $_state) { ?>
+                                    <tr>
+                                        <td><?php echo _time($_state['add_time']); ?></td>
+                                        <td><?php echo $_['stowage_status'][$_state['status_before']]; ?></td>
+                                        <td><?php echo $_['stowage_status'][$_state['status_after']]; ?></td>
+                                        <td><?php echo $_state['content']; ?></td>
+                                        <td><?php echo $_state['admin_name'].'['.$_state['admin_part'].']'; ?></td>
+                                    </tr>
+                                <?php } ?>
+                                </tbody>
+                            </table>
+                        </li>
                     <?php } ?>
                 </ul>
             </div>
@@ -204,6 +235,34 @@ if(!defined('PART'))exit;
 <script type="text/javascript">
     $('.tablelist tbody tr:odd').addClass('odd');
     $(document).ready(function(){
+        $('#date-picker-start').datetimepicker({
+            lang:'ch',
+            timepicker:false,
+            allowBlank: true,
+            format:'Y-m-d',
+            formatDate:'Y/m/d',
+            maxDate:'+1970/01/01',
+            onClose: function(){
+                if ($('#date-picker-end').val() != '' && $('#date-picker-start').val() > $('#date-picker-end').val()) {
+                    $('#date-picker-start').val('');
+                }
+            }
+        });
+
+        $('#date-picker-end').datetimepicker({
+            lang:'ch',
+            timepicker:false,
+            allowBlank: true,
+            format:'Y-m-d',
+            formatDate:'Y/m/d',
+            maxDate:'+1970/01/01',
+            onClose: function(){
+                if ($('#date-picker-start').val() != '' && $('#date-picker-start').val() > $('#date-picker-end').val()) {
+                    $('#date-picker-end').val('');
+                }
+            }
+        });
+
         $('#btn-ship-add').on('click', function(){
             //console.log($('select[name="ship_select"]').find('option:selected').length);
             if ($('select[name="ship_select"]').find('option:selected').length > 0) {

@@ -4,14 +4,14 @@ if(!defined('PART'))exit;
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title><?php echo $_['title'];?></title>
-<?php
-_css('default');
-_css('v1.0');
-_css('style');
-_jq();
-?>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title><?php echo $_['title'];?></title>
+	<?php
+	_css('default');
+	_css('v1.0');
+	_css('style');
+	_jq();
+	?>
 </head>
 <body>
 <?php
@@ -21,10 +21,10 @@ _part('nav');
 ?>
 <!-- 主体 -->
 <div class="layout_wrap">
-    <?php
-    _part('personleft');
-    ?>
-    <div class="prod_return khfwrightCon">
+	<?php
+	_part('personleft');
+	?>
+	<div class="prod_return khfwrightCon">
 		<div class="cont">
 			<div class="zhjf-title">
 				商品列表
@@ -33,12 +33,16 @@ _part('nav');
 				</p>
 			</div>
 			<div class="userinfo">
-				<form action="<?php echo _u('//goods_mess/'.Page::$p.'/'); ?>" method="post" id="mess-form">
-				<select name="mess_action">
-					<option value="">操作</option>
-					<option value="onsale">批量上架</option>
-					<option value="unsale">批量下架</option>
-				</select>
+				<form action="<?php echo _u('//goods/'); ?>" method="post" id="mess-form">
+					<p style="float: left; margin-bottom: 5px;">
+						<select name="mess_action" style="float: left;height: 34px; line-height: 34px; margin-right: 5px;">
+							<option value="">操作</option>
+							<option value="onsale">批量上架</option>
+							<option value="unsale">批量下架</option>
+						</select>
+						<input type="text" name="search" value="<?php echo $_['search_key']; ?>" style="float: left;height: 30px; line-height: 30px; margin-right: 5px; padding: 0 5px 0 5px;" />
+						<a href="javascript:void(0);" id="btn-seller-search" class="return-btn" style="float: left;width: 50px; margin-right: 5px;">搜 索</a>
+					</p>
 					<table class="table-orderList">
 						<thead>
 						<tr>
@@ -57,7 +61,7 @@ _part('nav');
 						<tbody>
 						<?php
 						foreach (Page::$arr as $k=>$goods) {
-						?>
+							?>
 							<tr>
 								<td><input type="checkbox" name="checkbox[]" value="<?php echo $goods['id']; ?>" /></td>
 								<td width="30%">
@@ -82,7 +86,7 @@ _part('nav');
 								<td style="color: <?php echo $goods['state']?'#d31a26':'#12ad12'; ?>"><b><?php echo $_['state'][$goods['state']]; ?></b></td>
 								<td width="10%"><a href="<?php echo _u('//goods_edit/'.$goods['id'].'/'.Page::$p.'/'); ?>">编辑</a></td>
 							</tr>
-						<?php
+							<?php
 						}
 						?>
 						</tbody>
@@ -110,11 +114,16 @@ _part('nav');
 
 		if ($('select[name="mess_action"]').val() != '') {
 			if (confirm('确定进行批量操作？')) {
+				$('select[name="mess_action"]').closest('form').attr('action', '<?php echo _u('//goods_mess/'.Page::$p.'/'); ?>');
 				$('select[name="mess_action"]').closest('form').submit();
 			} else {
 				$('select[name="mess_action"]').find('option[value=""]').prop('selected', 'selected');
 			}
 		}
+	});
+	$('#btn-seller-search').on('click', function(){
+		$(this).closest('form').attr('action', '<?php echo _u('//goods/'); ?>');
+		$(this).closest('form').submit();
 	});
 </script>
 <!-- //主体 -->

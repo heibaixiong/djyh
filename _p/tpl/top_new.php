@@ -89,7 +89,7 @@ $key=explode(',',$_['config']['search']);
                     $_i++;
                     if ($_i > 8) break;
                     ?>
-                    <li class="f_zk01_icon0<?php echo $_i; ?>"><a href="<?php echo _u('/shop/index/'.$v['id'].'/'); ?>"><?php echo $v['title']; ?></a></li>
+                    <li class="f_zk01_icon0<?php echo $_i; ?>"<?php if (is_file(DIR.$v['img'])) echo ' style="background:url(\''._resize($v['img'],18,18).'\') no-repeat left center;"'; ?>><a href="<?php echo _u('/shop/index/'.$v['id'].'/'); ?>"><?php echo $v['title']; ?></a></li>
                 <?php } ?>
             </ul>
             <ul class="f_zk02">

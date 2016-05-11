@@ -61,7 +61,7 @@ if(!defined('PART'))exit;
         foreach(Page::$arr as $k=>$v){
             ?>
             <tr>
-                <td><?php echo $v['id']; ?></td>
+                <td><?php echo str_repeat('0', 12-strlen($v['id'])).$v['id']; ?></td>
                 <td><?php echo $v['ship_name']; ?></td>
                 <td><?php echo $v['ship_phone']?></td>
                 <td><?php echo $v['ship_prov'].'/'.$v['ship_city'].'/'.$v['ship_area']; ?></td>
@@ -69,7 +69,7 @@ if(!defined('PART'))exit;
                 <td>￥<?php echo _rmb($v['ship_amount']);?> 元</td>
                 <td><?php echo _time($v['mod_time']);?></td>
                 <td><?php echo $_['order_status'][$v['status']]; ?></td>
-                <td><a href="<?php echo _u('/order/edit/'.$v['id'].'/'); ?>" class="tablelink">查看</a></td>
+                <td><a href="<?php echo $v['detail_url']; ?>" class="tablelink">查看</a></td>
             </tr>
             <?php
         }

@@ -52,6 +52,7 @@ $(document).ready(function(){
             <th>电话</th>
             <th>所在地</th>
             <th>时间</th>
+            <th>网点</th>
             <th>状态</th>
             <th>操作</th>
         </tr>
@@ -68,6 +69,7 @@ $(document).ready(function(){
                 <td><?php echo $v['phone']; ?></td>
                 <td><?php echo $v['prov'].'/'.$v['city'].'/'.$v['area']; ?></td>
                 <td><?php echo _time($v['add_time']);?></td>
+                <td><?php echo $v['user_company']; ?></td>
                 <td><?php echo $v['status']=='1'?'启用':'停用'; ?></td>
                 <td><a href="<?php echo _u('/carrier/edit_driver/'.$v['id'].'/'._v(3).'/'._v(4).'/'); ?>" class="tablelink">编辑</a></td>
             </tr>
