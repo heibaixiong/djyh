@@ -38,9 +38,12 @@ if(!in_array(V0,$project)){
 	if (function_exists($fun)) {
 		//_logs(V0.'/'.V1.'/'.V2.'control');
 		call_user_func($fun);
+	} elseif (function_exists('__index')) {
+		call_user_func('__index');
 	} else {
-		if (function_exists('__index')) call_user_func('__index');
+		if (V0 == '_p') _header(_u('/error/not_found/'));
 	}
+
 	if(('mysqli'==DB_MYSQL)&&!empty($_wrap['mysqli_conn'])){
 		mysqli_close($_wrap['mysqli_conn']);
 	}

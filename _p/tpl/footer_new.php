@@ -1,6 +1,15 @@
 <?php
 if(!defined('PART'))exit;
 ?>
+<!--底部-->
+<div class="footer">
+    <div class="container" >
+        <div class="row">
+            <a href="#" class="visible-lg visible-md"><img class="img-responsive" src="<?php echo _img('new/footer_img.png'); ?>"></a>
+            <a class="visible-sm visible-xs" href="#"><img class="img-responsive" src="<?php echo _img('new/footer_img02.png'); ?>"></a>
+        </div>
+    </div>
+</div>
 <div class="foot_box">
     <div class="container" style="margin-top:16px;">
         <div class="row ">

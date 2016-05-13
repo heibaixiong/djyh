@@ -20,6 +20,9 @@ $(function(){
 	});
 	$('.addbtn').click(function(){
 		var jie=$('#goodsnum');
+		if ($(this).prev('input[id^="goodsId_"]').length > 0) {
+			jie = $(this).prev('input[id^="goodsId_"]');
+		}
 		var stock=jie.attr('maxnum');
 		var num=parseInt(jie.val());
 		if(num<stock){
@@ -28,6 +31,9 @@ $(function(){
 	});
 	$('.cutbtn').click(function(){
 		var jie=$('#goodsnum');
+		if ($(this).next('input[id^="goodsId_"]').length > 0) {
+			jie = $(this).next('input[id^="goodsId_"]');
+		}
 		var num=parseInt(jie.val());
 		if(num>1){
 			jie.val(num-1);
@@ -42,6 +48,7 @@ $(function(){
 				$('#shopping-amount').html(_result['total']);
 				//alert('添加成功！');
 				alert(_result['msg']);
+				if (_result['redirect']) window.location.href = _result['redirect'];
 			});
 		}
 	});

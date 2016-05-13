@@ -28,7 +28,7 @@ _part('nav');
 				    <div class="details-leftBox">
 				        <div class="details_showPic">
 				            <div id="spec-n1" class="big jqzoom">
-				                <img alt="<?php echo $_['rs']['title'];?>" src="<?php echo _resize($_['rs']['img'], 360, 360); ?>">
+				                <img alt="<?php echo htmlspecialchars($_['rs']['title']);?>" src="<?php echo _resize($_['rs']['img'], 360, 360); ?>">
 				            </div>
 				            <div id="spec-list" class="dp_slide">
 				                <ul style="overflow: hidden;">
@@ -193,7 +193,7 @@ _part('nav');
 		                                    <div class="search_item_box">
 			                                    <div class="prod_img">
 			                                        <a href="<?php echo _u('//show/'.$v['id'].'/');?>">
-			                                            <img style="display: inline;" alt="<?php echo $v['title']?>" src="<?php echo _resize($v['img'], 210, 210); ?>" class="imgload lazy">
+			                                            <img style="display: inline;" alt="<?php echo htmlspecialchars($v['title']); ?>" src="<?php echo _resize($v['img'], 210, 210); ?>" class="imgload lazy">
 			                                        </a>
 			                                    </div>
 			                                    <div style="position: relative;">
@@ -213,7 +213,7 @@ _part('nav');
 		                                    <div class="prod_btn">
 		                                        <div style="margin-top: 3px;" class="num_box fl input-div">
 		                                            <input type="button" class="cutbtn minusDisable num-ico">
-		                                            <input type="text" minnum="1" maxnum="0" orinum="1" value="1" id="goodsId_0" class="atext minicart_num">
+		                                            <input type="text" minnum="1" maxnum="<?php echo $v['stock']?>" orinum="1" value="1" id="goodsId_0" class="atext minicart_num">
 		                                            <input type="button" class="addbtn plusDisable  num-ico">
 		                                        </div>
 		                                        <input type="submit" class="buy-btn fr" value="加入购物车" id="submit" name="submit" data="<?php echo $v['id'];?>">

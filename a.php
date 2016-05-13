@@ -12,13 +12,14 @@ define('CACHE',DIR.'cache/');
 define('LOGS',DIR.'logs/');
 define('ERR',true);
 define('AUTO_LOAD',true);
-define('AUTO_CREATFILE',true);
+define('AUTO_CREATFILE',false);
 define('DB_MYSQL','mysqli');
 define('PRE','hbx_');
 define('SALT','@#@$$%%%$$#@');
 define('INDEX','');
 define('HTML','php');
-define('CACHETIME',1000);
+define('CACHETIME',1800);
+
 $_wrap['db']['host']='localhost';
 $_wrap['db']['user']='root';
 $_wrap['db']['pass']='';
@@ -32,7 +33,7 @@ $_wrap['sms']['user'] = 'hnhbx';
 $_wrap['sms']['pass'] = 'heibaixiong0201';
 
 $_wrap['payment_method'] = array(
-    'cod' => array('code' => 'cod', 'title' => '货到付款', 'state' => 2),
+    /*'cod' => array('code' => 'cod', 'title' => '货到付款', 'state' => 2),*/
     'alipay' => array('code' => 'alipay_direct', 'title' => '支付宝', 'state' => 1),
     'weixin' => array('code' => 'wxpay', 'title' => '微信', 'state' => 1),
     'wxcode' => array('code' => 'wxpay_qrcode', 'title' => '微信', 'state' => 1),

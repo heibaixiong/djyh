@@ -95,7 +95,7 @@ _part('nav');
             <br/>
             <p class="fl">
                 支付方式：
-                <input type="radio" name="payment_method" value="cod" id="payment_cod" checked="checked" /> <label for="payment_cod">货到付款</label> &nbsp;&nbsp;
+                <!--<input type="radio" name="payment_method" value="cod" id="payment_cod" checked="checked" /> <label for="payment_cod">货到付款</label> &nbsp;&nbsp;-->
                 <input type="radio" name="payment_method" value="alipay" id="payment_alipay" /> <label for="payment_alipay">支付宝</label> &nbsp;&nbsp;
                 <input type="radio" name="payment_method" value="<?php echo _isweixin()?'weixin':'wxcode'; ?>" id="payment_weixin" /> <label for="payment_weixin">微信</label> &nbsp;&nbsp;
             </p>

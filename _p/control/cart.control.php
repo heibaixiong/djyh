@@ -206,8 +206,10 @@ function __add(){
 
 			if (empty($real_select)) {
 				$json['error'] = '请先选择商品属性！';
+				$json['redirect'] = _u('/shop/show/'.floatval(_v(3)).'/');
 			} elseif (count($real_select) <> $attr_types) {
 				$json['error'] = '请选择完整商品属性！';
+				$json['redirect'] = _u('/shop/show/'.floatval(_v(3)).'/');
 			} else {
 				if ($rc) {
 					foreach ($rc as $cart) {

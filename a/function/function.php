@@ -378,7 +378,7 @@ function _toutf($str){
 function _left($str,$star,$len,$omit='',$charset='UTF-8'){
     //$s=mb_substr($str,$star,$len,$charset);
     if (mb_strwidth($str, $charset) <= $len) {
-        return $str.str_repeat('&nbsp;', $len-mb_strwidth($str, $charset));
+        //return $str.str_repeat('　', floor(($len-mb_strwidth($str, $charset))/2));
     }
     $s = mb_strimwidth($str, $star, $len, $omit, $charset);
     return $s;

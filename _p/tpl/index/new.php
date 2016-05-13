@@ -24,7 +24,46 @@ if(!defined('PART'))exit;
 <?php
 _part('top_new');
 ?>
+<div class="big_nav">
+    <div class="container">
+        <div class="row big_nav_top">
+            <div class="col-md-2 left_box visible-lg visible-md visible-xs"><a style="font-size:18px;">全部商品分类</a></div>
+            <div class="big_nav_new hidden-xs">
+                <div class="col-sm-1 col-md-1 "><a href="<?php echo _u('/index/index/');?>">首页</a></div>
+                <div class="col-sm-1 col-md-1 current_bignav_a"><a href="<?php echo _u('/shop/special/');?>">推荐商品</a></div>
+                <div class="col-sm-1 col-md-1 "><a href="<?php echo _u('/shop/hot/');?>">热卖商品</a></div>
+                <div class="col-sm-1 col-md-1"><a href="<?php echo _u('/shop/new/');?>">最新上架</a></div>
+                <div class="col-sm-1 col-md-1"><a href="<?php echo _u('/news/index/');?>">最新公告</a></div>
+                <div class="col-sm-1 col-md-1"><a href="<?php echo _u('/article/index/');?>">关于我们</a></div>
+            </div>
+            <div class="col-md-2 hidden-lg right_box"><a style="float: right;"></a></div>
 
+        </div>
+    </div>
+    <div class="f_zk hidden-lg" style="clear: both">
+        <div class="container">
+            <ul class="f_zk01">
+                <?php
+                $_i = 0;
+                foreach($_['oneclass'] as $k=>$v){
+                    $_i++;
+                    if ($_i > 8) break;
+                    ?>
+                    <li class="f_zk01_icon0<?php echo $_i; ?>"<?php if (is_file(DIR.$v['img'])) echo ' style="background:url(\''._resize($v['img'],18,18).'\') no-repeat left center;"'; ?>><a href="<?php echo _u('/shop/index/'.$v['id'].'/'); ?>"><?php echo $v['title']; ?></a></li>
+                <?php } ?>
+            </ul>
+            <ul class="f_zk02">
+                <li><a href="<?php echo _u('/index/index/');?>">首页</a></li>
+                <li><a href="<?php echo _u('/shop/special/');?>">推荐商品</a></li>
+                <li><a href="<?php echo _u('/shop/hot/');?>">热卖商品</a></li>
+                <li><a href="<?php echo _u('/shop/new/');?>">最新上架</a></li>
+                <li><a href="<?php echo _u('/news/index/');?>">最新公告</a></li>
+                <li><a href="<?php echo _u('/article/index/');?>">关于我们</a></li>
+            </ul>
+        </div>
+
+    </div>
+</div>
 <!--轮播-->
 <div id="myCarousel" class="carousel slide">
     <div class="container visible-lg" style="height:599px;position:absolute;width:1200px;left:50%;margin-left:-600px;">
@@ -255,7 +294,7 @@ _part('top_new');
                     <li class="big_text_box">
                         <div class="text_box01">
                             <p class="lou_01_bom_text01"><a href="<?php echo _u('/shop/show/'.$rec['id'].'/'); ?>"><?php echo _left($rec['title'], 0, 40); ?></a></p>
-                            <p class="lou_01_bom_text02"><a><?php echo _left(strip_tags($rec['content']), 0, 62, '...'); ?></a></p>
+                            <p class="lou_01_bom_text02"><a><?php echo _left(strip_tags($rec['content']), 0, 68, '...'); ?></a></p>
                             <p class="lou_01_bom_text05"><a style="float: left;">￥<?php echo _rmb($rec['mark']/100);?></a><a class="lou_01_bom_text03" style="float: left;">￥<?php echo _rmb($rec['mark']*1.24/100);?></a></p>
                             <p class="lou_01_bom_text04"><a>已售<?php echo $rec['sale'];?>件</a></p>
                         </div>
@@ -272,15 +311,7 @@ _part('top_new');
     </div>
     <?php } ?>
 </div>
-<!--底部-->
-<div class="footer">
-    <div class="container" >
-        <div class="row">
-            <a href="#" class="visible-lg visible-md"><img class="img-responsive" src="<?php echo _img('new/footer_img.png'); ?>"></a>
-            <a class="visible-sm visible-xs" href="#"><img class="img-responsive" src="<?php echo _img('new/footer_img02.png'); ?>"></a>
-        </div>
-    </div>
-</div>
+
 <?php
 _part('footer_new');
 _part('footer3');

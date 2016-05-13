@@ -24,6 +24,9 @@ function __index(){
 	if($px==2){
 		$pxsql='mark';
 	}
+	if($px==3){
+		$pxsql='addtime desc';
+	}
 	$pxsql .= ',px,id desc';
 	$pxsql = ltrim($pxsql, ',');
 
@@ -32,23 +35,25 @@ function __index(){
 		_c('title','所有商品');
 		_c('cate_title','所有商品');
 		_c('classtitle','所有分类');
-		_c('shopclass',_f('oneclass'));
+		//_c('shopclass',_f('oneclass'));
 		Page::start('ware',$p,'state=0',$pxsql);
 	}else{
 		$title = _sqlfield('class','title','id='.$r);
 		_c('title', $title);
 		_c('cate_title', $title);
 		$pid=_sqlfield('class','pid','id='.$r);
+		_c('p_id', $pid);
 		if(0==$pid){
-			_c('shopclass',_sqlall('class','pid='.$r,'px'));
-			_c('classtitle',_sqlfield('class','title','pid='.$r));
+			//_c('shopclass', _sqlall('class','pid='.$r,'px'));
+			_c('classtitle', $title);
+			_c('cate_title', '全部');
 		}else{
-			_c('shopclass',_sqlall('class','pid='.$pid,'px'));
-			_c('classtitle',_sqlfield('class','title','id='.$pid));
+			//_c('shopclass', _sqlall('class','pid='.$pid,'px'));
+			_c('classtitle', _sqlfield('class','title','id='.$pid));
 		}
 		Page::start('ware',$p,'(class1='.$r.' or class2='.$r.') and state=0',$pxsql);
 	}	
-	_tpl('/index');
+	_tpl('/index_new');
 }
 function __search(){
     if(_post('key')){
@@ -69,20 +74,24 @@ function __search(){
 	if($px==2){
 		$pxsql='mark';
 	}
+	if($px==3){
+		$pxsql='addtime desc';
+	}
 	$pxsql .= ',px,id desc';
 	$pxsql = ltrim($pxsql, ',');
 
 	$key=urldecode(_v(3));
 	_c('title',$key);
 	_c('cate_title',$key);
-	_c('classtitle','所有分类');
-	_c('shopclass',_f('oneclass'));
+	_c('classtitle','搜索');
+	//_c('shopclass',_f('oneclass'));
+	_c('p_id', '');
 	$sql='';
     if(!empty($key)){
         $sql.='state=0 and (title like \'%'._escape($key).'%\' or number like \'%'._escape($key).'%\')';
     }
 	Page::start('ware',$p,$sql,$pxsql);
-    _tpl('/index');
+    _tpl('/index_new');
 }
 function __special(){
 	$p = intval(_v(3));
@@ -100,15 +109,19 @@ function __special(){
 	if($px==2){
 		$pxsql='mark';
 	}
+	if($px==3){
+		$pxsql='addtime desc';
+	}
 	$pxsql .= ',px,id desc';
 	$pxsql = ltrim($pxsql, ',');
 
 	_c('title','推荐商品');
 	_c('cate_title','推荐商品');
 	_c('classtitle','所有分类');
-	_c('shopclass',_f('oneclass'));
+	_c('p_id', '');
+	//_c('shopclass',_f('oneclass'));
 	Page::start('ware',$p,'recommend=1 and state=0', $pxsql);
-	_tpl('/index');
+	_tpl('/index_new');
 }
 function __hot(){
 	$p = intval(_v(3));
@@ -126,15 +139,19 @@ function __hot(){
 	if($px==2){
 		$pxsql='mark';
 	}
+	if($px==3){
+		$pxsql='addtime desc';
+	}
 	$pxsql .= ',px,id desc';
 	$pxsql = ltrim($pxsql, ',');
 
 	_c('title','热销商品');
 	_c('cate_title','热销商品');
 	_c('classtitle','所有分类');
-	_c('shopclass',_f('oneclass'));
+	_c('p_id', '');
+	//_c('shopclass',_f('oneclass'));
 	Page::start('ware',$p,'hot=1 and state=0', $pxsql);
-	_tpl('/index');
+	_tpl('/index_new');
 }
 function __new(){
 	$p = intval(_v(3));
@@ -152,15 +169,19 @@ function __new(){
 	if($px==2){
 		$pxsql='mark';
 	}
+	if($px==3){
+		$pxsql='addtime desc';
+	}
 	$pxsql .= ',px,id desc';
 	$pxsql = ltrim($pxsql, ',');
 
 	_c('title','最新上架');
 	_c('cate_title','最新上架');
 	_c('classtitle','所有分类');
-	_c('shopclass',_f('oneclass'));
+	_c('p_id', '');
+	//_c('shopclass',_f('oneclass'));
 	Page::start('ware',$p,'new=1 and state=0', $pxsql);
-	_tpl('/index');
+	_tpl('/index_new');
 }
 function __show(){
 	$p = floatval(_v(3));
