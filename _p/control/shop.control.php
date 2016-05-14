@@ -215,5 +215,5 @@ function __show(){
 	_c('title',$arr['title']);
 	_c('youjiao',array('', '推荐', '最新', '热门'));
 	_c('list',_sqlall('ware', 'state=0 and uid='.$arr['uid'].' and id !='.$arr['id'], 'px,id desc', 10));
-	_tpl('/show');
+	_tpl('/show_new');
 }
