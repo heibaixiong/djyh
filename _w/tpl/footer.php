@@ -2,7 +2,7 @@
 <footer class="aui-nav" id="aui-footer">
     <ul class="aui-bar-tab font_box">
         <li class="" id="tabbar1" >
-            <a href="<?php echo _u('/index/index/'); ?>">
+            <a onclick="openWin('<?php echo _u('/index/index'); ?>', 0)">
                 <span class="footer_icon01"></span>
                 <p>首  页</p>
             </a>
