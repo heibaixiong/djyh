@@ -9,186 +9,36 @@ if(!_session('webid')){
 */
 //商品列表页
 function __index(){
-	$r = intval(_v(3));	//分类ID
-	if(empty($r)){
-		$r=0;
+	$cid = intval(_v(3));	//分类ID
+	if(empty($cid)){
+		$cid = 0;
 	}
-	$p = intval(_v(4));	//第几页
-	if(empty($p)){
-		$p=0;
+	$page = intval(_v(4));	//第几页
+	if(empty($page)){
+		$page = 1;
 	}
-	$px = intval(_v(5));	//排序方式
-	if(empty($px)){
-		$px=0;
+	$paixu = intval(_v(5));	//排序方式
+	if(empty($paixu)){
+		$paixu = 0;
 	}
-	$pxsql='';
-	if($px==1){
-		$pxsql='sale desc';
-	}
-	if($px==2){
-		$pxsql='mark';
-	}
-	if($px==3){
-		$pxsql='addtime desc';
-	}
-	$pxsql .= ',px,id desc';
-	$pxsql = ltrim($pxsql, ',');
 
 	global $_;
-	if(0==$r){
-		_c('title','所有商品');
-		_c('cate_title','所有商品');
-		_c('classtitle','所有分类');
-		//_c('shopclass',_f('oneclass'));
-		Page::start('ware',$p,'state=0',$pxsql);
-	}else{
-		$title = _sqlfield('class','title','id='.$r);
-		_c('title', $title);
-		_c('cate_title', $title);
-		$pid=_sqlfield('class','pid','id='.$r);
-		_c('p_id', $pid);
-		if(0==$pid){
-			//_c('shopclass', _sqlall('class','pid='.$r,'px'));
-			_c('classtitle', $title);
-			_c('cate_title', '全部');
-		}else{
-			//_c('shopclass', _sqlall('class','pid='.$pid,'px'));
-			_c('classtitle', _sqlfield('class','title','id='.$pid));
-		}
-		Page::start('ware',$p,'(class1='.$r.' or class2='.$r.') and state=0',$pxsql);
-	}	
+	$_['good_list'] = get_good_list($cid, $page, $paixu);
+
+	//如果是AJAX提交，则返回JSON数据
+	if(isAjax()){
+		header('Content-Type:application/json; charset=utf-8');
+		exit(json_encode($_['good_list']));
+	}
+
+	//var_dump($rs);exit;
+
+	_c('title', '商品列表');
+	_c('ajax_url', _u('/shop/index'));
+
 	_tpl();
 }
 
-//商品搜索部分
-function __search(){
-    if(_post('key')){
-    	_url(_u('///'.urlencode(_post('key')).'/'));
-    }    
-    $p = intval(_v(4));
-	if(empty($p)){
-		$p=0;
-	}
-	$px = intval(_v(5));
-	if(empty($px)){
-		$px=0;
-	}
-	$pxsql='';
-	if($px==1){
-		$pxsql='sale desc';
-	}
-	if($px==2){
-		$pxsql='mark';
-	}
-	if($px==3){
-		$pxsql='addtime desc';
-	}
-	$pxsql .= ',px,id desc';
-	$pxsql = ltrim($pxsql, ',');
-
-	$key=urldecode(_v(3));
-	_c('title',$key);
-	_c('cate_title',$key);
-	_c('classtitle','搜索');
-	//_c('shopclass',_f('oneclass'));
-	_c('p_id', '');
-	$sql='';
-    if(!empty($key)){
-        $sql.='state=0 and (title like \'%'._escape($key).'%\' or number like \'%'._escape($key).'%\')';
-    }
-	Page::start('ware',$p,$sql,$pxsql);
-    _tpl('/index_new');
-}
-function __special(){
-	$p = intval(_v(3));
-	if(empty($p)){
-		$p=0;
-	}
-	$px = intval(_v(5));
-	if(empty($px)){
-		$px=0;
-	}
-	$pxsql='';
-	if($px==1){
-		$pxsql='sale desc';
-	}
-	if($px==2){
-		$pxsql='mark';
-	}
-	if($px==3){
-		$pxsql='addtime desc';
-	}
-	$pxsql .= ',px,id desc';
-	$pxsql = ltrim($pxsql, ',');
-
-	_c('title','推荐商品');
-	_c('cate_title','推荐商品');
-	_c('classtitle','所有分类');
-	_c('p_id', '');
-	//_c('shopclass',_f('oneclass'));
-	Page::start('ware',$p,'recommend=1 and state=0', $pxsql);
-	_tpl('/index_new');
-}
-function __hot(){
-	$p = intval(_v(3));
-	if(empty($p)){
-		$p=0;
-	}
-	$px = intval(_v(5));
-	if(empty($px)){
-		$px=0;
-	}
-	$pxsql='';
-	if($px==1){
-		$pxsql='sale desc';
-	}
-	if($px==2){
-		$pxsql='mark';
-	}
-	if($px==3){
-		$pxsql='addtime desc';
-	}
-	$pxsql .= ',px,id desc';
-	$pxsql = ltrim($pxsql, ',');
-
-	_c('title','热销商品');
-	_c('cate_title','热销商品');
-	_c('classtitle','所有分类');
-	_c('p_id', '');
-	//_c('shopclass',_f('oneclass'));
-	Page::start('ware',$p,'hot=1 and state=0', $pxsql);
-	_tpl('/index_new');
-}
-function __new(){
-	$p = intval(_v(3));
-	if(empty($p)){
-		$p=0;
-	}
-	$px = intval(_v(5));
-	if(empty($px)){
-		$px=0;
-	}
-	$pxsql='';
-	if($px==1){
-		$pxsql='sale desc';
-	}
-	if($px==2){
-		$pxsql='mark';
-	}
-	if($px==3){
-		$pxsql='addtime desc';
-	}
-	$pxsql .= ',px,id desc';
-	$pxsql = ltrim($pxsql, ',');
-
-	_c('title','最新上架');
-	_c('cate_title','最新上架');
-	_c('classtitle','所有分类');
-	_c('p_id', '');
-	//_c('shopclass',_f('oneclass'));
-	Page::start('ware',$p,'new=1 and state=0', $pxsql);
-	_tpl('/index_new');
-}
 function __show(){
 	$p = floatval(_v(3));
 	if(empty($p)){
@@ -222,4 +72,51 @@ function __show(){
 	_c('youjiao',array('', '推荐', '最新', '热门'));
 	_c('list',_sqlall('ware', 'state=0 and uid='.$arr['uid'].' and id !='.$arr['id'], 'px,id desc', 10));
 	_tpl('/show');
+}
+
+/*综合商品搜索
+ * 1.$cid商品分类ID，cid = 0，则所有商品
+ * 2.$page页数，默认第一页
+ * 3.$paixu,排序方式：0ID降序；1销量升序;2销量降序;3价格升序;4价格降序；5时间升序;6时间降序
+ * */
+function get_good_list($cid = 0, $page = 1, $paixu = 0){
+	//return $paixu;
+	//条件整合
+	$condition = 'state = 1';
+	if(is_int($cid) && $cid > 0){
+		$condition .= ' and ( class1 = '.$cid .' or class2 = ' . $cid . ')';
+	}
+
+	//return $condition;
+
+	//排序方式
+	if(!is_int($paixu) || $paixu < 0){
+		$paixu = 0;
+	}
+	$paixusql = '';
+	if($paixu == 1 || $paixu == 2){
+		$paixusql .= 'sale';
+	}else if($paixu == 3 || $paixu == 4){
+		$paixusql .= 'mark';
+	}else if($paixu == 5 || $paixu == 6){
+		$paixusql .= 'addtime';
+	}else{
+		$paixusql .= 'id';
+	}
+	if($paixusql != ''){
+		if($paixu % 2 == 0){
+			$paixusql .= ' desc';
+		}else{
+			$paixusql .= ' asc';
+		}
+	}
+	//return $paixusql;
+
+	Page::start('ware', $page, $condition, $paixusql, 10);
+	//return Page::$pnum;
+	//判断当前页与总页数
+	if(Page::$pnum < $page){
+		return '';
+	}
+	return Page::$arr;
 }
