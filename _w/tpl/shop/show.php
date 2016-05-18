@@ -182,8 +182,8 @@
 				foreach($_['list'] as $k => $v){
 					?>
 					<li>
-						<div class="detail_hot_img"><a href="#"><img src="<?php echo $v['img']; ?>"></a> <span class="store_one">推荐<br>商品</span></div>
-						<p class="detail_hot_wz"><a href="#" class="aui-ellipsis-1"><?php echo $v['title']; ?></a></p>
+						<div class="detail_hot_img"><a href="<?php echo _u('/shop/show/'.$v['id']); ?>"><img src="<?php echo $v['img']; ?>"></a> <span class="store_one">推荐<br>商品</span></div>
+						<p class="detail_hot_wz"><a href="<?php echo _u('/shop/show/'.$v['id']); ?>" class="aui-ellipsis-1"><?php echo $v['title']; ?></a></p>
 						<p class="detail_hot_wz02"><span class="detail_hot_pice">￥<?php echo _rmb($_['rs']['mark']/100);?></span><span class="detail_hot_num">已售<em><?php echo $_['rs']['sale'];?></em>件</span></p>
 					</li>
 					<?php
@@ -252,7 +252,7 @@
 					<li>
 						<div class="attr_bottom">
 							<a href="#" class="attr_bottom_a01">进  店</a>
-							<a href="#" class="attr_bottom_a02">加入购物车</a>
+							<a href="#" class="attr_bottom_a02 idnex_gw" data-id="<?php echo $_rs['id']; ?>">加入购物车</a>
 							<a href="#" class="attr_bottom_a03">立即购买</a>
 						</div>
 					</li>
@@ -320,7 +320,16 @@ _part('footer');
 		$('.slide-wrapper ').css({'bottom':'0'});
 		$(".list_bigbox02").show();
 	})
-	s
+
+	//购物车点击操作
+	$(".idnex_gw").click(function(){
+		var tag = is_login();
+		if(tag === true){
+			var id = parseInt($(this).attr('data-id'));
+			var num = 1;
+			addCart(id, num);
+		}
+	});
 
 </script>
 

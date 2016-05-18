@@ -36,8 +36,7 @@ _css('commons');
         </span>
     </div>
 </header>
-<div>
-
+<div style="position: absolute;top: 50px;bottom: 55px;overflow-y: scroll;-webkit-overflow-scrolling: touch; width:100%; ">
     <!--轮播start-->
     <?php
         if(isset($_['flash']) && count($_['flash']) > 0) {
@@ -64,7 +63,7 @@ _css('commons');
             <p class="aui-text-center index_kx aui-border-b"><span>快消品</span></p>
 
             <!-- 推荐位广告start -->
-            <p class="aui-text-center index_pro01"><a href="#"><img src="<?php echo _img('index_lou1.png');?>"></a></p>
+            <p class="aui-text-center index_pro01"><a href="#"><img src="<?php //echo _img('index_lou1.png');?>"></a></p>
             <!-- 推荐位广告end -->
 
             <!-- 商品列表start -->

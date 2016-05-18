@@ -1,16 +1,15 @@
 <?php
 if(!defined('PART'))exit;
 
-if(!_session('weixin_openid') || !_session('webid')){
-	_url(_u('/index/auth'));
-	//_session('weixin_openid', 'oivF8wVNcYmaPoOTbX11lgA1oqCo');
-	//_session('webid', 84);
-	//var_dump(_session());
-	//exit;
-}
-
 //微信端首页面
 function __index(){
+	if(!_session('weixin_openid') || !_session('webid')){
+		_url(_u('/index/auth'));
+		//_session('weixin_openid', 'oivF8wVNcYmaPoOTbX11lgA1oqCo');
+		//_session('webid', 84);
+		//var_dump(_session());
+		//exit;
+	}
 	//幻灯片
 	if(_ftime('flash')>CACHETIME){
 		_f('flash',_sqlall('ad','class=1 and state=0','px,id desc',5));
@@ -45,6 +44,7 @@ function __ads(){
 
 //微信端自动登录注册
 function __auth(){
+
 	global $_wrap;
 	require_once(APP_PATH . 'library/wxpayexception.php');
 	define('APPID', $_wrap['wxpay_config']['wxpay_appid']);
@@ -65,7 +65,6 @@ function __auth(){
 	$tools = new JsApiPay();
 	$openId = $tools->GetOpenid();
 	//var_dump($openId);exit;
-	_session('weixin_openid', $openId);
 
 	$wx_user = _sqlone('admin_bind', 'openid=\'' . _escape($openId) . '\'');
 	if (empty($wx_user)) {
