@@ -44,7 +44,7 @@ function __ads(){
 }
 
 //微信端自动登录注册
-function auth(){
+function __auth(){
 	global $_wrap;
 	require_once(APP_PATH . 'library/wxpayexception.php');
 	define('APPID', $_wrap['wxpay_config']['wxpay_appid']);
