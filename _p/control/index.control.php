@@ -47,7 +47,7 @@ function __new(){
 	if(_ftime('index')>CACHETIME){
 		$index=_sqlall('class','pid=0 and state=0 and `show`=1', 'px, id desc', 8);
 		foreach($index as $k=>$v){
-			$index[$k]['ware']=_sqlall('ware','class1='.$v['id'].' and length(`img`)>3 and state=0', 'px,id desc', 10);
+			//$index[$k]['ware']=_sqlall('ware','class1='.$v['id'].' and length(`img`)>3 and state=0', 'px,id desc', 10);
 			$index[$k]['goods_hot']=_sqlall('ware','class1='.$v['id'].' and length(`img`)>3 and state=0 and hot=1', 'px,id desc', 5);
 			$index[$k]['goods_rec']=_sqlall('ware','class1='.$v['id'].' and length(`img`)>3 and state=0 and recommend=1', 'px,id desc', 8);
 		}

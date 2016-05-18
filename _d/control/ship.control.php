@@ -96,6 +96,7 @@ function __edit() {
         $address[] = $order['ship_prov'];
         $address[] = $order['ship_city'];
         $address[] = $order['ship_area'];
+        $address[] = $order['ship_address'];
     }
 
     foreach ($address as $k => $v) {

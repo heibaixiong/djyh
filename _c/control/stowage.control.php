@@ -49,6 +49,25 @@ function __list() {
     _tpl('/list');
 }
 
+function __ship() {
+    $json = array();
+
+    $sql = "o.mid > 0 and o.status in (3,4) and o.ship_number != '' and o.ship_number like '%"._escape(_get('ship_key'))."%'";
+    $sql = "select o.ship_number from " . _pre('ship_order')." as o " .
+        "left join "._pre('ship_user')." as u on o.wx_open_id=o.rob_open_id " .
+        "left join "._pre('ship_user_info')." as ui on u.id=ui.uid " .
+        "left join "._pre('ship_to_stowage')." as s2s on o.ship_number=s2s.ship_number " .
+        "left join "._pre('ship_stowage')." as ss on ss.id=s2s.stowage_id " .
+        "where " . $sql
+    ;
+    if (!(strlen(_session('adminrank')) > 0 && _session('adminrank') == '0')) $sql .= "  and (((ui.mid='".floatval(_session('code'))."' OR (o.mid > 0 and o.mid='".floatval(_session('code'))."')) AND ss.mid is null) OR (ss.to_mid='".floatval(_session('code'))."' AND ss.status=3))";
+    $sql .= " group by o.ship_number order by o.id desc limit 5";
+
+    $json['result'] = _sqlselect($sql);
+
+    die(json_encode($json));
+}
+
 function __add() {
     _c('driver', array());
     _c('form_action', _u('//save//'._v(3).'/'._v(4).'/'));
@@ -61,7 +80,18 @@ function __add() {
 
     _c('company', _sqlall('ship_company', 'status=1', 'id asc'));
 
-    $ship_order = _sqlall('ship_order', 'status in (3,4)', 'id');
+    //$ship_order = _sqlall('ship_order', 'status in (3,4)', 'id');
+    $sql = "o.mid > 0 and o.status in (3,4) and o.ship_number != ''";
+    $sql = "select o.* from " . _pre('ship_order')." as o " .
+        "left join "._pre('ship_user')." as u on o.wx_open_id=o.rob_open_id " .
+        "left join "._pre('ship_user_info')." as ui on u.id=ui.uid " .
+        "left join "._pre('ship_to_stowage')." as s2s on o.ship_number=s2s.ship_number " .
+        "left join "._pre('ship_stowage')." as ss on ss.id=s2s.stowage_id " .
+        "where " . $sql
+    ;
+    if (!(strlen(_session('adminrank')) > 0 && _session('adminrank') == '0')) $sql .= "  and (((ui.mid='".floatval(_session('code'))."' OR (o.mid > 0 and o.mid='".floatval(_session('code'))."')) AND ss.mid is null) OR (ss.to_mid='".floatval(_session('code'))."' AND ss.status=3))";
+    $sql .= " group by o.ship_number order by o.id desc limit 50";
+    $ship_order = _sqlselect($sql);
     _c('ship_order', $ship_order);
 
     _c('stowage_ship', array());
@@ -90,7 +120,19 @@ function __edit() {
 
     _c('company', _sqlall('ship_company', 'status=1', 'id asc'));
 
-    $ship_order = _sqlall('ship_order', 'status in (3,4)', 'id');
+    //$ship_order = _sqlall('ship_order', 'status in (3,4)', 'id');
+    $sql = "o.mid > 0 and o.status in (3,4) and o.ship_number != ''";
+    $sql = "select o.* from " . _pre('ship_order')." as o " .
+        "left join "._pre('ship_user')." as u on o.wx_open_id=o.rob_open_id " .
+        "left join "._pre('ship_user_info')." as ui on u.id=ui.uid " .
+        "left join "._pre('ship_to_stowage')." as s2s on o.ship_number=s2s.ship_number " .
+        "left join "._pre('ship_stowage')." as ss on ss.id=s2s.stowage_id " .
+        "where " . $sql
+    ;
+    if (!(strlen(_session('adminrank')) > 0 && _session('adminrank') == '0')) $sql .= "  and (((ui.mid='".floatval(_session('code'))."' OR (o.mid > 0 and o.mid='".floatval(_session('code'))."')) AND ss.mid is null) OR (ss.to_mid='".floatval(_session('code'))."' AND ss.status=3))";
+    $sql .= " group by o.ship_number order by o.id desc limit 50";
+    $ship_order = _sqlselect($sql);
+
     _c('ship_order', $ship_order);
 
     $stowage_ship = array();
@@ -124,6 +166,11 @@ function __save() {
 
     if (!(strlen(_session('adminrank')) > 0 && _session('adminrank') == '0') && $stowage && $stowage['mid'] <> _session('code') && $stowage['to_mid'] <> _session('code')) {
         _alerturl('您暂无权限进行此操作！', _u('//list/'._v(4).'/'._v(5).'/'));
+        die();
+    }
+
+    if ($stowage['status'] == 3) {
+        _alerturl('配载单状态已到达，不可再修改！', _u('//list/'._v(4).'/'._v(5).'/'));
         die();
     }
 
@@ -172,7 +219,7 @@ function __save() {
                             }
                         }
 
-                        if (_post('notice') == '1') {
+                        //if (_post('notice') == '1') {
                             _sqlinsert('ship_order_status', array(
                                 'ship_number' => floatval($value),
                                 'status_before' => 4,
@@ -186,7 +233,7 @@ function __save() {
                             if ($order) {
                                 _sendWxMsg($order['wx_open_id'], '您的订单：['.str_repeat('0', 12-strlen($order['id'])).$order['id'].'], 正发往：【'.$data['prov_e'].'/'.$data['city_e'].'/'.$data['area_e'].'】');
                             }
-                        }
+                        //}
 
                     }
                     /*if ($data['status'] == '3') {
@@ -220,7 +267,7 @@ function __save() {
                                 'add_time' => time(),
                                 'sys' => 0
                             ));
-                            $order = _sqlone('ship_order', 'status=5 and ship_number=\''.floatval($value).'\'');
+                            $order = _sqlone('ship_order', 'status=4 and ship_number=\''.floatval($value).'\'');
                             if ($order) {
                                 _sendWxMsg($order['wx_open_id'], '您的订单：['.str_repeat('0', 12-strlen($order['id'])).$order['id'].'], 已到达：【'.$data['prov_e'].'/'.$data['city_e'].'/'.$data['area_e'].'】');
                             }

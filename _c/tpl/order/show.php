@@ -56,6 +56,9 @@ if(!defined('PART'))exit;
         <div id="tab1" class="tabson">
             <ul class="forminfo">
                 <li><label>订单编号：</label><p style="padding-top: 10px;"><?php echo str_repeat('0', 12-strlen($_['order']['id'])).$_['order']['id']; ?></p></li>
+                <?php if (isset($_['order']['status']) && $_['order']['status'] >= 3) { ?>
+                <li><label>运 单 号：</label><p style="padding-top: 10px;"><?php echo $_['order']['ship_number']; ?></p></li>
+                <?php } ?>
                 <li><label>发 货 人：</label><p style="padding-top: 10px;"><?php echo $_['order']['ship_name']; ?></p></li>
                 <li><label>手　　机：</label><p style="padding-top: 10px;"><?php echo $_['order']['ship_phone']; ?></p></li>
                 <li><label>发货地址：</label><p style="padding-top: 10px;"><?php echo $_['order']['ship_prov'].$_['order']['ship_city'].$_['order']['ship_area'].$_['order']['ship_address']?></p></li>
@@ -77,28 +80,6 @@ if(!defined('PART'))exit;
                 <li><label>备　　注：</label><p style="padding-top: 10px;"><?php echo $_['order']['ship_note']; ?></p></li>
                 <li><label>下单时间：</label><p style="padding-top: 10px;"><?php echo _time($_['order']['add_time']); ?></p></li>
                 <li><label>订单状态：</label><p style="padding-top: 10px;"><?php echo $_['order_status'][$_['order']['status']]; ?></p></li>
-                <?php if ($_['order']['status'] >= 4) { ?>
-                    <li><label>物流跟踪：</label>
-                        <table class="tablelist">
-                            <thead>
-                            <tr>
-                                <th width="10%"></th>
-                                <th width="40%">商品</th>
-                                <th width="10%">单价</th>
-                                <th width="10%">数量</th>
-                                <th width="10%">小计</th>
-                                <th width="10%">状态</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-
-                            </tbody>
-                            <tfoot>
-                            <tr><td colspan="6" style="text-align: right; padding-right: 10px;"></td></tr>
-                            </tfoot>
-                        </table>
-                    </li>
-                <?php } ?>
             </ul>
         </div>
         <div id="tab2" class="tabson">
@@ -112,16 +93,6 @@ if(!defined('PART'))exit;
                             <th width="20%">状态</th>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td><?php echo _time($_['order']['rob_time']); ?></td>
-                                <td><?php echo $_['order']['rob_name']; ?> -> 接单</td>
-                                <td>已接单</td>
-                            </tr>
-                            <tr>
-                                <td><?php echo _time($_['order']['pick_time']); ?></td>
-                                <td><?php echo $_['order']['rob_name']; ?> -> 揽件</td>
-                                <td>已揽件</td>
-                            </tr>
                             <?php foreach ($_['order']['ship_status'] as $_state) { ?>
                                 <tr>
                                     <td><?php echo _time($_state['mod_time']); ?></td>
@@ -131,6 +102,18 @@ if(!defined('PART'))exit;
                                     </td>
                                     <td><?php echo $_['stowage_status'][$_state['status']]; ?></td>
                                 </tr>
+                            <?php } ?>
+                            <tr>
+                                <td><?php echo _time($_['order']['pick_time']); ?></td>
+                                <td><?php echo $_['order']['rob_name']; ?> -> 揽件</td>
+                                <td>已揽件</td>
+                            </tr>
+                            <?php if (!empty($_['order']['rob_open_id'])) { ?>
+                            <tr>
+                                <td><?php echo _time($_['order']['rob_time']); ?></td>
+                                <td><?php echo $_['order']['rob_name']; ?> -> 接单</td>
+                                <td>已接单</td>
+                            </tr>
                             <?php } ?>
                             </tbody>
                         </table>

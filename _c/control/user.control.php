@@ -124,7 +124,7 @@ function __save(){
 			$data['pass']=_md5(_post('pass'));
 		}
 	} else {
-		if(!empty($pass)){
+		if(!empty(_post('pass'))){
 			$data['pass']=_md5(_post('pass'));
 		}
 	}

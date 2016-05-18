@@ -54,6 +54,9 @@ if(!defined('PART'))exit;
                     <li><a href="javascript:void(0);" id='b' onClick="selectTag('#b','#c','#a','#tab2','#tab3','#tab1')">运单状态</a></li>
                     <li><a href="javascript:void(0);" id='c' onClick="selectTag('#c','#a','#b','#tab3','#tab1','#tab2')">配载记录</a></li>
                 <?php } ?>
+                <?php if ($_['order']['status'] == 3 && $_['order']['mid'] == 0) { ?>
+                    <li style="float: right;"><a href="<?php echo _u('/ship/pick/'.$_['order']['id'].'/'._v(4).'/'._v(5).'/'); ?>" style="padding: 0px;"><input id="btn-save" type="button" class="btn" value="确认入仓" /></a></li>
+                <?php } ?>
             </ul>
         </div>
         <div id="tab1" class="tabson">
@@ -82,6 +85,7 @@ if(!defined('PART'))exit;
                 <li><label>运单状态：</label>
                     <p style="padding-top: 10px;">
                         <?php echo $_['order_status'][$_['order']['status']]; ?>
+                        <?php if ($_['order']['status']==3 && $_['order']['mid']>0) echo '[已入仓]';?>
                         <?php if (strlen($_['order']['ship_status'])>0) echo '['.$_['stowage_status'][$_['order']['ship_status']].']'; ?>
                     </p>
                 </li>
@@ -90,6 +94,8 @@ if(!defined('PART'))exit;
         </div>
         <div id="tab2" class="tabson">
             <ul class="forminfo" style="padding-left: 0px;">
+                <?php if ($_['order']['ship_status'] == 3 && $_['order']['ship_states'][0]['to_mid'] == floatval(_session('code'))) { ?>
+                    <form method="post">
                 <li><label>操作内容：</label>
                     <p style="padding-top: 10px;">
                         <textarea name="status_content" rows="6" cols="50" class=""></textarea>
@@ -97,9 +103,26 @@ if(!defined('PART'))exit;
                 </li>
                 <li><label>&nbsp;</label>
                     <p>
-                        <input id="btn-status-history" type="button" class="btn" value="确认添加" />
+                        <input id="btn-status-deliver" type="button" class="btn" value="派件" />
+                        <input id="btn-status-receive" type="button" class="btn" value="提货" />
                     </p>
                 </li>
+                    </form>
+                    <script type="text/javascript">
+                        $(document).ready(function(){
+                                $('input[id="btn-status-deliver"]').click(function(){
+                                    $(this).closest('form').attr('action', '<?php echo _u('/ship/deliver/'.$_['order']['id'].'/'._v(4).'/'._v(5).'/'); ?>');
+                                    $(this).closest('form').submit();
+                                });
+
+                                $('input[id="btn-status-receive"]').click(function(){
+                                    $(this).closest('form').attr('action', '<?php echo _u('/ship/receive/'.$_['order']['id'].'/'._v(4).'/'._v(5).'/'); ?>');
+                                    $(this).closest('form').submit();
+                                });
+                            }
+                        );
+                    </script>
+                <?php } ?>
                 <li>
                     <table class="tablelist">
                         <thead>
@@ -151,7 +174,7 @@ if(!defined('PART'))exit;
                             </tr>
                         <?php } ?>
                         <?php if (empty($_['order']['ship_states'])) { ?>
-                            <tr><td colspan="4" align="center">暂无记录</td></tr>
+                            <tr><td colspan="5" align="center">暂无记录</td></tr>
                         <?php } ?>
                         </tbody>
                     </table>

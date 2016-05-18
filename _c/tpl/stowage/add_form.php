@@ -152,15 +152,10 @@ if(!defined('PART'))exit;
             <div id="tab2" class="tabson">
                 <div class="tools">
                     <ul class="toolbar" style="margin-bottom: 5px;">
-                        <li style="margin-bottom: 5px;padding: 0 5px 0 5px;">发件人：<input type="text" name="" value="" class="dfinput" style="width: 150px;" /></li>
-                        <li style="margin-bottom: 5px;padding: 0 5px 0 5px;">发件人电话：<input type="text" name="" value="" class="dfinput" style="width: 150px;" /></li>
-                        <li style="margin-bottom: 5px;padding: 0 5px 0 5px;">发货地址：<input type="text" name="" value="" class="dfinput" style="width: 200px;" /></li>
-                        <li style="margin-bottom: 5px;padding: 0 5px 0 5px;">揽件时间：<input type="text" name="" value="" class="dfinput" style="width: 100px;" id="date-picker-start" /> - <input type="text" name="" value="" class="dfinput" style="width: 100px;" id="date-picker-end" /></li>
-
-                        <li style="margin-bottom: 5px;padding: 0 5px 0 5px; clear: both;">收件人：<input type="text" name="" value="" class="dfinput" style="width: 150px;" /></li>
-                        <li style="margin-bottom: 5px;padding: 0 5px 0 5px;">收件人电话：<input type="text" name="" value="" class="dfinput" style="width: 150px;" /></li>
-                        <li style="margin-bottom: 5px;padding: 0 5px 0 5px;">收货地址：<input type="text" name="" value="" class="dfinput" style="width: 200px;" /></li>
-                        <li class="click"><a href="javascript:void(0);"><span><img src="<?php echo _img('ico06.png');?>" /></span>搜索</a></li>
+                        <li style="margin-bottom: 5px;padding: 0 5px 0 5px;">运单号：<input type="text" name="ship_key" value="" class="dfinput" style="width: 150px;" /></li>
+                        <li class="click">
+                            <a href="javascript:void(0);" id="btn-ship-search"><span><img src="<?php echo _img('ico06.png');?>" /></span>搜索</a>
+                        </li>
                     </ul>
                 </div>
                 <ul class="forminfo" style="padding-left: 0px;">
@@ -296,6 +291,41 @@ if(!defined('PART'))exit;
             }
 
             return false;
+        });
+
+        $('#btn-ship-search').on('click', function(){
+            if ($('input[name="ship_key"]').val() == '') {
+                $('input[name="ship_key"]').focus();
+                return false;
+            }
+            if ($(this).hasClass('working')) {
+                return false;
+            }
+            var _obj = $(this);
+            $.ajax({
+                url: '<?php echo _u('/stowage/ship/'); ?>',
+                type: 'get',
+                dataType: 'json',
+                data: $('input[name="ship_key"]'),
+                beforeSend: function() {
+                    $(_obj).addClass('working');
+                },
+                complete: function() {
+                    $(_obj).removeClass('working');
+                },
+                success: function(data) {
+                    if (data['result']) {
+                        for (var i=0; i<data['result'].length; i++) {
+                            if ($('select[name="ship_select"]').find('option[value="'+data['result'][i]['ship_number']+'"]').length == 0) {
+                                $('select[name="ship_select"]').find('optgroup').first().prepend('<option value="'+data['result'][i]['ship_number']+'">'+data['result'][i]['ship_number']+'</option>');
+                            }
+                        }
+                    }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                }
+            });
         });
     });
 </script>

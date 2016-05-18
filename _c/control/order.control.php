@@ -118,10 +118,13 @@ function __edit(){
 		$uid = _sqlfield('ship_user', 'id', "wx_open_id='{$order['rob_open_id']}'");
 		$order['rob_name'] = _sqlfield('ship_user_info', 'real_name', "uid='{$uid}'");
 	}
+	if (empty($order['rob_name']) && $order['mid'] > 0) {
+		$order['rob_name'] = _sqlfield('ship_company', 'name', 'id=\''.(int)$order['mid'].'\'');
+	}
 
 	$order['ship_status'] = array();
 	if ($order['status'] > 3) {
-		$sql = "select s.* from "._pre('ship_to_stowage')." as s2s inner join "._pre('ship_stowage')." as s on s2s.stowage_id=s.id where s2s.ship_number='{$order['ship_number']}' and s.status>0 order by s.id";
+		$sql = "select s.* from "._pre('ship_to_stowage')." as s2s inner join "._pre('ship_stowage')." as s on s2s.stowage_id=s.id where s2s.ship_number='{$order['ship_number']}' and s.status>0 order by s.id desc";
 		$res = _sqlselect($sql);
 		$order['ship_status'] = $res;
 	}
@@ -184,7 +187,22 @@ function __save() {
 		die();
 	}
 
+	if (!empty(_post('ship_number'))) {
+		if ($order) {
+			if ($check = _sqlone('ship_order', 'ship_number=\''._escape(_post('ship_number')).'\' and id != \''.$order['id'].'\'')) {
+				_alertback('运单号已被使用，请核对重新输入！');
+				die();
+			}
+		} else {
+			if ($check = _sqlone('ship_order', 'ship_number=\''._escape(_post('ship_number')).'\'')) {
+				_alertback('运单号已被使用，请核对重新输入！');
+				die();
+			}
+		}
+	}
+
 	$data = array();
+	$data['ship_number'] = _post('ship_number');
 	$data['ship_prov'] = _post('ship_prov');
 	$data['ship_city'] = _post('ship_city');
 	$data['ship_area'] = _post('ship_area');
@@ -219,8 +237,38 @@ function __save() {
 
 	if (empty($order)) {
 		$data['add_time'] = time();
+		$data['mid'] = intval(_session('code'));
+		$data['sys'] = 1;
+
+		if ($data['status'] > 1) {
+			$data['rob_time'] = time();
+		}
+		if ($data['status'] > 2) {
+			$data['pick_time'] = time();
+		}
+		if ($data['status'] > 3) {
+			$data['ship_time'] = time();
+		}
 
 		if ($id = _sqlinsert('ship_order', $data)) {
+			_sqlinsert('ship_order_status', array(
+				'ship_number' => floatval($data['ship_number']),
+				'status_before' => $data['status'],
+				'status_after' => $data['status'],
+				'content' => '已揽件：【'._session('admincompany').'】',
+				'mid' => floatval(_session('adminid')),
+				'add_time' => time(),
+				'sys' => 1
+			));
+			_sqlinsert('ship_order_status', array(
+				'ship_number' => floatval($data['ship_number']),
+				'status_before' => $data['status'],
+				'status_after' => $data['status'],
+				'content' => '已到达：【'._session('admincompany').'】',
+				'mid' => floatval(_session('adminid')),
+				'add_time' => time(),
+				'sys' => 1
+			));
 			_alerturl('操作成功！', _u('//list/'._v(4).'/'._v(5).'/'));
 		} else {
 			_alertback('操作失败，请稍后再试！');
@@ -247,10 +295,13 @@ function __show(){
 		$uid = _sqlfield('ship_user', 'id', "wx_open_id='{$order['rob_open_id']}'");
 		$order['rob_name'] = _sqlfield('ship_user_info', 'real_name', "uid='{$uid}'");
 	}
+	if (empty($order['rob_name']) && $order['mid'] > 0) {
+		$order['rob_name'] = _sqlfield('ship_company', 'name', 'id=\''.(int)$order['mid'].'\'');
+	}
 
 	$order['ship_status'] = array();
 	if ($order['status'] > 3) {
-		$sql = "select s.* from "._pre('ship_to_stowage')." as s2s inner join "._pre('ship_stowage')." as s on s2s.stowage_id=s.id where s2s.ship_number='{$order['ship_number']}' and s.status>0 order by s.id";
+		$sql = "select s.* from "._pre('ship_to_stowage')." as s2s inner join "._pre('ship_stowage')." as s on s2s.stowage_id=s.id where s2s.ship_number='{$order['ship_number']}' and s.status>0 order by s.id desc";
 		$res = _sqlselect($sql);
 		$order['ship_status'] = $res;
 	}
