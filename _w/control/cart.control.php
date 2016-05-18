@@ -2,7 +2,7 @@
 if(!defined('PART'))exit;
 $webid=_session('webid');
 if(empty($webid)){
-	_url(_u('/index/login/'));
+	_url(_u('/index/auth/'));
 	die();
 }
 //购物车商品列表

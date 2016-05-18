@@ -2,7 +2,7 @@
 if(!defined('PART'))exit;
 $webid=_session('webid');
 if(empty($webid)){
-	//_url(_u('/index/auth/'));
+	_url(_u('/index/auth/'));
 	//die();
 }
 function __index(){
