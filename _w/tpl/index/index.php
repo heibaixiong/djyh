@@ -74,7 +74,7 @@ _css('commons');
 
             <div class="aui-content index_content">
                 <div class="aui-col-xs-5" >
-                    <a href="#" class="index_pro02">
+                    <a href="<?php echo _u('/shop/show/'.$v['id']); ?>" class="index_pro02">
                         <img src="<?php echo _resize($v['img']); ?>" >
                         <span>推荐<br>商品</span>
                     </a>
@@ -82,7 +82,7 @@ _css('commons');
                 <div class="aui-col-xs-7" >
                     <div class="index_bleft">
                         <p class="index_text01"><a href="#"><?php echo $v['title']; ?></a></p>
-                        <p class="index_text02">逍遥胡辣汤 河南特产 逍遥老杨家</p>
+                        <p class="index_text02"><?php echo $v['class1name']; ?></p>
                         <p class="index_text03">￥<?php echo _rmb($v['mark']/100);?></p>
                         <div class="index_text04">
                             <div class="idnex_gw" data-id="<?php echo $v['id']; ?>">加入购物车</div>
@@ -116,7 +116,7 @@ _css('commons');
 
                 <div class="aui-content index_content">
                     <div class="aui-col-xs-5" >
-                        <a href="#" class="index_pro02">
+                        <a href="<?php echo _u('/shop/show/'.$v['id']); ?>" class="index_pro02">
                             <img src="<?php echo _resize($v['img']); ?>" >
                             <span>推荐<br>商品</span>
                         </a>
@@ -136,8 +136,7 @@ _css('commons');
                         </div>
                     </div>
                 </div>
-
-                <?php
+            <?php
             }
             ?>
             <!-- 商品列表end -->
@@ -177,7 +176,7 @@ _part('footer');
         var tag = is_login();
         if(tag === true){
             var id = parseInt($(this).attr('data-id'));
-            var num = 9;
+            var num = 1;
             addCart(id, num);
         }
     });

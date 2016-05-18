@@ -2,21 +2,21 @@
 <footer class="aui-nav" id="aui-footer">
     <ul class="aui-bar-tab font_box">
         <li class="" id="tabbar1" >
-            <a onclick="openWin('<?php echo _u('/index/index'); ?>', 0)">
+            <a href="<?php echo _u('/index/index'); ?>">
                 <span class="footer_icon01"></span>
                 <p>首  页</p>
             </a>
 
         </li>
         <li id="tabbar2" >
-            <a onclick="openWin('<?php echo _u('/shop/index'); ?>', 0)">
+            <a href="<?php echo _u('/shop/index'); ?>">
                 <span class="footer_icon02"></span>
                 <p>分  类</p>
             </a>
 
         </li>
         <li id="tabbar3" >
-            <a onclick="openWin('<?php echo _u('/cart/index'); ?>', 1)">
+            <a href="<?php echo _u('/cart/index'); ?>">
                 <span class="footer_icon03"></span>
                 <p>购物车</p>
             </a>
@@ -40,16 +40,14 @@ _js('common');
 <script>
     //判断用户是否登录
     function is_login(){
-        var webid = '<?php echo _session("webid"); ?>';
-        if(!webid){
-            dialog({title:'温馨提示', content:'您还没有登录，是否立即登录？', buttons:['立即登录', '稍后再说']}, function(opt){
-                if(opt == 1){
-                    var url = '<?php echo _u('/index/login');  ?>';
-                    openWin(url, 0);
-                }else{
-                    return false;
-                }
-            });
+        var webid = '<?php echo _session("webid"); ?>',
+            openid = '<?php echo _session('weixin_openid'); ?>';
+        if(!webid || !openid){
+            <?php
+                 _session('weixin_redirect_url') ? '' : _session('weixin_redirect_url', 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+            ?>
+            var url = '<?php echo _u('/index/auth');  ?>';
+            openWin(url, 0);
         }else{
             return true;
         }
@@ -67,7 +65,8 @@ _js('common');
         $.get(url, function(data){
             var rs = $.parseJSON(data);
             //console.log(rs);
-            dialog({title:'温馨提示', buttons:['确定'], content:rs['msg']});
+            //dialog({title:'温馨提示', buttons:['确定'], content:rs['msg']});
+            tips(rs['msg']);
         });
     }
 </script>

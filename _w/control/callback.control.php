@@ -44,29 +44,29 @@ function __wxpay_openid() {
     _session('weixin_openid', $openId);
 
     //if (!empty(_session('weixin_redirect_url')) && strpos(_session('weixin_redirect_url'), '/?d/') !== false) {
-        $wx_user = _sqlone('ship_user', 'wx_open_id=\''._escape($openId).'\'');
-        if (empty($wx_user)) {
-            $data = array(
-                'wx_open_id' => $openId,
-                'user_name' => 'u'._random(8, 'num'),
-                'pass_word' => _md5(_random(8)),
-                'role' => '0',
-                'add_time' => time(),
-                'mod_time' => time(),
-                'last_time' => time(),
-                'logins' => '1',
-                'status' => '1',
-            );
-            $uid = _sqlinsert('ship_user', $data);
-            _session('wx_uid', $uid);
-        } else {
-            $data = array(
-                'last_time' => time(),
-                'logins' => $wx_user['logins'] + 1,
-            );
-            _sqlupdate('ship_user', $data, 'id=\''.$wx_user['id'].'\'');
-            _session('wx_uid', $wx_user['id']);
-        }
+    $wx_user = _sqlone('ship_user', 'wx_open_id=\''._escape($openId).'\'');
+    if (empty($wx_user)) {
+        $data = array(
+            'wx_open_id' => $openId,
+            'user_name' => 'u'._random(8, 'num'),
+            'pass_word' => _md5(_random(8)),
+            'role' => '0',
+            'add_time' => time(),
+            'mod_time' => time(),
+            'last_time' => time(),
+            'logins' => '1',
+            'status' => '1',
+        );
+        $uid = _sqlinsert('ship_user', $data);
+        _session('wx_uid', $uid);
+    } else {
+        $data = array(
+            'last_time' => time(),
+            'logins' => $wx_user['logins'] + 1,
+        );
+        _sqlupdate('ship_user', $data, 'id=\''.$wx_user['id'].'\'');
+        _session('wx_uid', $wx_user['id']);
+    }
     //}
 
     if (_session('weixin_redirect_url')) {

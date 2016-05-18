@@ -1,266 +1,291 @@
-<?php
-if(!defined('PART'))exit;
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!doctype html>
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title><?php echo $_['title'];?></title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title><?php echo $_['title'];?></title>
 <?php
-_jq();
-_css('default');
-_css('v1.0');
-_css('style');
-_js('shop');
+_css('aui');
+_css('commons');
+_css('detail');
 ?>
 </head>
 <body>
-<?php
-_part('top');
-_part('head');
-_part('nav');
-?>
-<!-- 主体 -->
-<div class="w1200">
-        <div class="details_main">
-            <div class="details_body clearfix">
-                <div class="details-content">
-				    <div class="details-leftBox">
-				        <div class="details_showPic">
-				            <div id="spec-n1" class="big jqzoom">
-				                <img alt="<?php echo htmlspecialchars($_['rs']['title']);?>" src="<?php echo _resize($_['rs']['img'], 360, 360); ?>">
-				            </div>
-				            <div id="spec-list" class="dp_slide">
-				                <ul style="overflow: hidden;">
-									<li>
-										<img src="<?php echo _resize($_['rs']['img'], 60, 60); ?>" data-image="<?php echo _resize($_['rs']['img'], 360, 360); ?>" />
-									</li>
-									<?php
-				                	foreach($_['img'] as $k=>$v){
-				                	?>
-				                    <li>
-				                        <img src="<?php echo _resize($v, 60, 60); ?>" data-image="<?php echo _resize($v, 360, 360); ?>" />
-				                    </li>
-				                    <?php
-				                    }
-					                ?>
-				                </ul>
-				            </div>
-				        </div>
-				        <div class="show_info">
-				            <div class="jifen-details-riCon">
-				                <div class="goodsName"><a style="text-decoration: none; cursor: default" href="javascript:void(0)"><?php echo $_['rs']['title'];?></a></div>
-				                <div class="deteils_shop_div1" style="padding: 0 0 15px;">
-				                    <div class="priceNew">
-				                        <div class="priceTop">
-				                            <div class="fl priceTag mt-10">
-				                                <p><span class="priceSpan fl typeRight">价格：</span><span class="priceSpan1 fl"><strong>￥</strong><?php echo _rmb($_['rs']['mark']/100);?></span></p>
-				                            </div>
-				                        </div>
-				                    </div>
-									<div class="priceNew">
-										<p class="fl"><span class="priceSpan fl typeRight">销量：</span><span class="red fl"><?php echo $_['rs']['sale'];?></span></p>
-										<div class="clear"></div>
-									</div>
-				                </div>
-				            </div>
+<!--头部-->
+<header class="aui-nav aui-bar aui-bar-nav aui-bar-dark" id="top_nav">
+	<div class="aui-col-xs-2" style="width:18%;">
+        <span class="aui-pull-left" style="padding-left: 5px;">
+           <span class="aui-iconfont aui-icon-left"></span>
+        </span>
+	</div>
+	<div class="aui-col-xs-8" style="width:62%">
+		<div class="aui-searchbar" id="search">
+			<form style="width:100%;">
+				<input type="search" placeholder="请输入搜索内容" id="search-input">
+				<a href="#" class="aui-iconfont aui-icon-search search_icon" ></a>
+			</form>
+		</div>
+	</div>
+	<div class="aui-col-xs-2" style="width:20%;">
+         <span class="aui-pull-right" style="padding-right:5px;padding-top:2px;">
+            <a class="index_car">搜索</a>
+        </span>
+	</div>
+</header>
+<div style="position: absolute;top: 50px;bottom: 55px;overflow-y: scroll;-webkit-overflow-scrolling: touch; width:100%; ">
 
-				            <div class="quantity">
-								<?php
-								$_group = '';
-								foreach ($_['attr_info'] as $attr) {
-									if ($attr['wname'] <> $_group) {
-										if ($_group <> '') echo '</p>';
-										$_group = $attr['wname'];
-										echo '<p style="margin-bottom: 10px;" class="attr-options-select"><label style="font-weight: bold;">'.$_group.'：</label>';
-									}
-									?>
-									<span style="margin-right: 5px; line-height: 30px; border: 1px solid #aaa; padding: 5px; cursor: pointer;" data-toggle="false" data-attr="<?php echo $attr['id']; ?>"><?php echo $attr['model']; ?></span>
-									<?php
-								}
-								if (!empty($_['attr_info'])) echo '</p>';
-								?>
-				                <span class="fl iname" style="font-weight: bold;">数量：</span>
-				                <div class="fl quantityfr input-div">
-				                    <input type="text" minnum="1" maxnum="<?php echo $_['rs']['stock'];?>" orinum="1" value="1" id="goodsnum" class="fl atext" style="margin-left: 3px;">
-				                    <div class="fl ml-5">
-				                        <a class="addbtn ibtn" href="javaScript:void(0);"></a>
-				                        <a class="cutbtn ibtn" href="javaScript:void(0);"></a>
-				                    </div>
-				                </div>
-				                <p class="quantity_Stock fl">库存：<span><?php echo $_['rs']['stock'];?></span></p>
-				                <div class="clear"></div>
-				            </div>
-				                <div class="shopBtnBox">
-				                    <p class="fl btn-1 join">
-				                        <a class="btn-jhd livebuy" href="javaScript:void(0)" data="<?php echo $_['rs']['id'];?>" data-option="">加入购物车</a>
-				                    </p>
-				                </div>
-				        </div>
-				    </div>                    
-                    <div class="details-rightBox">
-                        <div class="CommodityDetail-topBox">                            
-                            <a href="<?php echo _u('/user/index/'.$_['rs']['uid'].'/');?>">
-                                <h4 title="<?php echo $_['rs']['uname'];?>" class="CommodityDetail-topWord"><?php echo $_['rs']['uname'];?></h4>
-                            </a>
-                            <div class="clear"></div>
-                        </div>
-                        <div class="clear"></div>
-                        <!--供货商信息-->
-                        <ul class="CommodityDetail-ul">
-                            <li>
-                                <p class="CommodityDetail-Note">
-                                    代理产品：
-                                </p>
-                                <div class="CommodityDetail-NoteDetails"><p><?php echo $_['rs0']['product'];?></p></div>
-                            </li>
-                            <li>
-                                <p class="CommodityDetail-Note">
-                                    配送条件：
-                                </p>
-                                <div class="CommodityDetail-NoteDetails"><p><?php echo $_['rs0']['if'];?></p></div>
-                            </li>
-                            <li>
-                                <p class="CommodityDetail-Note">
-                                    配送范围：
-                                </p>
-                                <div class="CommodityDetail-NoteDetails"><p><?php echo $_['rs0']['zone'];?></p></div>
-                            </li>
-                            <li>
-                                <p class="CommodityDetail-Note">
-                                    优惠政策：
-                                </p>
-                                <div class="CommodityDetail-NoteDetails"><p><?php echo $_['rs0']['good'];?></p></div>
-                            </li>
-                        </ul>
-                        <!--供货商信息-->
-                        <a href="<?php echo _u('/user/index/'.$_['rs']['uid'].'/');?>">
-                            <div class="SeeShop-Btn">逛逛店铺</div>
-                        </a>
-                    </div>
-                    <div class="clear"></div>
-                    <div id="sameGoods"></div>
-                    <div class="show_description" style="padding: 10px 0 10px 0; border: none; border-top: 1px solid #eee;">
-                        <div class="prod_descrit clearfix">
-							<?php if (!empty($_['para_info'])) { ?>
-								<h3 style="float: left; clear: both;">商品参数</h3>
-								<ul style="float: left; clear: both; margin-bottom: 10px; width: 100%; border-bottom: 1px solid #eee;">
-									<?php foreach ($_['para_info'] as $para) { ?>
-									<li style="float: left; margin: 0px 10px 5px 10px;"><?php echo $para['paraname'].'：'.$para['value']; ?></li>
-									<?php } ?>
-								</ul>
-							<?php } ?>
-                            <h3 style="float: left; clear: both;">商品描述</h3>
-                            <div style="float: left; clear: both; padding: 0 10px 0 10px; width: 100%;">
-							<?php echo $_['rs']['content'];?>
-							</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="otherGoods" class="details_main_recommend">
-				<div class="main-width-goods">
-				    <div class="main-goods-title">
-				        <img class="fl" src="<?php echo _img('car.png');?>">
-				        <p class="red font16 fl mt-10">该供货商的其他商品</p>
-				        <div class="clear"></div>
-				    </div>
-				    <div class="main-goods-scroll">
-				        <div class="goods-div-scroll">
-				            <div class="search_list">
-				                <ul class="clearfix">
-				                	<?php
-				                	foreach($_['list'] as $k=>$v){
-				                		$youjiao=0;
-					                    if($v['recommend']==1){
-					                        $youjiao=1;
-					                    }
-					                    if($v['new']==1){
-					                        $youjiao=2;
-					                    }
-					                    if($v['hot']==1){
-					                        $youjiao=3;
-					                    }
-				                	?>
-		                            <li class="search_item search_item240">
-		                            	<?php
-		                            	if($youjiao>0){
-		                            	?>
-	                                    <div class="pro-activiyIco"><?php echo $_['youjiao'][$youjiao];?></div>
-	                                    <?php
-	                                    }
-	                                    ?>
-		                                    <div class="search_item_box">
-			                                    <div class="prod_img">
-			                                        <a href="<?php echo _u('//show/'.$v['id'].'/');?>">
-			                                            <img style="display: inline;" alt="<?php echo htmlspecialchars($v['title']); ?>" src="<?php echo _resize($v['img'], 210, 210); ?>" class="imgload lazy">
-			                                        </a>
-			                                    </div>
-			                                    <div style="position: relative;">
-			                                        <p class="prod_price">
-			                                            <span>¥<?php echo _rmb($v['mark']/100);?></span>
-			                                            <b></b>
-			                                        </p>
-			                                    </div>
-		                                    <div class="clear"></div>
-		                                    <p class="prod_title"><a href="<?php echo _u('//show/'.$v['id'].'/');?>"><?php echo $v['title']?></a></p>
-		                                    <div class="clear"></div>
-		                                    <div class="prod_num">
-		                                        <div class="fl c_999">销量：<?php echo $v['sale']?></div>
-		                                        <div class="fr c_999">库存：<?php echo $v['stock']?></div>
-		                                    </div>
-		                                    <div class="clear"></div>
-		                                    <div class="prod_btn">
-		                                        <div style="margin-top: 3px;" class="num_box fl input-div">
-		                                            <input type="button" class="cutbtn minusDisable num-ico">
-		                                            <input type="text" minnum="1" maxnum="<?php echo $v['stock']?>" orinum="1" value="1" id="goodsId_0" class="atext minicart_num">
-		                                            <input type="button" class="addbtn plusDisable  num-ico">
-		                                        </div>
-		                                        <input type="submit" class="buy-btn fr" value="加入购物车" id="submit" name="submit" data="<?php echo $v['id'];?>">
-		                                        <div class="clear"></div>
-		                                    </div>
-		                                    <p class="pro_address"><a href="<?php echo _u('/user/'.$_['rs']['uid'].'/');?>"><?php echo $_['rs']['uname'];?></a></p>
-		                                </div>
-		                            </li>
-		                            <?php
-		                            }
-		                            ?>
-				                </ul>
-				            </div>
-				        </div>
-				    </div>
+	<!--筛选条件-->
+	<ul class="aui-content list_sx aui-border-tb" style="margin-bottom:0;">
+		<li class="aui-col-xs-6 current_mr"><a href="#">商品</a></li>
+		<li class="aui-col-xs-6" style="border:none;"><a href="#">详情</a></li>
+		<!-- <li class="aui-col-xs-3 "><a href="#">评价</a></li> -->
+		<!-- <li class="aui-col-xs-4 " style="border: none"><a href="#">购物车</a></li> -->
+	</ul>
+
+	<!--main-->
+	<div class="big_main">
+		<div class="det_img">
+			<img src="<?php echo $_['rs']['img']; ?>">
+		</div>
+		<!--题目-->
+		<div class="det_tit">
+			<div class="det_tit_box">
+				<div class="det_tit_left">
+					<p class="index_text01"><a href="#"><?php echo $_['rs']['title']; ?></a></p>
+					<p class="index_text02" style="margin-top:0.2rem;"><?php echo $_['rs']['class1name']; ?></p>
+				</div>
+				<div class="det_tit_cent">
+
+				</div>
+				<div class="det_tit_right">
+					<a href="#">
+						<p class="det_tit_lin01"></p>
+						<p class="det_tit_lin02">收藏</p>
+					</a>
 				</div>
 			</div>
-        </div>
+			<div class="det_price">
+				<span class="det_price_in01">价格:<em>￥<?php echo _rmb($_['rs']['mark']/100);?></em></span>
+				<span class="det_price_in02">已售<em><?php echo $_['rs']['sale'];?></em>件</span>
+			</div>
+		</div>
+		<!--选择-->
+		<ul class="aui-list-view det_bigbox" style="margin:10px 0;border-color:#c6c6c6;">
+			<li class="aui-list-view-cell">
+				<div class="aui-arrow-right aui-ellipsis-1 list_pp">
+					选择套装
+				</div>
+			</li>
+		</ul>
+
+		<!--东家要货自营-->
+		<div class="det_zj">
+			<div class="detail_home_lin01"><a href="#"><?php echo $_['rs0']['compony']; ?></a></div>
+			<ul class="detail_home">
+				<li class="detail_home_lin02 detail_icpn02"><a>金牌信誉店</a></li>
+				<li class="detail_home_lin03" style="width:100%;text-align: center;">
+					<div class="detail_lin03_item" style="float: none">
+						<div class="detail_lin03_item_tex aui-ellipsis-1" style="padding-top:0.3rem;"><?php echo $_['rs0']['product']; ?></div>
+						<div class="detail_lin03_item_num" style="height:0.7rem">
+							<span style="visibility: hidden">4.8</span>
+						</div>
+					</div>
+
+				</li>
+				<!--
+				<li class="detail_home_lin04">
+					<a href="#" class="detail_lin04_d01">进店逛逛</a>
+				</li>
+				-->
+			</ul>
+			<ul class="detail_home">
+				<li class="detail_home_lin02"><a>店铺评分</a></li>
+				<li class="detail_home_lin03">
+					<div class="detail_lin03_item">
+						<div class="detail_lin03_item_tex">描 述</div>
+						<div class="detail_lin03_item_num">
+							<span>4.8</span>
+						</div>
+					</div>
+					<div class="detail_lin03_item">
+						<div class="detail_lin03_item_tex">服 务</div>
+						<div class="detail_lin03_item_num ">
+							<span>4.8</span>
+						</div>
+					</div>
+					<div class="detail_lin03_item">
+						<div class="detail_lin03_item_tex">物 流</div>
+						<div class="detail_lin03_item_num">
+							<span>4.8</span>
+						</div>
+					</div>
+				</li>
+				<!--
+				<li class="detail_home_lin04">
+					<a href="#" class="detail_lin04_d02">收藏店铺</a>
+				</li>
+				-->
+			</ul>
+		</div>
+		<!-- 热门推荐start -->
+		<div class="detail_hot">
+			<div class="detail_hot_tex">热门推荐<span>NEW</span></div>
+			<ul class="detail_hot_min">
+				<?php
+				foreach($_['list'] as $k => $v){
+				?>
+				<li>
+					<div class="detail_hot_img"><a href="#"><img src="<?php echo $v['img']; ?>"></a> <span class="store_one">推荐<br>商品</span></div>
+					<p class="detail_hot_wz"><a href="#" class="aui-ellipsis-1"><?php echo $v['title']; ?></a></p>
+					<p class="detail_hot_wz02"><span class="detail_hot_pice">￥<?php echo _rmb($_['rs']['mark']/100);?></span><span class="detail_hot_num">已售<em><?php echo $_['rs']['sale'];?></em>件</span></p>
+				</li>
+				<?php
+				}
+				?>
+			</ul>
+		</div>
+		<!-- 热门推荐end -->
+
+		<!-- 逛逛start -->
+		<div class="detail_attr det_yem" style="position: inherit;">
+			<div class="attr_bottom" style="margin:0.44rem 0;">
+				<a href="#" class="attr_bottom_a01"><!-- 进  店 --></a>
+				<a href="#" class="attr_bottom_a02 idnex_gw" data-id="<?php echo $_['rs']['id']; ?>">加入购物车</a>
+				<a href="#" class="attr_bottom_a03">立即购买</a>
+			</div>
+		</div>
+		<!-- 逛逛end -->
+
+	</div>
 </div>
 
-<script type="text/javascript">
-	$('.attr-options-select span').on('click', function(){
-		if ($(this).data('toggle') === false) {
-			$(this).closest('p').find('span').data('toggle', false);
-			$(this).closest('p').find('span').css('border-color', '#aaa').css('background-color', '#fff').css('color', '#333');
-			$(this).data('toggle', true);
-			$(this).css('border-color', '#ff7300').css('background-color', '#f1f1f1').css('color', '#ff7300');
-		} else {
-			$(this).data('toggle', false);
-			$(this).css('border-color', '#aaa').css('background-color', '#fff').css('color', '#333');
-		}
+<!--弹出层-->
+<div class="slide-mask"></div>
+<aside class="slide-wrapper" >
+	<div class="slide_big">
+		<div class="slide_right">
+			<div class="detail_attr" >
+				<ul>
+					<li class="aui-content index_content det_newcont" style="background: #fff;padding-top:20px;">
+						<div class="aui-col-xs-4" >
+							<a href="#" class="index_pro02">
+								<img src="<?php echo $_['rs']['img']; ?>" >
+							</a>
 
-		var _select = '';
-		$('.attr-options-select span').each(function(){
-			if ($(this).data('toggle') === true) {
-				if (_select != '') _select += ',';
-				_select += $(this).data('attr');
-			}
+						</div>
+						<div class="aui-col-xs-8" >
+							<div class="index_bleft">
+								<p class="index_text01"><a href="#"><?php echo $_['rs']['title']; ?></a></p>
+								<p class="index_text02"><?php echo $_['rs']['class1name']; ?></p>
+								<p class="index_text03">￥<?php echo _rmb($_['rs']['mark']/100);?></p>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="attr_middle">
+							<dl>
+								<dt>选择套装</dt>
+								<dd><a>精品礼盒</a><a>实惠套装</a><a>简易装</a><a>简易装</a><a>简易装</a><a>简易装</a></dd>
+							</dl>
+						</div>
+					</li>
+					<li>
+						<div class="attr_center">
+							<dl>
+								<dt>数量</dt>
+								<dd class="detail_sl">
+									<span class="detail_jian"></span>
+									<input type="text" value="1">
+									<span class="detail_jia"></span>
+								</dd>
+							</dl>
+						</div>
+						<div style="clear: both;"></div>
+					</li>
+					<li>
+						<div class="attr_bottom">
+							<a href="#" class="attr_bottom_a01">进  店</a>
+							<a href="#" class="attr_bottom_a02">加入购物车</a>
+							<a href="#" class="attr_bottom_a03">立即购买</a>
+						</div>
+					</li>
+				</ul>
+			</div>
+
+		</div>
+
+	</div>
+</aside>
+
+<?php
+_part('footer');
+?>
+
+
+<script>
+
+
+	var arr_old_bgp = ["footer_icon01","footer_icon02","footer_icon03","footer_icon04"],
+			arr_new_bgp = ["footer_bh01","footer_bh02","footer_bh03",'footer_bh04',];
+	$('.aui-bar-tab li').click(function(){
+		var guide =$(this).index();
+		var $this = $(this),
+				index = $this.index();
+		$this.parent().find('li').each(function(i,e){
+
+			$(this).find('span').removeClass(arr_new_bgp[i]);
+
 		});
-		$('.shopBtnBox .livebuy').data('option', _select);
+
+		$(this).find('span').addClass(arr_new_bgp[index]).siblings("p").css("color","#ff0000").parents("li").siblings("li").find("span").removeClass(arr_new_bgp[index]).siblings("p").css("color","#3c3c3c");
+	});
+
+
+	var arr_old_bg= ["","list_sxicon01","list_sxicon02","list_sxicon03"],
+			arr_new_bg = [" ", "current_mr02","current_mr03","current_mr04"];
+	$('.list_sx li').click(function(){
+
+		var guide =$(this).index();
+		var $this = $(this),
+				index = $this.index();
+		$this.parent().find('li').each(function(i,e){
+
+			$(this).find('span').removeClass(arr_new_bg[i]);
+
+		});
+
+		$(this).find('span').addClass(arr_new_bg[index]).parents("li").siblings("li").find("span").removeClass(arr_new_bg[index]);
+		$(this).addClass("current_mr").siblings("li").removeClass("current_mr");
+	});
+
+
+	$('div.slide-mask').on('click', function(){
+		$('div.slide-mask').hide();
+		$('aside.slide-wrapper').removeClass('moved');
+//         $(".slide-wrapper").hide();
+
+	});
+	$(".det_bigbox li").click(function(){
+		var wh = $('div.wrapperhove'+'rtree').height();
+		$('div.slide-mask').css('height', wh).show();
+		$('aside.slide-wrapper').css('height', wh).addClass('moved');
+		$('div.slide-mask').css({'bottom':'0'});
+		$('.slide-wrapper ').css({'bottom':'0'});
+		$(".list_bigbox02").show();
+	})
+
+
+	//购物车点击操作
+	$(".idnex_gw").click(function(){
+		var tag = is_login();
+		if(tag === true){
+			var id = parseInt($(this).attr('data-id'));
+			var num = 9;
+			addCart(id, num);
+		}
 	});
 </script>
-<!-- //主体 --> 
-<?php
-_part('footer1');
-_part('footer2');
-_part('footer3');
-?>
 </body>
 </html>

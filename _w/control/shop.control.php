@@ -1,12 +1,10 @@
 <?php
 if(!defined('PART'))exit;
 
-/*
-if(!_session('webid')){
-	_url(_u('/index/login'));
-	die();
+if(!_session('weixin_openid') || !_session('webid')){
+	//_url(_u('/index/auth'));
 }
-*/
+
 //商品列表页
 function __index(){
 	$cid = intval(_v(3));	//分类ID
@@ -39,21 +37,24 @@ function __index(){
 	_tpl();
 }
 
+//商品详情页
 function __show(){
 	$p = floatval(_v(3));
 	if(empty($p)){
 		$p=0;
 	}
-
+	//获取商品详情
 	$arr=_sqlone('ware','id='.$p.' and state=0');
+	//var_dump($arr);exit;
 	if (empty($arr)) _alertback('商品已下架或不存在！');
-
+	//var_dump(_sqlone('compony','aid='.$arr['uid']));exit;
 	_c('rs',$arr);
 	_c('rs0',_sqlone('compony','aid='.$arr['uid']));
 
 	_c('attr_info', _sqlall('attri_info', 'wid='.$arr['id'], 'id'));
 	_c('para_info', _sqlall('para_info', 'wid='.$arr['id'], 'id'));
 
+	/*
 	$img=array();
 	if(!empty($arr['img1']) && is_file(DIR.$arr['img1'])){
 		$img[]=$arr['img1'];
@@ -68,10 +69,13 @@ function __show(){
 		$img[]=$arr['img4'];
 	}
 	_c('img',$img);
+	*/
+
 	_c('title',$arr['title']);
 	_c('youjiao',array('', '推荐', '最新', '热门'));
-	_c('list',_sqlall('ware', 'state=0 and uid='.$arr['uid'].' and id !='.$arr['id'], 'px,id desc', 10));
-	_tpl('/show');
+	//该供货商的其他商品
+	_c('list',_sqlall('ware', 'state=0 and uid='.$arr['uid'].' and id !='.$arr['id'], 'px,id desc', 6));
+	_tpl();
 }
 
 /*综合商品搜索
@@ -82,7 +86,7 @@ function __show(){
 function get_good_list($cid = 0, $page = 1, $paixu = 0){
 	//return $paixu;
 	//条件整合
-	$condition = 'state = 1';
+	$condition = 'state = 0';
 	if(is_int($cid) && $cid > 0){
 		$condition .= ' and ( class1 = '.$cid .' or class2 = ' . $cid . ')';
 	}

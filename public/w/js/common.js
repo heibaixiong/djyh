@@ -18,7 +18,7 @@ function checkTel(tel){
 
 /* 脚底冒泡提示事件 */
 function tips(name){
-	var str='<p id="tips">'+name+'</p>';
+	var str='<p id="tips" style="position:fixed;bottom:0;width:100%;height:30px;line-height:30px;color:#333;text-align:center;z-index:10000;"">'+name+'</p>';
 	$("body").append(str);
 	$("#tips").animate({bottom:'30px'});
 	setTimeout(function(){

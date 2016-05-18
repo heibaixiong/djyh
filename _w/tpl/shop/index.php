@@ -55,16 +55,12 @@
     <div class="big_main" id=""wrapper">
         <div class="aui-content list-box" id=""scroller">
 
-            <div id="pullDown">
-                <span class="pullDownIcon"></span><span class="pullDownLabel">Pull down to refresh...</span>
-            </div>
-
             <?php
                 foreach($_['good_list'] as $k => $v){
             ?>
             <div class="aui-content index_content">
                 <div class="aui-col-xs-5" >
-                    <a href="#" class="index_pro02">
+                    <a href="<?php echo _u('/shop/show/'.$v['id']); ?>" class="index_pro02">
                         <img src="<?php echo _resize($v['img']); ?>" >
                         <span>推荐<br>商品</span>
                     </a>
@@ -88,9 +84,6 @@
                 }
             ?>
 
-            <div id="pullUp">
-                <span class="pullUpIcon"></span><span class="pullUpLabel">Pull up to refresh...</span>
-            </div>
         </div>
     </div>
     <!-- 商品列表end -->
@@ -164,17 +157,8 @@
     </div>
 </aside>
 
-<div id="pullDown">
-    <span class="pullDownIcon"></span><span class="pullDownLabel">Pull down to refresh...</span>
-</div>
-<div id="pullUp">
-    <span class="pullUpIcon"></span><span class="pullUpLabel">Pull up to refresh...</span>
-</div>
-
-
 <?php
 _part('footer');
-_js('idangerous.swiper.min');
 ?>
 <script>
     //排序部分
@@ -210,24 +194,6 @@ _js('idangerous.swiper.min');
         get_goods_list(1, cid, 1, paixu)
     });
 
-    function pullUpAction () {
-        setTimeout(function () {	// <-- Simulate network congestion, remove setTimeout from production!
-            var el, li, i;
-            el = document.getElementById('thelist');
-
-            for (i=0; i<3; i++) {
-                li = document.createElement('li');
-                li.innerText = 'Generated row ' + (++generatedCount);
-                el.appendChild(li, el.childNodes[0]);
-            }
-
-            myScroll.refresh();		// Remember to refresh when contents are loaded (ie: on ajax completion)
-        }, 1000);	// <-- Simulate network congestion, remove setTimeout from production!
-    }
-
-
-
-
     /*AJAX获取数据
      * type=0默认下拉刷新;1重新加载
      * cid分类
@@ -243,7 +209,7 @@ _js('idangerous.swiper.min');
             data : '',
             type : 'post',
             success : function(data){
-                console.log(data);
+                //console.log(data);
                 //return false;
                 if(data == false){
                     tips('没有更多数据');
@@ -285,6 +251,17 @@ _js('idangerous.swiper.min');
         loading(0); //关闭加载效果
     }
 
+    //购物车点击操作
+    $(".idnex_gw").click(function(){
+        var tag = is_login();
+        if(tag === true){
+            var id = parseInt($(this).attr('data-id'));
+            var num = 1;
+            addCart(id, num);
+        }
+    });
+
+
     $('.index_car').on('click', function(e){
         var wh = $('div.wrapperhove'+'rtree').height();
         $('div.slide-mask').css('height', wh).show();
@@ -315,26 +292,6 @@ _js('idangerous.swiper.min');
         $('aside.slide-wrapper').removeClass('moved');
     })
 
-    var holdPosition = 0;
-    var mySwiper = new Swiper('.swiper-container',{
-        slidesPerView:'auto',
-        mode:'vertical',
-        watchActiveIndex: true,
-        onTouchStart: function() {
-            holdPosition = 0;
-        },
-        onResistanceBefore: function(s, pos){
-            holdPosition = pos;
-        },
-        onTouchEnd: function(){
-            if (holdPosition>100) {
-                mySwiper.setWrapperTranslate(0,100,0)
-                mySwiper.params.onlyExternal=true
-                $('.preloader').addClass('visible');
-                console.log(123);
-            }
-        }
-    })
 </script>
 </body>
 </html>
