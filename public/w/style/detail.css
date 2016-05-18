@@ -552,3 +552,63 @@ aside.slide-wrapper .slide_right{
     color: #fff;
     font-size:0.8rem;
 }
+/*ฯ๊ว้*/
+
+
+.d_tab .d_tab_main .d_tab_img{
+    margin-top:0.44rem;
+}
+.d_tab .d_tab_main .d_tab_img img{
+    width:100%;
+    display: block;
+}
+.d_tab .d_tab_main .d_tab_list{
+ background:#fff;
+}
+.d_tab .d_tab_main .d_tab_list .d_tab_list_title{
+    line-height: 1.96rem;
+    font-size:0.66rem;
+    color: #3c3c3c;
+    font-weight: bold;
+    border-bottom:solid 1px #c6c6c6;
+    padding-left:20px;
+}
+.d_tab .d_tab_main .d_tab_list .d_tab_list02{
+    padding: 0 20px;
+    border-bottom:solid 1px #c6c6c6;
+    padding-bottom:1.9rem;
+}
+.d_tab .d_tab_main .d_tab_list .d_tab_list02 li{
+     line-height: 1.12rem;
+     font-size:0.53rem;
+     color: #8c8c8c;
+     text-overflow: ellipsis;
+     white-space: nowrap;
+     overflow: hidden;
+ }
+.d_tab .d_tab_main .d_tab_list .d_tab_list02 li p{
+    line-height: 2.06rem;
+    font-size:0.67rem;
+    color: #646464;
+}
+.d_tab .d_tab_main .d_tab_list .d_tab_list02 li a{
+    font-size:0.53rem;
+    color: #8c8c8c;
+
+}
+.d_tab .d_tab_main .d_tab_list .d_tab_list02 li .d_tab_list02_lef{
+    float: left;
+}
+.d_tab .d_tab_main .d_tab_list .d_tab_list02 li .d_tab_list02_rig{
+    float: right;
+}
+.d_tab .d_tab_main .d_tab_img p{
+    line-height: 1.96rem;
+    font-size:0.66rem;
+    color: #3c3c3c;
+    font-weight: bold;
+    border-bottom:solid 1px #c6c6c6;
+    padding-left:20px;
+    background:#fff;
+}
+

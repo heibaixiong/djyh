@@ -2,7 +2,7 @@
 if(!defined('PART'))exit;
 
 if(!_session('weixin_openid') || !_session('webid')){
-	//_url(_u('/index/auth'));
+	_url(_u('/index/auth'));
 }
 
 //商品列表页

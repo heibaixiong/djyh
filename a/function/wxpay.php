@@ -19,7 +19,7 @@ function _getPaymentForm($order_id = 0) {
 
 	$notify_url = 'http://'.$_SERVER['HTTP_HOST'] . '/callback/payment/wxpay.php';
 
-	$return_url = _u('/cart/success/');
+	//$return_url = _u('/cart/success/');
 
 	$out_trade_no = $order_id;
 
@@ -47,7 +47,7 @@ function _getPaymentForm($order_id = 0) {
 	$input->SetTotal_fee($total_fee);
 	$input->SetTime_start(date("YmdHis"));
 	$input->SetTime_expire(date("YmdHis", time() + 600));
-	$input->SetGoods_tag("test goods tags");
+	//$input->SetGoods_tag("test goods tags");
 	$input->SetNotify_url($notify_url);
 	$input->SetTrade_type("JSAPI");
 	$input->SetOpenid($openId);
@@ -55,7 +55,7 @@ function _getPaymentForm($order_id = 0) {
 	//echo "4";
 
 	$order = WxPayApi::unifiedOrder($input);
-	print_r($order);
+	//print_r($order);
 
 	//echo "5";
 	//echo '<font color="#f00"><b>统一下单支付单信息</b></font><br/>';
@@ -67,8 +67,8 @@ function _getPaymentForm($order_id = 0) {
 	$data['editAddress'] = $tools->GetEditAddressParameters();
 	//echo "7";
 
-	$data['return_url'] = $this->url->link('checkout/success');
-	$data['checkout_url'] = $this->url->link('checkout/checkout');
+	//$data['return_url'] = $this->url->link('checkout/success');
+	//$data['checkout_url'] = $this->url->link('checkout/checkout');
 
 	extract($data);
 

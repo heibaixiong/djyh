@@ -22,9 +22,9 @@
             </a>
         </li>
         <li id="tabbar4">
-            <a href="#">
+            <a href="<?php echo _u('/person/order'); ?>">
                 <span class="footer_icon04"></span>
-                <p>个人中心</p>
+                <p>我的订单</p>
             </a>
         </li>
     </ul>

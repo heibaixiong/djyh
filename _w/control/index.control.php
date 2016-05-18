@@ -3,6 +3,10 @@ if(!defined('PART'))exit;
 
 if(!_session('weixin_openid') || !_session('webid')){
 	_url(_u('/index/auth'));
+	//_session('weixin_openid', 'oivF8wVNcYmaPoOTbX11lgA1oqCo');
+	//_session('webid', 84);
+	//var_dump(_session());
+	//exit;
 }
 
 //微信端首页面

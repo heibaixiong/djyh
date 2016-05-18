@@ -1,150 +1,148 @@
-<?php
-if(!defined('PART'))exit;
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!doctype html>
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title><?php echo $_['title'];?></title>
-<?php
-_css('default');
-_css('v1.0');
-_css('style');
-_jq();
-?>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title><?php echo $_['title'];?></title>
+    <?php
+    _css('aui');
+    _css('commons');
+    _css('my_car');
+    ?>
 </head>
 <body>
-<?php
-_part('top');
-_part('head');
-_part('nav');
-?>
-<!-- 主体 -->
-<div class="main-Body">
-    <div class="main-content">
-        <div class="main-body-w">
-            <h4 class="hBorder">我的进货单</span>
-                <div class="progress-jhd1"></div>
-            </h4>
-            <table class="table-orderList">
-                <form action="<?php echo _u('//checkout/'); ?>" method="post" id="cart-form">
-                    <tbody>
-                    <tr style="height:35px;">
-                        <td width="1%" style="background-color: #eee;"><input type="checkbox" name="checkbox_all" title="全选" /></td>
-                        <td width="30%" style="background-color: #eee;">
-                            <span class="fl">商品</span>
-                        </td>
-                        <td style="background-color: #eee;" width="10%">单价(元)</td>
-                        <td style="background-color: #eee;" width="10%">数量</td>
-                        <td style="background-color: #eee;" width="10%">小计</td>
-                        <td style="background-color: #eee;" width="5%">操作</td>
-                    </tr>
-                    	<?php
-                        $cid = -1;
-	                    foreach ($_['arr'] as $k=>$v) {
-                            if ($v['company_id'] <> $cid) {
-                                $cid = $v['company_id'];
-	                    ?>
-                                <tr style="height:40px;">
-                                    <td colspan="6" style="text-align:left;padding-left:5px;border: 0px;vertical-align: bottom;padding-bottom: 5px;">
-                                        <span style="color:#d31a26;font-weight:bold;">
-                                            <input type="checkbox" name="cart_checkbox_<?php echo $v['company_id']; ?>" data-cid="<?php echo $v['company_id']; ?>" />
-                                            [<?php echo $v['company']; ?>]
-                                        </span>
-                                    </td>
-                                </tr>
+<!-- 头部start -->
+<header class="aui-nav aui-bar aui-bar-nav aui-bar-dark" id="top_nav">
+    <div class="aui-col-xs-2" onclick="history.go(-1)">
+        <span class="aui-pull-left" style="padding-left: 5px;">
+           <span class="aui-iconfont aui-icon-left"></span>
+        </span>
+    </div>
+    <div class="aui-col-xs-8" style="text-align: center;width:62%;">
+        <a class="car_icon01" style="">购物车</a>
+    </div>
+    <div class="aui-col-xs-2" style="width:20%;">
+        <span class="aui-pull-right" style="padding-right:5px;padding-top:2px;">
+             <a href="#" class="index_car" style="background:none;font-size:20px;color:#fff;">编辑</a>
+        </span>
+    </div>
+</header>
+<div>
+<!-- 头部end -->
 
-                        <?php
-                            }
-                        ?>
-                    	<tr>
-                            <td width="1%">
-                                <input type="checkbox" name="cart_goods[]" data-toggle="<?php echo $v['company_id']; ?>" value="<?php echo $v['id']; ?>" />
-                            </td>
-                            <td width="30%">
-                                <div class="fl">
-                                    <div class="proImg">
-                                        <img src="<?php echo _resize($v['img'], 60, 60); ?>">
-                                    </div>
-                                    <div class="proDetails">
-                                        <a id="GoodsName865912" href="<?php echo _u('/shop/show/'.$v['wid'].'/');?>" style="float: left;" target="_blank"><?php echo $v['wtitle']?></a>
-                                        <?php
-                                        if (!empty($options = unserialize($v['model']))) {
-                                            echo '<label style="float: left;clear: both; margin-top: 5px;">';
-                                            foreach ($options as $option) {
-                                                echo $option['name'].'：'.$option['value'].'&nbsp;&nbsp;';
-                                            }
-                                            echo '</label>';
-                                        }
-                                        ?>
-                                        <p style="clear: both;float:left;width:100%;margin-top: 5px;">给卖家留言：
-                                        <input type="text" name="comment[<?php echo $v['id']; ?>]" value="<?php echo $v['content']; ?>" style="width: 80%;" />
-                                        </p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td width="10%">
-                                <span price="42.50" id="865912" class="red block GoodsPrice">￥<?php echo _rmb($v['mark']/100);?></span>
-                            </td>
-                            <td width="10%">
-                                <p class="">
-                                    <?php echo $v['num']?>
-                                </p>
-                            </td>
-                            <td width="10%"><b class="red GoodsTotalPrice">￥<?php echo _rmb($v['mark']/100*$v['num']);?></b></td>
-                            <td width="5%"><a class="red" cartid="" href="<?php echo _u('/cart/del/'.$v['id'].'/');?>">删除</a></td>
-                        </tr>
-                    <?php
-                    }
-                    ?>
-                    </tbody>
-                </form>
-            </table>
-            <div id="orderTotalInfo" class="gross-price-js">
-                <div class="fl gross-left">
-                    <input type="button" onclick="location = '<?php echo _u('/index/index/');?>'" value="&lt;&lt;继续购物" class="btn-gray3">
-                </div>
-                <div class="fr gross-right">
-                    <div class="fl">
-                        <p class="fl">已选了商品总计:<b class="red font18"> <span class="red"><?php echo $_['num'];?></span></b></p>
-                        <p class="fl">总金额：<b class="red font18"><strong>￥<?php echo _rmb($_['mark']/100);?></strong></b></p>
+<div style="position: absolute;top: 50px;bottom: 55px;overflow-y: scroll;-webkit-overflow-scrolling: touch; width:100%; ">
+    <!--main-->
+    <div class="big_main">
+        <div class="aui-content">
+
+            <!-- 购物车商品列表start -->
+            <?php
+            foreach($_['arr'] as $k => $v){
+            ?>
+            <div class="aui-content order_content" >
+                <div class="detail_home_lin01"><a href="#"><?php echo $v['company']; ?></a></div>
+                <div class="index_content">
+                    <div class="aui-col-xs-4" >
+                        <a href="#" class="index_pro02">
+                            <img src="<?php echo $v['img']; ?>" >
+                        </a>
+
                     </div>
-                    <p class="fl"><a class="return-btn" href="<?php echo _u('/cart/checkout/');?>" id="btn-cart-checkout">结算</a></p>
+                    <div class="aui-col-xs-8" >
+                        <div class="index_bleft">
+                            <p class="index_text01"><a href="#"><?php echo $v['wtitle']; ?></a></p>
+                            <p class="index_text02"><?php echo $v['class1name']; ?></p>
+                            <div class="index_text03">
+                                <a>￥<?php echo _rmb($v['mark']/100);?></a>
+                                <div class="detail_sl">
+                                    <span class="detail_jian"></span>
+                                    <input type="text" value="<?php echo $v['num']; ?>">
+                                    <span class="detail_jia"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                <?php
+                }
+                ?>
+                <!-- 购物车商品列表end -->
+
+                <ul class="order_linbox">
+                    <li class="order_lin01">
+                        <a>应付：<em>￥<?php echo _rmb($_['mark']/100);?></em></a>
+                        <a>已选<em><?php echo $_['num']; ?></em>件商品</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="car_bom">
+            <a class="car_bom_qx">全选</a>
+            <div class="car_bom_rig">
+                <a>合计：<em>￥<?php echo _rmb($_['mark']/100);?></em></a>
+                <a href="<?php echo _u('/cart/submit/'); ?>">结算(<em><?php echo $_['num']; ?></em>件)</a>
             </div>
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    $('input[name^="cart_checkbox_"]').click(function(){
-        var _cid = $(this).data('cid');
-        $('input[data-toggle="'+_cid+'"]').prop('checked', $(this).prop('checked'));
-        $('input[name="checkbox_all"]').prop('checked', $('input[name="cart_goods[]"]:checked').length?$('input[name="cart_goods[]"]:checked').eq(0).prop('checked'):false);
-    });
-    $('input[name="cart_goods[]"]').click(function(){
-        var _cid = $(this).data('toggle');
-        $('input[name=cart_checkbox_'+_cid+']').prop('checked', $('input[data-toggle="'+_cid+'"]:checked').length?$('input[data-toggle="'+_cid+'"]:checked').eq(0).prop('checked'):false);
-        $('input[name="checkbox_all"]').prop('checked', $('input[name="cart_goods[]"]:checked').length?$('input[name="cart_goods[]"]:checked').eq(0).prop('checked'):false);
-    });
-    $('input[name="checkbox_all"]').click(function(){
-        $('input[name^="cart_checkbox_"]').prop('checked', $(this).prop('checked'));
-        $('input[name="cart_goods[]"]').prop('checked', $(this).prop('checked'));
-    });
 
-    $(document).delegate('#btn-cart-checkout', 'click', function(e) {
-        e.preventDefault();
-        if ($('input[name="cart_goods[]"]:checked').length <= 0) {
-            alert('请选择要结算的商品！');
-        } else {
-            $('#cart-form').submit();
+<?php
+_part('footer');
+?>
+<script>
+
+    var arr_old_bgp = ["footer_icon01","footer_icon02","footer_icon03","footer_icon04"],
+        arr_new_bgp = ["footer_bh01","footer_bh02","footer_bh03",'footer_bh04',];
+    $('.aui-bar-tab li').click(function(){
+        var guide =$(this).index();
+        var $this = $(this),
+            index = $this.index();
+        $this.parent().find('li').each(function(i,e){
+
+            $(this).find('span').removeClass(arr_new_bgp[i]);
+
+        });
+
+        $(this).find('span').addClass(arr_new_bgp[index]).siblings("p").css("color","#ff0000").parents("li").siblings("li").find("span").removeClass(arr_new_bgp[index]).siblings("p").css("color","#3c3c3c");
+    });
+    // 单独店铺全选 取消全选
+    $(".detail_home_lin01 ").click(function(){
+        if($(this).find("a").hasClass("select_true") == true){
+
+            $(this).find("a").removeClass("select_true");
+            $(this).siblings(".index_content").find(".index_pro02").removeClass("select_true");
+        }else{
+            $(this).find("a").addClass("select_true");
+            $(this).siblings(".index_content").find(".index_pro02").addClass("select_true");
         }
+
+    })
+    // 单个商品的选择
+    $(".index_pro02").click(function(){
+
+        if($(this).hasClass("select_true") == true){
+
+            $(this).removeClass("select_true");
+        }else{
+            $(this).addClass("select_true");
+        }
+    })
+    // 全选 取消全选
+    $(".car_bom_qx").click(function(){
+        if($(this).hasClass("select_true") == true){
+            $(this).removeClass("select_true");
+            $(".detail_home_lin01 a").removeClass("select_true");
+            $(".index_pro02").removeClass("select_true");
+        }else{
+            $(this).addClass("select_true");
+            $(".detail_home_lin01 a").addClass("select_true");
+            $(".index_pro02").addClass("select_true");
+        }
+
     });
 </script>
-<!-- //主体 -->
-<?php
-_part('footer1');
-_part('footer2');
-_part('footer3');
-?>
+
 </body>
 </html>

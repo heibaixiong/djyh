@@ -13,15 +13,16 @@ function __index(){
 	 * 2.获取商品详情
 	 * 3.获取公司详情
 	 * */
-	$sql = "select og.*, c.id as company_id, c.compony as company, g.uid as seller_id from " . PRE . "cart as og left join " . PRE . "ware as g on og.wid = g.id left join " . PRE . "compony as c on g.uid = c.aid" .
+	$sql = "select og.*, c.id as company_id, c.compony as company, g.uid as seller_id, g.class1name from " . PRE . "cart as og left join " . PRE . "ware as g on og.wid = g.id left join " . PRE . "compony as c on g.uid = c.aid" .
 		" where og.uid = " . $webid . " and og.state = 0 and g.state = 0" .
 		" order by c.id, og.addtime, og.id"
 	;
 
 	$goods = _sqlselect($sql);
-	var_dump($goods);exit;
+	//var_dump($goods);exit;
 	$mark=0;
 	$num=0;
+	//计算商品总价
 	foreach($goods as $k => $v){
 		$mark+=$v['mark']*$v['num'];
 		$num+=$v['num'];
@@ -30,10 +31,10 @@ function __index(){
 	_c('mark', $mark);
 	_c('num', $num);
 	_c('title', '购物车');
-
 	_tpl();
 }
 
+//结算
 function __checkout(){
 /*
 	//如果是微信浏览器，并且不存在微信openid，则转去获取微信openid获取程序
@@ -125,19 +126,11 @@ function __submit(){
 	$order['express'] = '东家物流';
 	$order['expressprice'] = 0;
 
-	if (array_key_exists(_post('payment_method'), $_wrap['payment_method'])) {
-		$order['payment_code'] = $_wrap['payment_method'][_post('payment_method')]['code'];
-		$order['payment'] = $_wrap['payment_method'][_post('payment_method')]['title'];
-		$order['state'] = $_wrap['payment_method'][_post('payment_method')]['state'];
-	} else {
-		/*$order['payment_code'] = 'cod';
-		$order['payment'] = '货到付款';
-		$order['state'] = 2;*/
-		_alerturl('请选择支付方式！', _u('/cart/checkout/'));
-	}
+	$order['payment_code'] = 'wxpay';
+	$order['payment'] = '微信';
+	$order['state'] = 1;
 
-
-	$order_id = _sqlinsert('order', $order);
+	$order_id = _sqlinsert('order', $order);	//插入订单
 	if ($order_id) {
 		_sqldo('update '.PRE.'cart set orderid = '.$order_id.', state = '.$order['state'].', uptime='.time().' where uid='.$webid.' and (state=0)');
 		if ($order['state'] == 1) {

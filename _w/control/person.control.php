@@ -2,8 +2,8 @@
 if(!defined('PART'))exit;
 $webid=_session('webid');
 if(empty($webid)){
-	_url(_u('/index/login/'));
-	die();
+	//_url(_u('/index/auth/'));
+	//die();
 }
 function __index(){
 	/*$webid=_session('webid');
@@ -33,32 +33,37 @@ function __order(){
 	global $_;
 	global $_wrap;
 
-	$webid=_session('webid');
+	$webid = _session('webid');
 
-	_c('total_all', _sqlnum('order', 'uid='.$webid));
-	_c('total_1', _sqlnum('order', 'uid='.$webid.' and state=1'));
-	_c('total_2', _sqlnum('order', 'uid='.$webid.' and state=2'));
-	_c('total_3', _sqlnum('order', 'uid='.$webid.' and state=3'));
-	_c('total_4', _sqlnum('order', 'uid='.$webid.' and state=4'));
-	_c('total_12', _sqlnum('order', 'uid='.$webid.' and state=12'));
+	_c('total_all', _sqlnum('order', 'uid='.$webid));	//所有订单
+	_c('total_1', _sqlnum('order', 'uid='.$webid.' and state=1'));	//等待付款
+	_c('total_2', _sqlnum('order', 'uid='.$webid.' and state=2'));	//已付款
+	_c('total_3', _sqlnum('order', 'uid='.$webid.' and state=3'));	//已发货
+	_c('total_4', _sqlnum('order', 'uid='.$webid.' and state=4'));	//已完成
+	_c('total_12', _sqlnum('order', 'uid='.$webid.' and state=12'));	//已关闭
 
-	$p=_v(3);
+	$p = _v(3);	//分页
 	if(empty($p)){
-		$p=0;
+		$p = 0;
 	}
 
 	$where = 'uid='.$webid;
-	if (in_array(_v(4), array(1,2,3,4,12))) {
+	if (in_array(_v(4), array(1,2,3,4,12))) {		//订单状态
 		$where .= ' and state = \''.intval(_v(4)).'\'';
 	}
 
 	Page::start('order', $p, $where, 'addtime desc, id desc', 10);
-
+	//var_dump(Page::$arr);exit;
 	foreach (Page::$arr as $k => $order) {
-		$sql = "select og.*, c.id as company_id, c.compony as company, g.uid as seller_id from " . PRE . "cart as og left join " . PRE . "ware as g on og.wid = g.id left join " . PRE . "compony as c on g.uid = c.aid" .
+		/*
+		 *第一步：获取订单下的购物车中所有商品
+		 *第二部：获取每个产品的详情
+		 *第三部：获取产品所属的公司信息
+		*/
+		$sql = "select og.*, c.id as company_id, c.compony as company, g.uid as seller_id, g.class1name from " . PRE . "cart as og left join " . PRE . "ware as g on og.wid = g.id left join " . PRE . "compony as c on g.uid = c.aid" .
 			" where og.orderid = " . $order['id'] .
-			" order by c.id, og.addtime, og.id"
-		;
+			" order by c.id, og.addtime, og.id" ;
+		//var_dump($sql);exit;
 		$order_goods = _sqlselect($sql);
 		Page::$arr[$k]['goods'] = $order_goods;
 		Page::$arr[$k]['status'] = $_['user_order_status'][$order['state']];
@@ -79,7 +84,8 @@ function __order(){
 			}*/
 		}
 	}
-
+	//echo '<pre>';
+	//print_r(Page::$arr);exit;
 	_c('title','我的订单');
 	_c('order_state', $_['user_order_status']);
 	_c('payment_method', $_wrap['payment_method']);
@@ -176,32 +182,26 @@ function __order_receipt() {
 	_header( _u('//order/'.intval(_v(4))));
 }
 
+//微信支付部分 -- 公众号支付
 function __order_pay(){
 	global $_;
 	global $_wrap;
 
 	$webid=_session('webid');
 
-	$order = _sqlone('order', 'state=1 and id='.intval(_v(3)).' and uid='.$webid);
+	$order = _sqlone('order', 'state=1 and id='.intval(_v(3)).' and uid='.$webid);	//查询订单
 	if (empty($order)) {
 		_alerturl('订单不存在或状态不允许！', _u('//order/'._v(4).'/'));
 	}
 
-	$order['goods'] = _sqlall('cart','orderid='.$order['id']);
+	$order['goods'] = _sqlall('cart','orderid='.$order['id']);	//查询订单中的商品列表
 	$order['status'] = $_['user_order_status'][$order['state']];
-
-	/*$sql = "select og.*, c.id as company_id, c.compony as company, g.uid as seller_id from " . PRE . "cart as og left join " . PRE . "ware as g on og.wid = g.id left join " . PRE . "compony as c on g.uid = c.aid" .
-		" where og.orderid = " . $order['id'] . " and g.uid = " . intval(_v(5)) .
-		" order by c.id, og.addtime, og.id"
-	;
-
-	$order['goods'] = _sqlselect($sql);*/
 
 	if (empty($order['goods'])) {
-		_alerturl('订单不存！', _u('//order/'._v(4).'/'));
+		_alerturl('订单不存在！', _u('//order/'._v(4).'/'));
 	}
 
-	$order['status'] = $_['user_order_status'][$order['state']];
+	//$order['status'] = $_['user_order_status'][$order['state']];
 
 	$order['payment_data'] = '';
 	if ($order['state'] == '1' && !is_null(_post('payment_method')) && array_key_exists(_post('payment_method'), $_wrap['payment_method'])) {

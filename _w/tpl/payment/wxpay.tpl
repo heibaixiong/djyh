@@ -9,12 +9,10 @@
 				WeixinJSBridge.log(res.err_msg);
 			   if(res.err_msg == "get_brand_wcpay_request:ok"){
 				 //alert(res.err_code+res.err_desc+res.err_msg);
-					 window.location.href="<?php echo $return_url; ?>";
+				 	alert('支付成功');
 				 }else{
 					 //返回跳转到订单详情页面
 					 alert(支付失败);
-					 window.location.href="<?php echo $checkout_url; ?>";
-					   
 				 }
 				//alert(res.err_code+res.err_desc+res.err_msg);
 			}
