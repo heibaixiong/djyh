@@ -41,7 +41,7 @@ function __order(){
 	_c('total_2', _sqlnum('order', 'uid='.$webid.' and state=2'));	//已付款
 	_c('total_3', _sqlnum('order', 'uid='.$webid.' and state=3'));	//已发货
 	_c('total_4', _sqlnum('order', 'uid='.$webid.' and state=4'));	//已完成
-	_c('total_12', _sqlnum('order', 'uid='.$webid.' and state=12'));	//已关闭
+	//_c('total_12', _sqlnum('order', 'uid='.$webid.' and state=12'));	//已关闭
 
 	$p = _v(3);	//分页
 	if(empty($p)){
@@ -49,7 +49,7 @@ function __order(){
 	}
 
 	$where = 'uid='.$webid;
-	if (in_array(_v(4), array(1,2,3,4,12))) {		//订单状态
+	if (in_array(_v(4), array(1,2,3,4))) {		//订单状态
 		$where .= ' and state = \''.intval(_v(4)).'\'';
 	}
 
@@ -192,16 +192,17 @@ function __order_pay(){
 
 	$webid=_session('webid');
 
-	$order = _sqlone('order', 'state=1 and id='.intval(_v(3)).' and uid='.$webid);	//查询订单
+	$id = $_POST['id'];
+	$order = _sqlone('order', 'state=1 and id='.intval($id).' and uid='.$webid);	//查询订单
 	if (empty($order)) {
-		_alerturl('订单不存在或状态不允许！', _u('//order/'._v(4).'/'));
+		exit(json_encode(100));	//订单不存在
 	}
 
 	$order['goods'] = _sqlall('cart','orderid='.$order['id']);	//查询订单中的商品列表
 	$order['status'] = $_['user_order_status'][$order['state']];
 
 	if (empty($order['goods'])) {
-		_alerturl('订单不存在！', _u('//order/'._v(4).'/'));
+		exit(json_encode(100));	//订单不存在
 	}
 
 	//$order['status'] = $_['user_order_status'][$order['state']];
@@ -229,25 +230,17 @@ function __order_pay(){
 	}
 
 	if (empty($order['payment_data'])) {
-		_alerturl('支付方式异常，请选择其它支付方式或稍后再试！', _u('//order/'._v(4).'/'));
+		exit(json_encode(101));		//支付方式异常，请选择其它支付方式或稍后再试！
 	} else {
 		$data = array();
 		$data['payment_code'] = $_wrap['payment_method'][_post('payment_method')]['code'];
 		$data['payment'] = $_wrap['payment_method'][_post('payment_method')]['title'];
 		$data['uptime'] = time();
 		if (!_sqlupdate('order', $data, 'state=1 and id='.intval(_v(3)).' and uid='.$webid)) {
-			_alerturl('支付方式更新异常，请稍后再试！', _u('//order/'._v(4).'/'));
+			exit(json_encode(102));		//支付方式更新异常，请稍后再试！
 		}
 	}
-
-	$order['payment'] = $_wrap['payment_method'][_post('payment_method')]['title'];
-	$order['payment_code'] = $_wrap['payment_method'][_post('payment_method')]['code'];
-
-	_c('order', $order);
-	_c('order_state', $_['user_order_status']);
-	_c('page', intval(_v(4)));
-	_c('title','订单支付');
-	_tpl();
+	echo ($order['payment_data']);exit;
 }
 
 function __order_close() {

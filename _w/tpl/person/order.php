@@ -76,7 +76,7 @@ _css('my_order');
 					<li class="order_lin02">
 					<?php
 						if($v1['state'] == '1'){
-							echo '<a href="#"><span>立即支付</span></a>';
+							echo '<a href="#" data-id="' . $v1['id'] . '" class="pay-now"><span>立即支付</span></a>';
 							echo '<a href="' .  _u('/person/order_close/'.$v1['id'].'/'.Page::$p) . '" class="cancleOrder"><span>取消订单</span></a>';
 						}else if($v1['state'] == '2'){
 							echo '<a href="#"><span>等待发货</span></a>';
@@ -100,22 +100,8 @@ _css('my_order');
 <?php
 _part('footer');
 ?>
-
+<div class="paybox" style="display: none;"></div>
 <script type="text/javascript">
-	$('.a-open-btn').click(function(){
-		if ($(this).data('state') === false) {
-			$(this).html('[收起]');
-			$(this).data('state', true);
-			$(this).closest('table').find('tbody tr').show();
-		} else {
-			$(this).html('[展开]');
-			$(this).data('state', false);
-			$(this).closest('table').find('tbody tr').each(function(e, b){
-				if (e > 2) $(b).hide();
-			});
-		}
-	});
-
 	//关闭订单操作
 	$(document).delegate('a.cancleOrder', 'click', function(e){
 		e.preventDefault();
@@ -133,6 +119,20 @@ _part('footer');
 			window.location.href = $(this).attr('href');
 		}
 		return false;
+	});
+
+	//pay now
+	$(".pay-now").click(function(){
+		var id = parseInt($(this).attr('data-id'));
+		var url = '<?php echo _u('/person/order_pay/'); ?>' + id;
+		$.post(url, {id:id, payment_method:'weixin'}, function(data){
+			if(data != '100' && data != '101' && data != '102'){
+				$(".paybox").append(data);
+				$('body').delegate("#btn-cart-pay", 'click');
+			}else{
+				alert('支付失败，请稍后再试');
+			}
+		});
 	});
 </script>
 <!-- //主体 -->
