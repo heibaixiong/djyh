@@ -16,12 +16,12 @@
 <body>
 <!--头部-->
 <header class="aui-nav aui-bar aui-bar-nav aui-bar-dark" id="top_nav">
-	<div class="aui-col-xs-2" style="width:18%;">
-        <span class="aui-pull-left">
+	<div class="aui-col-xs-2" style="width:18%;" onclick="history.go(-1)">
+        <span class="aui-pull-left" style="padding-left: 5px;">
            <span class="aui-iconfont aui-icon-left"></span>
         </span>
 	</div>
-	<div class="aui-col-xs-8">
+	<div class="aui-col-xs-8" style="width:62%">
 		<div class="aui-searchbar" id="search">
 			<form style="width:100%;">
 				<input type="search" placeholder="请输入搜索内容" id="search-input">
@@ -29,9 +29,9 @@
 			</form>
 		</div>
 	</div>
-	<div class="aui-col-xs-2">
-         <span class="aui-pull-right">
-            <a class="index_car">搜索</a>
+	<div class="aui-col-xs-2" style="width:20%;">
+         <span class="aui-pull-right" style="padding-right:5px;padding-top:2px;">
+            <a class="index_car good-search">搜索</a>
         </span>
 	</div>
 </header>
@@ -50,7 +50,7 @@
 		<!-- tab01-->
 		<div class="det_tab01" >
 			<div class="det_img">
-				<img src="<?php echo $_['rs']['img']; ?>">
+				<img src="<?php echo _resize($_['rs']['img'], 600, 600); ?>">
 			</div>
 			<!--题目-->
 			<div class="det_tit">
@@ -182,7 +182,7 @@
 				foreach($_['list'] as $k => $v){
 					?>
 					<li>
-						<div class="detail_hot_img"><a href="<?php echo _u('/shop/show/'.$v['id']); ?>"><img src="<?php echo $v['img']; ?>"></a> <span class="store_one">推荐<br>商品</span></div>
+						<div class="detail_hot_img"><a href="<?php echo _u('/shop/show/'.$v['id']); ?>"><img src="<?php echo _resize($v['img'], 300, 300); ?>"></a> <span class="store_one">推荐<br>商品</span></div>
 						<p class="detail_hot_wz"><a href="<?php echo _u('/shop/show/'.$v['id']); ?>" class="aui-ellipsis-1"><?php echo $v['title']; ?></a></p>
 						<p class="detail_hot_wz02"><span class="detail_hot_pice">￥<?php echo _rmb($_['rs']['mark']/100);?></span><span class="detail_hot_num">已售<em><?php echo $_['rs']['sale'];?></em>件</span></p>
 					</li>
@@ -216,9 +216,8 @@
 					<li class="aui-content index_content det_newcont" style="background: #fff;padding-top:20px;">
 						<div class="aui-col-xs-4" >
 							<a href="#" class="index_pro02">
-								<img src="<?php echo $_['rs']['img']; ?>" >
+								<img src="<?php echo _resize($_['rs']['img'], 300, 300); ?>" >
 							</a>
-
 						</div>
 						<div class="aui-col-xs-8" >
 							<div class="index_bleft">

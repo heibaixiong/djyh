@@ -26,18 +26,17 @@ _css('commons');
         <div class="aui-searchbar" id="search">
             <form style="width:100%;">
                 <input type="search" placeholder="请输入搜索内容" id="search-input">
-                <a href="#" class="aui-iconfont aui-icon-search search_icon" ></a>
+                <a href="#" class="aui-iconfont aui-icon-search search_icon"></a>
             </form>
         </div>
     </div>
     <div class="aui-col-xs-2" style="width:20%;">
         <span class="aui-pull-right" style="padding-right:5px;padding-top:2px;">
-            <a class="index_car">搜索</a>
+            <a class="index_car good-search">搜索</a>
         </span>
     </div>
 </header>
-<div>
-
+<div style="position: absolute;top: 50px;bottom: 55px;overflow-y: scroll;-webkit-overflow-scrolling: touch; width:100%; ">
     <!--轮播start-->
     <?php
         if(isset($_['flash']) && count($_['flash']) > 0) {
@@ -46,7 +45,7 @@ _css('commons');
         <div class="swiper-wrapper">
             <?php
             foreach ($_['flash'] as $k => $v) {
-                echo '<div class="swiper-slide" ><a href="' . ($v['url'] ? _u('/index/ads/' . $v['id'] . '/') : '#') . '" ><img  src="' . $v['img'] . '" /></a></div>';
+                echo '<div class="swiper-slide" ><a href="' . ($v['url'] ? _u('/index/ads/' . $v['id'] . '/') : '#') . '" ><img  src="' . _resize($v['img'], 400, 240) . '" /></a></div>';
             }
             ?>
         </div>

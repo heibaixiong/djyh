@@ -31,6 +31,8 @@ function __index(){
 	_c('mark', $mark);
 	_c('num', $num);
 	_c('title', '购物车');
+
+	_c('foot_nav', 3);	//脚部样式控制
 	_tpl();
 }
 

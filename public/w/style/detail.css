@@ -229,18 +229,16 @@ body{
     position: relative;
 }
 .detail_hot .detail_hot_min .detail_hot_img .store_one{
-    width:45px;
-    height:45px;
+    width:30px;
+    height:30px;
     background:#ff0000;
     color:#fff;
-    line-height: 15px;
+    line-height: 14px;
     text-align: center;
-    padding-top:7px;
     position: absolute;
     right: 0;
     top:0;
-    font-size: 14px;
-    font-weight: bold;
+    font-size: 11px;
 }
 .detail_hot .detail_hot_min .detail_hot_wz{
     padding-left:5px;

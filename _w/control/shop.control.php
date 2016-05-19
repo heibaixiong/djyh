@@ -22,8 +22,13 @@ function __index(){
 		$paixu = 0;
 	}
 
+	$keyword = '';
+	if(_v(6) && trim(_v(6)) != ''){
+		$keyword = urldecode(_v(6));
+	}
+
 	global $_;
-	$_['good_list'] = get_good_list($cid, $page, $paixu);
+	$_['good_list'] = get_good_list($cid, $page, $paixu, $keyword);
 
 	//如果是AJAX提交，则返回JSON数据
 	if(isAjax()){
@@ -31,11 +36,10 @@ function __index(){
 		exit(json_encode($_['good_list']));
 	}
 
-	//var_dump($rs);exit;
-
 	_c('title', '商品列表');
 	_c('ajax_url', _u('/shop/index'));
 
+	_c('foot_nav', 2);	//脚部样式控制
 	_tpl();
 }
 
@@ -77,6 +81,8 @@ function __show(){
 	_c('youjiao',array('', '推荐', '最新', '热门'));
 	//该供货商的其他商品
 	_c('list',_sqlall('ware', 'state=0 and uid='.$arr['uid'].' and id !='.$arr['id'], 'px,id desc', 6));
+
+	_c('foot_nav', 2);	//脚部样式控制
 	_tpl();
 }
 
@@ -85,14 +91,16 @@ function __show(){
  * 2.$page页数，默认第一页
  * 3.$paixu,排序方式：0ID降序；1销量升序;2销量降序;3价格升序;4价格降序；5时间升序;6时间降序
  * */
-function get_good_list($cid = 0, $page = 1, $paixu = 0){
+function get_good_list($cid = 0, $page = 1, $paixu = 0, $keyword = ''){
 	//return $paixu;
 	//条件整合
 	$condition = 'state = 0';
 	if(is_int($cid) && $cid > 0){
 		$condition .= ' and ( class1 = '.$cid .' or class2 = ' . $cid . ')';
 	}
-
+	if($keyword != ''){
+		$condition .= ' and title like "%' . $keyword . '%"';
+	}
 	//return $condition;
 
 	//排序方式

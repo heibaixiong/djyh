@@ -20,12 +20,12 @@
 <body>
 <!-- 头部start -->
 <header class="aui-nav aui-bar aui-bar-nav aui-bar-dark" id="top_nav">
-    <div class="aui-col-xs-2" style="width:18%;">
+    <div class="aui-col-xs-2" style="width:18%;" onclick="history.go(-1)">
         <span class="aui-pull-left" style="padding-left: 5px;">
            <span class="aui-iconfont aui-icon-left"></span>
         </span>
     </div>
-    <div class="aui-col-xs-8" style="width:62%">
+    <div class="aui-col-xs-8" style="width:60%">
         <div class="aui-searchbar" id="search">
             <form style="width:100%;">
                 <input type="search" placeholder="请输入搜索内容" id="search-input">
@@ -33,9 +33,9 @@
             </form>
         </div>
     </div>
-    <div class="aui-col-xs-2" style="width:20%;">
+    <div class="aui-col-xs-2" style="width:22%;">
         <span class="aui-pull-right" style="padding-right:5px;padding-top:2px;">
-            <a class="index_car" style="background:none;font-size:20px;color:#fff;">筛选</a>
+            <a class="index_car good-search" style="background:none;font-size:20px;color:#fff;">筛选</a>
         </span>
     </div>
 </header>

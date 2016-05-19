@@ -90,18 +90,16 @@ body{
     width:100%;
 }
 .index_pro02 span{
-    width:45px;
-    height:45px;
+    width:30px;
+    height:30px;
     background:#ff0000;
     color:#fff;
     text-align: center;
-    font-weight: bold;
-    padding-top:7px;
     position: absolute;
     left: 0;
     top:0;
-    line-height: 15px;
-    font-size:14px;
+    line-height: 14px;
+    font-size:11px;
 }
 .index_text01{
     height:1.67rem;

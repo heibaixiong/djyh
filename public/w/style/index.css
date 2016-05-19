@@ -1,5 +1,5 @@
 
-/*ÂÖ²¥*/
+/*ï¿½Ö²ï¿½*/
 .swiper-wrapper a{
 
 }
@@ -9,16 +9,23 @@
 
 }
 .swiper-container{
-    padding-bottom:24px;
+    padding-bottom:20px;
 }
 .swiper-container-horizontal>.swiper-pagination-bullets{
     background: #e8e8ed;
     bottom:0;
 }
+.swiper-pagination{
+    line-height: 20px;
+    bottom:0;
+    font-size: 17px;
+}
 .swiper-pagination span{
     width:10px;
     height:10px;
     background: #b4b4b8;
+    font-size:17px;
+
 }
 .swiper-pagination .swiper-pagination-bullet-active{
     background:#3c3c3c;
@@ -48,18 +55,16 @@
     width:100%;
 }
 .index_pro02 span{
-    width:45px;
-    height:45px;
+    width:30px;
+    height:30px;
     background:#ff0000;
     color:#fff;
     text-align: center;
-    font-weight: bold;
-    padding-top:7px;
     position: absolute;
     left: 0;
     top:0;
-    line-height: 15px;
-    font-size:14px;
+    line-height: 14px;
+    font-size:11px;
 }
 .index_text01{
     height:1.67rem;

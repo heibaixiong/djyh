@@ -15,19 +15,14 @@ _css('my_order');
 <body>
 <!-- 头部start -->
 <header class="aui-nav aui-bar aui-bar-nav aui-bar-dark" id="top_nav">
-	<div class="aui-col-xs-2" style="width:18%;">
-        <span class="aui-pull-left" style="padding-left: 5px;">
-           <span class="aui-iconfont aui-icon-left" onclick="history.back();"></span>
-        </span>
-	</div>
-	<div class="aui-col-xs-8" style="text-align: center;width:62%;">
-		我的订单
-	</div>
-	<div class="aui-col-xs-2" style="width:20%;">
-        <span class="aui-pull-right" style="padding-right:5px;padding-top:2px;">
-           <!--  <a href="#" class="index_car" style="background:none;font-size:20px;color:#fff;">管理</a> -->
-        </span>
-	</div>
+
+	<a class="aui-pull-left" onclick="history.go(-1)">
+		<span class="aui-iconfont aui-icon-left"></span>
+	</a>
+	<div class="aui-title"><span >我的订单</span></div>
+	<a class="aui-pull-right">
+		<span></span>管理
+	</a>
 </header>
 <!-- 头部end -->
 
@@ -58,7 +53,7 @@ _css('my_order');
 				<div class="index_content">
 					<div class="aui-col-xs-4" >
 						<a href="<?php echo _u('/shop/show/'.$v2['wid']); ?>" class="index_pro02">
-							<img src="<?php echo $v2['img']; ?>" >
+							<img src="<?php echo _resize($v2['img'], 300, 300); ?>" >
 						</a>
 					</div>
 					<div class="aui-col-xs-8" >

@@ -34,6 +34,8 @@ function __index(){
 
 	_c('notice',_sqlone('notice','1 order by px'));
 
+	_c('foot_nav', 1);	//脚部样式控制
+
 	_tpl('index');
 }
 
@@ -43,7 +45,7 @@ function __ads(){
 	$info = _sqlone('ad','id = '.$id);
 	if($info){
 		$sql = 'update `'. PRE . 'ad` set `hits` = `hits` + 1 where `id` = '.$id;	//点击次数+1
-		_sqlselect($sql);
+		_sqldo($sql);
 		if($info['url']){
 			header('Location:'.$info['url']);
 			exit;

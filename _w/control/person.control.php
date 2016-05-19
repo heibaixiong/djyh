@@ -89,6 +89,8 @@ function __order(){
 	_c('title','我的订单');
 	_c('order_state', $_['user_order_status']);
 	_c('payment_method', $_wrap['payment_method']);
+
+	_c('foot_nav', 4);	//脚部样式控制
 	_tpl();
 }
 

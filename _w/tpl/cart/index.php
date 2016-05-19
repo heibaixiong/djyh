@@ -14,19 +14,14 @@
 <body>
 <!-- 头部start -->
 <header class="aui-nav aui-bar aui-bar-nav aui-bar-dark" id="top_nav">
-    <div class="aui-col-xs-2" onclick="history.go(-1)">
-        <span class="aui-pull-left" style="padding-left: 5px;">
-           <span class="aui-iconfont aui-icon-left"></span>
-        </span>
-    </div>
-    <div class="aui-col-xs-8" style="text-align: center;width:62%;">
-        <a class="car_icon01" style="">购物车</a>
-    </div>
-    <div class="aui-col-xs-2" style="width:20%;">
-        <span class="aui-pull-right" style="padding-right:5px;padding-top:2px;">
-             <a href="#" class="index_car" style="background:none;font-size:20px;color:#fff;">编辑</a>
-        </span>
-    </div>
+
+    <a class="aui-pull-left" onclick="history.go(-1)">
+        <span class="aui-iconfont aui-icon-left"></span>
+    </a>
+    <div class="aui-title"><span class="car_icon01">购物车</span></div>
+    <a class="aui-pull-right">
+        <span></span>编辑
+    </a>
 </header>
 <div>
 <!-- 头部end -->
@@ -100,11 +95,8 @@ _part('footer');
         var $this = $(this),
             index = $this.index();
         $this.parent().find('li').each(function(i,e){
-
             $(this).find('span').removeClass(arr_new_bgp[i]);
-
         });
-
         $(this).find('span').addClass(arr_new_bgp[index]).siblings("p").css("color","#ff0000").parents("li").siblings("li").find("span").removeClass(arr_new_bgp[index]).siblings("p").css("color","#3c3c3c");
     });
     // 单独店铺全选 取消全选
@@ -143,6 +135,5 @@ _part('footer');
 
     });
 </script>
-
 </body>
 </html>

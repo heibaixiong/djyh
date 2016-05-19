@@ -5,7 +5,8 @@ body{
 /*Í·²¿*/
 #top_nav{
     background: #ff0000;
-    height:50px;
+    height:45px;
+    padding:2px 0;
 }
 #search{
     padding:0;
