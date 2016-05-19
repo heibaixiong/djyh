@@ -14,14 +14,19 @@
 <body>
 <!-- 头部start -->
 <header class="aui-nav aui-bar aui-bar-nav aui-bar-dark" id="top_nav">
-
-    <a class="aui-pull-left" onclick="history.go(-1)">
-        <span class="aui-iconfont aui-icon-left"></span>
-    </a>
-    <div class="aui-title"><span class="car_icon01">购物车</span></div>
-    <a class="aui-pull-right">
-        <span></span>编辑
-    </a>
+    <div class="aui-col-xs-2" onclick="history.go(-1)">
+        <span class="aui-pull-left" style="padding-left: 5px;">
+           <span class="aui-iconfont aui-icon-left"></span>
+        </span>
+    </div>
+    <div class="aui-col-xs-8" style="text-align: center;width:62%;">
+        <a class="car_icon01" style="">购物车</a>
+    </div>
+    <div class="aui-col-xs-2" style="width:20%;">
+        <span class="aui-pull-right" style="padding-right:5px;padding-top:2px;">
+             <a href="#" class="index_car">编辑</a>
+        </span>
+    </div>
 </header>
 <div>
 <!-- 头部end -->

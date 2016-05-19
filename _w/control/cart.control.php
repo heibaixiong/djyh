@@ -2,8 +2,9 @@
 if(!defined('PART'))exit;
 $webid=_session('webid');
 if(empty($webid)){
-	_url(_u('/index/auth/'));
-	die();
+	_session('weixin_redirect_url', 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);
+	_header('http://'.$_SERVER['HTTP_HOST'] . '/callback/wxpay_openid/index.php');
+	exit();
 }
 //购物车商品列表
 function __index(){

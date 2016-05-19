@@ -16,7 +16,7 @@
 <body>
 <!--头部-->
 <header class="aui-nav aui-bar aui-bar-nav aui-bar-dark" id="top_nav">
-	<div class="aui-col-xs-2" style="width:18%;" onclick="history.go(-1)">
+	<div class="aui-col-xs-2" style="width:15%;" onclick="history.go(-1)">
         <span class="aui-pull-left" style="padding-left: 5px;">
            <span class="aui-iconfont aui-icon-left"></span>
         </span>
@@ -29,9 +29,9 @@
 			</form>
 		</div>
 	</div>
-	<div class="aui-col-xs-2" style="width:20%;">
+	<div class="aui-col-xs-2" style="width:23%;">
          <span class="aui-pull-right" style="padding-right:5px;padding-top:2px;">
-            <a class="index_car good-search">搜索</a>
+            <a class="index_car">搜索</a>
         </span>
 	</div>
 </header>
@@ -50,14 +50,14 @@
 		<!-- tab01-->
 		<div class="det_tab01" >
 			<div class="det_img">
-				<img src="<?php echo _resize($_['rs']['img'], 600, 600); ?>">
+				<img src="<?php echo _resize($_['rs']['img'], 360, 360); ?>" />
 			</div>
 			<!--题目-->
 			<div class="det_tit">
 				<div class="det_tit_box">
 					<div class="det_tit_left">
 						<p class="index_text01"><a href="#"><?php echo $_['rs']['title']; ?></a></p>
-						<p class="index_text02" style="margin-top:0.2rem;"><?php echo $_['rs']['class1name']; ?></p>
+						<p class="index_text02" style="margin-top:0.2rem;"><?php echo _left(strip_tags($_['rs']['content']), 0, 48, '...'); ?></p>
 					</div>
 					<div class="det_tit_cent">
 
@@ -75,7 +75,7 @@
 				</div>
 			</div>
 			<!--选择-->
-			<ul class="aui-list-view det_bigbox" style="margin:10px 0;border-color:#c6c6c6;">
+			<ul class="aui-list-view det_bigbox" style="margin:10px 0;border-color:#c6c6c6;display: none;">
 				<li class="aui-list-view-cell">
 					<div class="aui-arrow-right aui-ellipsis-1 list_pp">
 						选择套装
@@ -97,7 +97,7 @@
 
 					</li>
 					<li class="detail_home_lin04">
-						<a href="#" class="detail_lin04_d01">进店逛逛</a>
+						<a href="<?php echo _u('/user/'.$_['rs']['uid'].'/');?>" class="detail_lin04_d01">进店逛逛</a>
 					</li>
 				</ul>
 				<ul class="detail_home">
@@ -182,7 +182,14 @@
 				foreach($_['list'] as $k => $v){
 					?>
 					<li>
-						<div class="detail_hot_img"><a href="<?php echo _u('/shop/show/'.$v['id']); ?>"><img src="<?php echo _resize($v['img'], 300, 300); ?>"></a> <span class="store_one">推荐<br>商品</span></div>
+						<div class="detail_hot_img">
+							<a href="<?php echo _u('/shop/show/'.$v['id']); ?>"><img src="<?php echo _resize($v['img'], 210, 210); ?>"></a>
+							<?php if ($v['recommend'] == 1) { ?>
+							<span class="store_one">推荐<br>商品</span>
+							<?php } elseif ($v['hot'] == 1) { ?>
+								<span class="store_one">热门<br>商品</span>
+							<?php } ?>
+						</div>
 						<p class="detail_hot_wz"><a href="<?php echo _u('/shop/show/'.$v['id']); ?>" class="aui-ellipsis-1"><?php echo $v['title']; ?></a></p>
 						<p class="detail_hot_wz02"><span class="detail_hot_pice">￥<?php echo _rmb($_['rs']['mark']/100);?></span><span class="detail_hot_num">已售<em><?php echo $_['rs']['sale'];?></em>件</span></p>
 					</li>

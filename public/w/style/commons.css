@@ -2,7 +2,7 @@ body{
     background-color:#fff ;
     font-family:"microsoft yahei";
 }
-/*Í·²¿*/
+/*Í·ï¿½ï¿½*/
 #top_nav{
     background: #ff0000;
     height:45px;
@@ -16,7 +16,7 @@ body{
     margin-right: 0;
 }
 #search input{
-    background:#ffbfbf;
+    /*background:#ffbfbf;*/
     border-radius: 14px;
     color: #8c8c8c;
     padding-left:28px;

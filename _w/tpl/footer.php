@@ -44,9 +44,9 @@ _js('common');
             openid = '<?php echo _session('weixin_openid'); ?>';
         if(!webid || !openid){
             <?php
-                 _session('weixin_redirect_url') ? '' : _session('weixin_redirect_url', 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                 _session('weixin_redirect_url') ? '' : _session('weixin_redirect_url', 'http://'.$_SERVER['HTTP_HOST'].'?'.$_SERVER['REQUEST_URI']);
             ?>
-            var url = '<?php echo _u('/index/auth');  ?>';
+            var url = '<?php echo 'http://'.$_SERVER['HTTP_HOST'] . '/callback/wxpay_openid/index.php';  ?>';
             openWin(url, 0);
         }else{
             return true;
