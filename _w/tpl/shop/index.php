@@ -20,12 +20,12 @@
 <body>
 <!-- 头部start -->
 <header class="aui-nav aui-bar aui-bar-nav aui-bar-dark" id="top_nav">
-    <div class="aui-col-xs-2" style="width:18%;" onclick="history.go(-1)">
+    <div class="aui-col-xs-2" style="width:15%;" onclick="history.go(-1)">
         <span class="aui-pull-left" style="padding-left: 5px;">
            <span class="aui-iconfont aui-icon-left"></span>
         </span>
     </div>
-    <div class="aui-col-xs-8" style="width:60%">
+    <div class="aui-col-xs-8" style="width:62%">
         <div class="aui-searchbar" id="search">
             <form style="width:100%;">
                 <input type="search" placeholder="请输入搜索内容" id="search-input">
@@ -33,9 +33,9 @@
             </form>
         </div>
     </div>
-    <div class="aui-col-xs-2" style="width:22%;">
+    <div class="aui-col-xs-2" style="width:23%;">
         <span class="aui-pull-right" style="padding-right:5px;padding-top:2px;">
-            <a class="index_car good-search" style="background:none;font-size:20px;color:#fff;">筛选</a>
+            <a class="index_car">筛选</a>
         </span>
     </div>
 </header>
@@ -61,17 +61,21 @@
             <div class="aui-content index_content">
                 <div class="aui-col-xs-5" >
                     <a href="<?php echo _u('/shop/show/'.$v['id']); ?>" class="index_pro02">
-                        <img src="<?php echo _resize($v['img']); ?>" >
-                        <span>推荐<br>商品</span>
+                        <img src="<?php echo _resize($v['img'], 210, 210); ?>" />
+                        <?php if ($v['recommend'] == 1) { ?>
+                            <span>推荐<br>商品</span>
+                        <?php } elseif ($v['hot'] == 1) { ?>
+                            <span>热门<br>商品</span>
+                        <?php } ?>
                     </a>
                 </div>
                 <div class="aui-col-xs-7" >
                     <div class="index_bleft">
                         <p class="index_text01"><a href="#"><?php echo $v['title']; ?></a></p>
-                        <p class="index_text02"><?php echo $v['class1name']; ?></p>
+                        <p class="index_text02"><?php echo _left(strip_tags($v['content']), 0, 48, '...'); ?></p>
                         <p class="index_text03">￥<?php echo _rmb($v['mark']/100);?></p>
                         <div class="index_text04">
-                            <div class="idnex_gw">加入购物车</div>
+                            <div class="idnex_gw" data-id="<?php echo $v['id']; ?>">加入购物车</div>
                             <div class="index_pl">
                                 <span>已售<em><?php echo $v['sale']*5; ?></em>件</span>
                                 <span>好评<em><?php echo $v['sale']*4; ?></em>条</span>
