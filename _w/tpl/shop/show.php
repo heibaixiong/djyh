@@ -31,7 +31,7 @@
 	</div>
 	<div class="aui-col-xs-2" style="width:23%;">
          <span class="aui-pull-right" style="padding-right:5px;padding-top:2px;">
-            <a class="index_car">搜索</a>
+            <a class="index_car good-search">搜索</a>
         </span>
 	</div>
 </header>
@@ -39,10 +39,12 @@
 
 	<!--筛选条件-->
 	<ul class="aui-content list_sx aui-border-tb">
-		<li class="aui-col-xs-3 current_mr"><a href="#">商品</a></li>
-		<li class="aui-col-xs-3 "><a href="#">详情</a></li>
+		<li class="aui-col-xs-6 current_mr"><a href="#">商品</a></li>
+		<li class="aui-col-xs-6 "><a href="#">详情</a></li>
+		<!--
 		<li class="aui-col-xs-3 "><a href="#">评价</a></li>
 		<li class="aui-col-xs-3 "><a href="#">购物车</a></li>
+		-->
 	</ul>
 
 	<!--main-->
@@ -97,7 +99,7 @@
 
 					</li>
 					<li class="detail_home_lin04">
-						<a href="<?php echo _u('/user/'.$_['rs']['uid'].'/');?>" class="detail_lin04_d01">进店逛逛</a>
+						<a href="#" class="detail_lin04_d01">进店逛逛</a>
 					</li>
 				</ul>
 				<ul class="detail_home">
