@@ -7,7 +7,6 @@ if(!_session('weixin_openid') || !_session('webid')){
 	exit();
 }
 
-
 //商品列表页
 function __index(){
 	$cid = intval(_v(3));	//分类ID
