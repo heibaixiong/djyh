@@ -34,6 +34,12 @@ function __index(){
 	//如果是AJAX提交，则返回JSON数据
 	if(isAjax()){
 		header('Content-Type:application/json; charset=utf-8');
+		foreach ($_['good_list'] as $k => $item) {
+			$_['good_list'][$k]['thumb_img'] = _resize($item['img'], 210, 210);
+			$_['good_list'][$k]['url_show'] = _u('/shop/show/'.$item['id'].'/');
+			$_['good_list'][$k]['short_desc'] = _left(strip_tags($item['content']), 0, 46);
+			$_['good_list'][$k]['mark_price'] = _rmb($item['mark']/100);
+		}
 		exit(json_encode($_['good_list']));
 	}
 
