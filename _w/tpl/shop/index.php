@@ -41,7 +41,7 @@
 </header>
 <!-- 头部end -->
 
-<div style="position: absolute;top: 50px;bottom: 55px;overflow-y: scroll;-webkit-overflow-scrolling: touch; width:100%; ">
+<div style="margin:50px auto 55px;overflow-y: scroll;-webkit-overflow-scrolling: touch; width:100%; ">
 
     <!--筛选条件-->
     <ul class="aui-content list_sx aui-border-tb" style="margin-bottom:0;">
@@ -101,11 +101,11 @@
         <div class="slide_right">
             <div class="aui-content">
                 <header class="aui-bar aui-bar-nav aui-bar-dark list_topin">
-                    <a class="aui-pull-left">
-                        <span class="aui-border aui-border-radius list_rest">取消</span>
+                    <a class="aui-pull-left reset-back">
+                        <span class="aui-border aui-border-radius list_rest">返回</span>
                     </a>
                     <div class="aui-title">筛选</div>
-                    <a class="aui-pull-right">
+                    <a class="aui-pull-right reset-confirm">
                         <span class=" list_rest02" style=" ">确认</span>
                     </a>
                 </header>
@@ -163,8 +163,14 @@
 
 <?php
 _part('footer');
+_js('iscroll');
 ?>
 <script>
+var cid = '<?php echo _v(3); ?>';
+    page = 1,
+    paixu = 0,
+    keyword = '<?php echo urldecode(_v(6)) ?>';
+
     //排序部分
     var  arr_new_bg = [" ", "current_mr02","current_mr03","current_mr04"];
     $('.list_sx li').click(function(){
@@ -179,7 +185,7 @@ _part('footer');
         /* 添加排序小图标 */
         $this.parent().find("i").removeClass("aui-icon-top").removeClass("aui-icon-down");
         var dom_a = $this.find("a");
-        var paixu = parseInt(dom_a.attr("data-paixu")), icon = (parseInt(dom_a.attr("data-icon")) + 1)%2;
+        paixu = parseInt(dom_a.attr("data-paixu")), icon = (parseInt(dom_a.attr("data-icon")) + 1)%2;
         paixu = paixu >= 0 ? paixu : 0;
         if(paixu > 0){
             var icf = '';
@@ -193,9 +199,19 @@ _part('footer');
             px = paixu%2 == 0 ? paixu - 1 : paixu + 1;
             dom_a.attr('data-paixu', px);
         }
-        var cid = '<?php echo _v(3); ?>';
-        //请求数据
-        get_goods_list(1, cid, 1, paixu)
+
+        //get good data
+        get_goods_list(1, cid, 1, paixu, keyword)
+    });
+
+    //pull down auto ajax
+    $(document).scroll(function() {
+        if(page > 0){
+            if ($(document).scrollTop() + $(window).height() == $(document).height()) {
+                page++;
+                get_goods_list(0, cid, page, paixu, keyword)
+            }
+        }
     });
 
     /*AJAX获取数据
@@ -204,10 +220,10 @@ _part('footer');
      * page页数
      * paixu排序方式
      */
-    function get_goods_list(type, cid, page, paixu){
+    function get_goods_list(type, cid, pages, paixu, keyword){
         loading(1); //打开加载效果
         var url = '<?php echo $_['ajax_url']; ?>';
-        url += '/' + cid + '/' + page + '/' + paixu;
+        url += '?/' + cid + '/' + pages + '/' + paixu + '/' + keyword;
         $.ajax({
             url : url,
             data : '',
@@ -217,6 +233,7 @@ _part('footer');
                 //return false;
                 if(data == false){
                     tips('没有更多数据');
+                    page = 0;
                     return false;
                 }
                 var str = '';
@@ -295,7 +312,6 @@ _part('footer');
         $('div.slide-mask').hide();
         $('aside.slide-wrapper').removeClass('moved');
     })
-
 </script>
 </body>
 </html>
