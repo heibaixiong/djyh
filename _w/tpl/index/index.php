@@ -36,7 +36,8 @@ _css('commons');
         </span>
     </div>
 </header>
-<div style="position: absolute;top: 50px;bottom: 55px;overflow-y: scroll;-webkit-overflow-scrolling: touch; width:100%; ">
+<div>
+
     <!--轮播start-->
     <?php
         if(isset($_['flash']) && count($_['flash']) > 0) {
@@ -58,90 +59,82 @@ _css('commons');
 
     <!--main-->
     <div class="big_main"  >
-        <!-- 推荐商品start -->
-        <div class="aui-content">
-            <p class="aui-text-center index_kx aui-border-b"><span>快消品</span></p>
+        <?php foreach ($_['wx_index'] as $item) { ?>
+            <!-- 推荐商品start -->
+            <div class="aui-content">
+                <p class="aui-text-center index_kx aui-border-b"><span><?php echo $item['title']; ?></span></p>
+                <?php if (is_file(DIR.$item['img_ad_2'])) { ?>
+                <!-- 推荐位广告start -->
+                <p class="aui-text-center index_pro01"><a href="<?php echo empty($item['url_ad_2']) ? 'javascript:void(0);':$item['url_ad_2']; ?>"><img src="<?php echo is_file(DIR.$item['img_ad_2'])?_resize($item['img_ad_2'], 690, 364):_img('new/lou_pro03.png'); ?>"></a></p>
+                <!-- 推荐位广告end -->
+                <?php } ?>
+                <!-- 商品列表start -->
+                <?php
+                foreach($item['goods_rec'] as $k => $v){
+                    ?>
 
-            <!-- 推荐位广告start -->
-            <p class="aui-text-center index_pro01"><a href="#"><img src="<?php //echo _img('index_lou1.png');?>"></a></p>
-            <!-- 推荐位广告end -->
-
-            <!-- 商品列表start -->
-            <?php
-                foreach($_['wx_index']['goods_rec'] as $k => $v){
-            ?>
-
-            <div class="aui-content index_content">
-                <div class="aui-col-xs-5" >
-                    <a href="<?php echo _u('/shop/show/'.$v['id']); ?>" class="index_pro02">
-                        <img src="<?php echo _resize($v['img']); ?>" >
-                        <span>推荐<br>商品</span>
-                    </a>
-                </div>
-                <div class="aui-col-xs-7" >
-                    <div class="index_bleft">
-                        <p class="index_text01"><a href="#"><?php echo $v['title']; ?></a></p>
-                        <p class="index_text02"><?php echo $v['class1name']; ?></p>
-                        <p class="index_text03">￥<?php echo _rmb($v['mark']/100);?></p>
-                        <div class="index_text04">
-                            <div class="idnex_gw" data-id="<?php echo $v['id']; ?>">加入购物车</div>
-                            <div class="index_pl">
-                                <span>好评<em>5000</em>条</span>
-                                <span>已售<em><?php echo $v['sale']; ?></em>件</span>
-                            </div>
+                    <div class="aui-content index_content">
+                        <div class="aui-col-xs-5" >
+                            <a href="<?php echo _u('/shop/show/'.$v['id']); ?>" class="index_pro02">
+                                <img src="<?php echo _resize($v['img']); ?>" >
+                                <span>推荐<br>商品</span>
+                            </a>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <?php
-                }
-            ?>
-            <!-- 商品列表end -->
-        </div>
-        <!-- 推荐商品end -->
-
-        <!-- 热门商品start -->
-        <div class="aui-content">
-            <p class="aui-text-center index_kx aui-border-b"><span>快消品</span></p>
-            <!-- 热门位广告start -->
-            <p class="aui-text-center index_pro01"><a href="#"><img src="<?php echo _img('index_lou1.png');?>"></a></p>
-            <!-- 热门位广告end -->
-
-            <!-- 商品列表start -->
-            <?php
-            foreach($_['wx_index']['goods_hot'] as $k => $v){
-                ?>
-
-                <div class="aui-content index_content">
-                    <div class="aui-col-xs-5" >
-                        <a href="<?php echo _u('/shop/show/'.$v['id']); ?>" class="index_pro02">
-                            <img src="<?php echo _resize($v['img']); ?>" >
-                            <span>推荐<br>商品</span>
-                        </a>
-                    </div>
-                    <div class="aui-col-xs-7" >
-                        <div class="index_bleft">
-                            <p class="index_text01"><a href="#"><?php echo $v['title']; ?></a></p>
-                            <p class="index_text02">逍遥胡辣汤 河南特产 逍遥老杨家</p>
-                            <p class="index_text03">￥<?php echo _rmb($v['mark']/100);?></p>
-                            <div class="index_text04">
-                                <div class="idnex_gw" data-id="<?php echo $v['id']; ?>">加入购物车</div>
-                                <div class="index_pl">
-                                    <span>好评<em>5000</em>条</span>
-                                    <span>已售<em><?php echo $v['sale']; ?></em>件</span>
+                        <div class="aui-col-xs-7" >
+                            <div class="index_bleft">
+                                <p class="index_text01"><a href="<?php echo _u('/shop/show/'.$v['id']); ?>"><?php echo $v['title']; ?></a></p>
+                                <p class="index_text02"><?php echo _left(strip_tags($v['content']), 0, 48, '...'); ?></p>
+                                <p class="index_text03">￥<?php echo _rmb($v['mark']/100);?></p>
+                                <div class="index_text04">
+                                    <div class="idnex_gw" data-id="<?php echo $v['id']; ?>">加入购物车</div>
+                                    <div class="index_pl">
+                                        <span>好评<em>5000</em>条</span>
+                                        <span>已售<em><?php echo $v['sale']; ?></em>件</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            <?php
-            }
-            ?>
-            <!-- 商品列表end -->
 
-        </div>
-        <!-- 热门商品end -->
+                    <?php
+                }
+                ?>
+                <!-- 商品列表end -->
+                <?php
+                foreach($item['goods_hot'] as $k => $v){
+                    ?>
+
+                    <div class="aui-content index_content">
+                        <div class="aui-col-xs-5" >
+                            <a href="<?php echo _u('/shop/show/'.$v['id']); ?>" class="index_pro02">
+                                <img src="<?php echo _resize($v['img']); ?>" >
+                                <span>热门<br>商品</span>
+                            </a>
+                        </div>
+                        <div class="aui-col-xs-7" >
+                            <div class="index_bleft">
+                                <p class="index_text01"><a href="<?php echo _u('/shop/show/'.$v['id']); ?>"><?php echo $v['title']; ?></a></p>
+                                <p class="index_text02"><?php echo _left(strip_tags($v['content']), 0, 48, '...'); ?></p>
+                                <p class="index_text03">￥<?php echo _rmb($v['mark']/100);?></p>
+                                <div class="index_text04">
+                                    <div class="idnex_gw" data-id="<?php echo $v['id']; ?>">加入购物车</div>
+                                    <div class="index_pl">
+                                        <span>好评<em>5000</em>条</span>
+                                        <span>已售<em><?php echo $v['sale']; ?></em>件</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                }
+                ?>
+            </div>
+            <!-- 推荐商品end -->
+        <?php } ?>
+
+        <div style="height: 60px;"></div>
+
     </div>
 </div>
 

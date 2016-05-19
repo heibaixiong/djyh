@@ -2,7 +2,9 @@
 if(!defined('PART'))exit;
 
 if(!_session('weixin_openid') || !_session('webid')){
-	_url(_u('/index/auth'));
+	_session('weixin_redirect_url', 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);
+	_header('http://'.$_SERVER['HTTP_HOST'] . '/callback/wxpay_openid/index.php');
+	exit();
 }
 
 //商品列表页

@@ -69,6 +69,31 @@ function __wxpay_openid() {
         }
     //}
 
+    $wx_user = _sqlone('admin_bind', 'openid=\'' . _escape($openId) . '\'');
+    if (empty($wx_user)) {
+        $data1 = array(
+            'openid' => $openId,
+            'from' => 'weixin',
+            'add_time' => time()
+        );
+        $wx_id = _sqlinsert('admin_bind', $data1);  //插入绑定表
+
+        $data2 = array(
+            'user' => 'w' . _random(8, 'num'),
+            'rank' => '5',
+            'reg_time' => time(),
+            'updatetime' => time(),
+            'login' => '1',
+            'state' => '0'
+        );
+        $user_id = _sqlinsert('admin', $data2); //插入用户表
+        _sqldo('update ' . _pre('admin_bind') . ' set user_id=' . $user_id . ' where id=' . $wx_id);  //更新绑定表
+
+        _session('webid', $user_id);
+    } else {
+        _session('webid', $wx_user['user_id']);
+    }
+
     if (_session('weixin_redirect_url')) {
         _header(_session('weixin_redirect_url'));
     } else {

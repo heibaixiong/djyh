@@ -1,24 +1,33 @@
 <?php
 if(!defined('PART'))exit;
+if(!_session('weixin_openid') || !_session('webid')){
+	/*_session('weixin_redirect_url', 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);
+	_header('http://'.$_SERVER['HTTP_HOST'] . '/callback/wxpay_openid/index.php');
+	exit();*/
+}
 
 //微信端首页面
 function __index(){
-	if(!_session('weixin_openid') || !_session('webid')){
-		_url(_u('/index/auth'));
-		//_session('weixin_openid', 'oivF8wVNcYmaPoOTbX11lgA1oqCo');
-		//_session('webid', 84);
-		//var_dump(_session());
-		//exit;
-	}
 	//幻灯片
 	if(_ftime('flash')>CACHETIME){
 		_f('flash',_sqlall('ad','class=1 and state=0','px,id desc',5));
 	}
 	_c('flash',_f('flash'));
 
-	if(_ftime('wx_index')>CACHETIME){
+/*	if(_ftime('wx_index')>CACHETIME){
 		$index['goods_hot']=_sqlall('ware','length(`img`)>3 and state=0 and hot=1', 'px,id desc', 5);	//热门
 		$index['goods_rec']=_sqlall('ware','length(`img`)>3 and state=0 and recommend=1', 'px,id desc', 5);	//推荐
+		_f('wx_index',$index);
+	}
+	_c('wx_index',_f('wx_index'));*/
+
+	if(_ftime('wx_index')>CACHETIME){
+		$index=_sqlall('class','pid=0 and state=0 and `show`=1', 'px, id desc', 8);
+		foreach($index as $k=>$v){
+			//$index[$k]['ware']=_sqlall('ware','class1='.$v['id'].' and length(`img`)>3 and state=0', 'px,id desc', 10);
+			$index[$k]['goods_hot']=_sqlall('ware','class1='.$v['id'].' and length(`img`)>3 and state=0 and hot=1', 'px,id desc', 5);
+			$index[$k]['goods_rec']=_sqlall('ware','class1='.$v['id'].' and length(`img`)>3 and state=0 and recommend=1', 'px,id desc', 5);
+		}
 		_f('wx_index',$index);
 	}
 	_c('wx_index',_f('wx_index'));
@@ -44,7 +53,6 @@ function __ads(){
 
 //微信端自动登录注册
 function __auth(){
-
 	global $_wrap;
 	require_once(APP_PATH . 'library/wxpayexception.php');
 	define('APPID', $_wrap['wxpay_config']['wxpay_appid']);
@@ -65,6 +73,7 @@ function __auth(){
 	$tools = new JsApiPay();
 	$openId = $tools->GetOpenid();
 	//var_dump($openId);exit;
+	_session('weixin_openid', $openId);
 
 	$wx_user = _sqlone('admin_bind', 'openid=\'' . _escape($openId) . '\'');
 	if (empty($wx_user)) {
