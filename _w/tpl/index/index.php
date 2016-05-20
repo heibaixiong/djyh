@@ -45,7 +45,7 @@ _css('commons');
         <div class="swiper-wrapper">
             <?php
             foreach ($_['flash'] as $k => $v) {
-                echo '<div class="swiper-slide" ><a href="' . ($v['url'] ? _u('/index/ads/' . $v['id'] . '/') : '#') . '" ><img  src="' . _resize($v['img'], 400, 240) . '" /></a></div>';
+                echo '<div class="swiper-slide" ><a href="' . ($v['url'] ? _u('/index/ads/' . $v['id'] . '/') : '#') . '" ><img  src="' . _resize($v['img'], 640, 200) . '" /></a></div>';
             }
             ?>
         </div>
@@ -76,7 +76,11 @@ _css('commons');
                         <div class="aui-col-xs-5" >
                             <a href="<?php echo _u('/shop/show/'.$v['id']); ?>" class="index_pro02">
                                 <img src="<?php echo _resize($v['img']); ?>" >
-                                <span>推荐<br>商品</span>
+                                <?php if ($v['recommend'] == 1) { ?>
+                                    <span>推荐<br>商品</span>
+                                <?php } elseif ($v['hot'] == 1) { ?>
+                                    <span>热门<br>商品</span>
+                                <?php } ?>
                             </a>
                         </div>
                         <div class="aui-col-xs-7" >
@@ -171,6 +175,12 @@ _part('footer');
             addCart(id, num);
         }
     });
+    //goods search
+    document.onkeydown = function(e){
+        if(event.keyCode == 13){
+            searchGoods();
+        }
+    }
 </script>
 </body>
 </html>
