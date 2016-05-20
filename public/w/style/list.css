@@ -90,6 +90,7 @@ body{
     width:100%;
 }
 .index_pro02 span{
+    padding-top:1px;
     width:30px;
     height:30px;
     background:#ff0000;
@@ -253,6 +254,7 @@ aside.slide-wrapper .slide_right{
 .list_pp {
     font-size:16px;
     color:#3c3c3c;
+    padding:12px 15px;
 }
 .list_pp:after{
     color:#646464;
@@ -262,6 +264,15 @@ aside.slide-wrapper .slide_right{
 }
 .aui-list-view-cell:last-child:after{
     border-bottom:solid 1px #e5e5e5;
+}
+.list_bigbox{
+    margin:0;
+}
+.list_bigbox .list_boxin{
+    padding:0;
+}
+.list_bigbox02{
+    margin:0;
 }
 .list_pp02{
     font-size:16px;
