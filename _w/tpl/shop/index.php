@@ -315,6 +315,7 @@ var cid = '<?php echo _v(3); ?>';
         console.log(temp2);
     })
     $(".list_rest02").click(function(){
+        console.log(temp1);
         $('div.slide-mask').hide();
         $('aside.slide-wrapper').removeClass('moved');
         if(temp1 > 0){
