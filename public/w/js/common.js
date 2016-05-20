@@ -18,30 +18,10 @@ function checkTel(tel){
 
 /* 脚底冒泡提示事件 */
 function tips(name){
-	var str='<p id="tips" style="position:fixed;bottom:0;width:100%;height:30px;line-height:30px;color:#333;text-align:center;z-index:10000;"">'+name+'</p>';
+	var str='<p id="tips" style="position:fixed;bottom:20%;left:35%;width:120px;height:25px;line-height:25px;color:#333;text-align:center;z-index:10000;margin:0 auto;overflow: hidden;-webkit-border-radius: 3px;-moz-border-radius: ;border-radius: 3px;"><span style="height: 25px;line-height: 25px;position: absolute;bottom: 0;left: 0;background-color: #000;opacity: 0.6;filter: alpha(opacity=30);font-size:12px; "><font color="#fff">' + name + '</font></span> </p>';
 	$("body").append(str);
-	$("#tips").animate({bottom:'30px'});
 	setTimeout(function(){
 		$("#tips").remove();
-	}, 2000);
-}
-
-/* 表单提示事件 */
-function tips2(name){
-	var str = '';
-	str += '<div class="aui-tips aui-tips-danger">';
-	str += '<div class="aui-tips-content aui-ellipsis-1">';
-	str += '<i class="aui-iconfont aui-icon-warnfill"></i>';
-	str += name;
-	str += '<i class="aui-iconfont aui-icon-roundclosefill"></i>';
-	str += '</div>';
-	str += '</div>';
-	str += '<p class="aui-text-center">&nbsp;</p>';
-	$("#tips2").append(str);
-	$("#tips2").fadeToggle();
-	setTimeout(function(){
-		$("#tips2").fadeToggle();
-		$("#tips2").html('');
 	}, 2000);
 }
 
