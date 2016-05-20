@@ -81,7 +81,7 @@ _css('my_order');
 						}else if($v1['state'] == '2'){
 							echo '<a href="#"><span>等待发货</span></a>';
 						}else if($v1['state'] == '3'){
-							echo '<a href="' . _u('//order_receipt/'.$v1['id'].'/'.Page::$p.'/'.$good['seller_id'].'/') . '"><span>确认收货</span></a>';
+							echo '<a href="' . _u('//order_receipt/'.$v1['id'].'/'.Page::$p.'/'.$v1['seller_id'].'/') . '"><span>确认收货</span></a>';
 						}
 					?>
 					</li>
@@ -123,12 +123,15 @@ _part('footer');
 
 	//pay now
 	$(".pay-now").click(function(){
+		load(1);
 		var id = parseInt($(this).attr('data-id'));
 		var url = '<?php echo _u('/person/order_pay/'); ?>' + id;
 		$.post(url, {id:id, payment_method:'weixin'}, function(data){
+			load(1);
+			//console.log(data);return false;
 			if(data != '100' && data != '101' && data != '102'){
 				$(".paybox").append(data);
-				$('body').delegate("#btn-cart-pay", 'click');
+				$("#btn-cart-pay").click();
 			}else{
 				alert('支付失败，请稍后再试');
 			}
