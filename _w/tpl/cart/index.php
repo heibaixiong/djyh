@@ -45,7 +45,7 @@
                 <div class="index_content">
                     <div class="aui-col-xs-4" >
                         <a href="#" class="index_pro02">
-                            <img src="<?php echo $v['img']; ?>" >
+                            <img src="<?php echo _resize($v['img'], 210, 210); ?>" >
                         </a>
 
                     </div>
