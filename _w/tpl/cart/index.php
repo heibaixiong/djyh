@@ -45,7 +45,7 @@
                 <div class="index_content">
                     <div class="aui-col-xs-4" >
                         <a href="#" class="index_pro02">
-                            <img src="<?php echo $v['img']; ?>" >
+                            <img src="<?php echo _resize($v['img'], 210, 210); ?>" >
                         </a>
 
                     </div>
@@ -94,7 +94,7 @@ _part('footer');
 <script>
 
     var arr_old_bgp = ["footer_icon01","footer_icon02","footer_icon03","footer_icon04"],
-        arr_new_bgp = ["footer_bh01","footer_bh02","footer_bh03",'footer_bh04',];
+        arr_new_bgp = ["footer_bh01","footer_bh02","footer_bh03",'footer_bh04'];
     $('.aui-bar-tab li').click(function(){
         var guide =$(this).index();
         var $this = $(this),

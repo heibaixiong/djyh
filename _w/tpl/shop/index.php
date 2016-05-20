@@ -110,27 +110,37 @@
                     </a>
                 </header>
                 <ul class="aui-list-view list_bigbox">
-                    <li class="aui-list-view-cell">
+                    <?php
+                    foreach($_['oneclass'] as $k1 => $v1){
+                    ?>
+                    <li class="aui-list-view-cell list-view-patent" data-cid="<?php echo $v1['id']; ?>">
                         <div class="aui-arrow-right aui-ellipsis-1 list_pp">
-                            品牌
+                            <?php echo $v1['title']; ?>
                         </div>
+                        <ul class="aui-list-view list_bigbox02 list-cid-<?php echo $v1['id']; ?>" style="display: none;">
+                            <div class="aui-list-view-cell list_select">
+                                <div class="aui-ellipsis-1" data-cid="<?php echo $v1['id']; ?>">
+                                    已选择:<span></span>
+                                </div>
+                            </div>
+                             <?php
+                             foreach($v1['child'] as $k2 => $v2){
+                            ?>
+                                 <li class="aui-list-view-cell" data-cid="<?php echo $v2['id']; ?>">
+                                     <div class="aui-arrow-right aui-ellipsis-1 list_pp02">
+                                         <?php echo $v2['title']; ?>
+                                     </div>
+                                 </li>
+                            <?php
+                             }
+                            ?>
+                        </ul>
                     </li>
-                    <li class="aui-list-view-cell">
-                        <div class="aui-arrow-right aui-ellipsis-1 list_pp">
-                            产地
-                        </div>
-                    </li>
-                    <li class="aui-list-view-cell">
-                        <div class="aui-arrow-right aui-ellipsis-1 list_pp">
-                            颜色
-                        </div>
-                    </li>
-                    <li class="aui-list-view-cell">
-                        <div class="aui-arrow-right aui-ellipsis-1 list_pp">
-                            风格
-                        </div>
-                    </li>
+                    <?php
+                    }
+                    ?>
                 </ul>
+                <!--
                 <ul class="aui-list-view list_bigbox02" style="display: none;">
                     <div class="aui-list-view-cell list_select">
                         <div class="aui-ellipsis-1">
@@ -142,18 +152,8 @@
                             老杨家
                         </div>
                     </li>
-                    <li class="aui-list-view-cell">
-                        <div class="aui-arrow-right aui-ellipsis-1 list_pp02">
-                            方中山
-                        </div>
-                    </li>
-                    <li class="aui-list-view-cell">
-                        <div class="aui-arrow-right aui-ellipsis-1 list_pp02">
-                            方西山
-                        </div>
-                    </li>
                 </ul>
-
+                -->
             </div>
 
         </div>
@@ -163,7 +163,6 @@
 
 <?php
 _part('footer');
-_js('iscroll');
 ?>
 <script>
 var cid = '<?php echo _v(3); ?>';
@@ -288,7 +287,7 @@ var cid = '<?php echo _v(3); ?>';
         }
     });
 
-
+    //筛选操作
     $('.index_car').on('click', function(e){
         var wh = $('div.wrapperhove'+'rtree').height();
         $('div.slide-mask').css('height', wh).show();
@@ -303,20 +302,41 @@ var cid = '<?php echo _v(3); ?>';
         $('aside.slide-wrapper').removeClass('moved');
 //         $(".slide-wrapper").hide();
     });
-    $(".list_bigbox li").click(function(){
+    var temp1 = 0, temp2 = 0;
+    $(".list_bigbox .list-view-patent").click(function(){
         $(this).css("background","#f0f0f0").siblings("li").css("background","#fff");
-        $(".list_bigbox").hide();
-        $(".list_bigbox02").show();
-    })
+        $(".list_pp").hide();
+        //$(".list_bigbox02").show();
+        var temp1 = parseInt($(this).attr('data-cid'));
+        $(".list-cid-"+temp1).show();
+        //console.log(temp1);
+    });
+
     $(".list_bigbox02 li").click(function(){
         $(this).css("background","#f0f0f0").siblings("li").css("background","#fff");
         $(this).find("div").addClass("list_pp03").parents("li").siblings("li").find("div").removeClass("list_pp03");
         var cc=$(this).find("div").text();
         $(".list_select span").text(cc);
+        temp2 = parseInt($(this).attr("data-cid"));
+        console.log(temp2);
     })
     $(".list_rest02").click(function(){
+        console.log(temp1);
         $('div.slide-mask').hide();
         $('aside.slide-wrapper').removeClass('moved');
+        if(temp1 > 0){
+            if(temp2 > 0){
+                cid = temp2;
+            }else{
+                cid = temp1;
+            }
+            console.log(cid);
+            paixu = 0;
+            keyword = '';
+            get_goods_list(1, cid, 1, paixu, keyword);
+        }else{
+            console.log(123);
+        }
     })
 </script>
 </body>

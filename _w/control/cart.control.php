@@ -99,7 +99,7 @@ function __submit(){
 
 	$address = _sqlone('caradd','uid='.$webid);
 	if (empty($address)) {
-		_alerturl('请先设置收货地址！',_u('/person/address/'));
+		//_alerturl('请先设置收货地址！',_u('/person/address/'));
 	}
 
 	$mark=0;
