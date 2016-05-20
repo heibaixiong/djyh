@@ -94,7 +94,7 @@ _part('footer');
 <script>
 
     var arr_old_bgp = ["footer_icon01","footer_icon02","footer_icon03","footer_icon04"],
-        arr_new_bgp = ["footer_bh01","footer_bh02","footer_bh03",'footer_bh04',];
+        arr_new_bgp = ["footer_bh01","footer_bh02","footer_bh03",'footer_bh04'];
     $('.aui-bar-tab li').click(function(){
         var guide =$(this).index();
         var $this = $(this),
