@@ -123,11 +123,11 @@ _part('footer');
 
 	//pay now
 	$(".pay-now").click(function(){
-		load(1);
+		//loading(1);
 		var id = parseInt($(this).attr('data-id'));
 		var url = '<?php echo _u('/person/order_pay/'); ?>' + id;
 		$.post(url, {id:id, payment_method:'weixin'}, function(data){
-			load(1);
+			//loading(1);
 			//console.log(data);return false;
 			if(data != '100' && data != '101' && data != '102'){
 				$(".paybox").append(data);
