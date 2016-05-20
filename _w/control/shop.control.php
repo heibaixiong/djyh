@@ -64,8 +64,8 @@ function __show(){
 	_c('rs',$arr);
 	_c('rs0',_sqlone('compony','aid='.$arr['uid']));
 
-	_c('attr_info', _sqlall('attri_info', 'wid='.$arr['id'], 'id'));
-	_c('para_info', _sqlall('para_info', 'wid='.$arr['id'], 'id'));
+	_c('attr_info', _sqlall('attri_info', 'wid='.$arr['id'], 'id'));	//商品属性
+	_c('para_info', _sqlall('para_info', 'wid='.$arr['id'], 'id'));	//商品参数
 
 	/*
 	$img=array();
