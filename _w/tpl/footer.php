@@ -72,10 +72,13 @@ _js('common');
 
     //goods search event
     $(document).delegate(".good-search", 'click', function(){
+        searchGoods();
+    });
+    function searchGoods(){
         var keyword = $("#search-input").val();
         var url = "<?php echo _u('/shop/index/0/1/0'); ?>";
         url += '/'+keyword;
         console.log(url);
         openWin(url, 0);
-    });
+    }
 </script>
