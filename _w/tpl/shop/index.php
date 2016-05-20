@@ -239,18 +239,24 @@ var cid = '<?php echo _v(3); ?>';
                 for(var i = 0; i < data.length; i++){
                     str += '<div class="aui-content index_content">';
                     str += '<div class="aui-col-xs-5" >';
-                    str += '<a href="#" class="index_pro02">';
-                    str += '<img src="' + data[i]['img'] + '" >';
-                    str += '<span>推荐<br>商品</span>';
+                    str += '<a href="'+data[i]['url_show']+'" class="index_pro02">';
+                    str += '<img src="' + data[i]['thumb_img'] + '" >';
+
+                    if (data[i]['recommend'] == 1) {
+                        str += '<span>推荐<br>商品</span>';
+                    } else if (data[i]['hot'] == 1) {
+                        str += '<span>推荐<br>商品</span>';
+                    }
+
                     str += '</a>';
                     str += '</div>';
                     str += '<div class="aui-col-xs-7" >';
                     str += '<div class="index_bleft">';
-                    str += '<p class="index_text01"><a href="#">' + data[i]['title'] + '</a></p>';
-                    str += '<p class="index_text02">' + data[i]['class1name'] + '</p>';
-                    str += '<p class="index_text03">￥' + (data[i]['mark']/100) + '</p>';
+                    str += '<p class="index_text01"><a href="'+data[i]['url_show']+'">' + data[i]['title'] + '</a></p>';
+                    str += '<p class="index_text02">' + data[i]['short_desc'] + '</p>';
+                    str += '<p class="index_text03">￥' + (data[i]['mark_price']) + '</p>';
                     str += '<div class="index_text04">';
-                    str += '<div class="idnex_gw">加入购物车</div>';
+                    str += '<div class="idnex_gw" data-id="'+data[i]['id']+'">加入购物车</div>';
                     str += '<div class="index_pl">';
                     str += '<span>已售<em>' + (parseInt(data[i]['sale'])*5) + '</em>件</span>';
                     str += '<span>好评<em>' + (parseInt(data[i]['sale'])*4) + '</em>条</span>';
