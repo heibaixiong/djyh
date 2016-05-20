@@ -82,28 +82,44 @@ function __wxpay_openid() {
 
     if (!empty(_session('weixin_redirect_url')) && preg_match('/[^?]*\?w\/.*/i', _session('weixin_redirect_url'))) {
         $wx_user = _sqlone('admin_bind', 'openid=\'' . _escape($openId) . '\'');
+        //var_dump($wx_user);exit;
         if (empty($wx_user)) {
             $data1 = array(
                 'openid' => $openId,
                 'from' => 'weixin',
                 'add_time' => time()
             );
-            $wx_id = _sqlinsert('admin_bind', $data1);  //插入绑定表
+            $wx_id = _sqlinsert('admin_bind', $data1);  //insert bindinfo to admin_bind
 
             $data2 = array(
                 'user' => 'w' . _random(8, 'num'),
                 'rank' => '5',
-                'reg_time' => time(),
+                'regtime' => time(),
                 'updatetime' => time(),
                 'login' => '1',
                 'state' => '0'
             );
-            $user_id = _sqlinsert('admin', $data2); //插入用户表
-            _sqldo('update ' . _pre('admin_bind') . ' set user_id=' . $user_id . ' where id=' . $wx_id);  //更新绑定表
-
-            _session('webid', $user_id);
+            if($user_id = _sqlinsert('admin', $data2)) {  //insert userinfo to admin_bind
+                _sqldo('update ' . _pre('admin_bind') . ' set user_id=' . $user_id . ' where id=' . $wx_id);  //update userinfo to admin_bind
+                _session('webid', $user_id);
+            }
         } else {
-            _session('webid', $wx_user['user_id']);
+            //get table admin info
+            $user = _sqlone('admin', 'id = '.$wx_user['user_id']);
+            if(empty($user)){	//add user info to table of admin
+                $data['user'] = 'w' . _random(8, 'num');
+                $data['rank'] = '5';
+                $data['regtime'] = time();
+                $data['updatetime'] = time();
+                $data['login'] = 1;
+                $data['state'] = 0;
+                if($user_id = _sqlinsert('admin', $data)) {  //insert userinfo to admin_bind
+                    _sqldo('update ' . _pre('admin_bind') . ' set user_id=' . $user_id . ' where id=' . $wx_user['id']);  //update userinfo to admin_bind
+                }
+            }else{
+                _sqldo('update ' . _pre('admin') . ' set updatetime=' . time() . ', login = login + 1 where id=' . $user['id']);	//update userinfo(updatetime,login) to admin
+                _session('webid', $wx_user['user_id']);
+            }
         }
     }
 
