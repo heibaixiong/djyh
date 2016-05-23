@@ -1,5 +1,13 @@
 <?php
 if(!defined('PART'))exit;
+
+if (_session('webid')) {
+	$user = _sqlone('admin', "id='".(int)_session('webid')."' and state=0");
+	if (empty($user)) {
+		_session('webid', null);
+	}
+}
+
 if(_ftime('config')>CACHETIME){
 	_f('config',_sqlone('config'));
 }

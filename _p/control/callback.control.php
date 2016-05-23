@@ -115,6 +115,7 @@ function __wxpay_openid() {
                 $data['state'] = 0;
                 if($user_id = _sqlinsert('admin', $data)) {  //insert userinfo to admin_bind
                     _sqldo('update ' . _pre('admin_bind') . ' set user_id=' . $user_id . ' where id=' . $wx_user['id']);  //update userinfo to admin_bind
+                    _session('webid', $user_id);
                 }
             }else{
                 _sqldo('update ' . _pre('admin') . ' set updatetime=' . time() . ', login = login + 1 where id=' . $user['id']);	//update userinfo(updatetime,login) to admin
