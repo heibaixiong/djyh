@@ -64,7 +64,15 @@ function __show(){
 	_c('rs',$arr);
 	_c('rs0',_sqlone('compony','aid='.$arr['uid']));
 
-	_c('attr_info', _sqlall('attri_info', 'wid='.$arr['id'], 'id'));	//商品属性
+	//_c('attr_info', _sqlall('attri_info', 'wid='.$arr['id'], 'id'));	//商品属性
+	$attr = _sqlall('attri_info', 'wid='.$arr['id'], 'id');
+	$tmp = array();
+	foreach($attr as $k => $v){
+		$tmp[$v['wname']][] = $v;
+	}
+	//var_dump($tmp);exit;
+	_c('attr_info', $tmp);
+
 	_c('para_info', _sqlall('para_info', 'wid='.$arr['id'], 'id'));	//商品参数
 
 	/*

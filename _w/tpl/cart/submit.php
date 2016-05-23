@@ -23,7 +23,7 @@
                 <?php if (isset($_['payment_data'])) { ?>
                 <div class="fr gross-right" style="margin-top:20px;">
                     <div class="fl">
-                        <p class="fl" style="line-height:30px;text-align:center;">总金额：<b class="red font18"><strong>￥90<?php echo _rmb($_['order']['total']); ?></strong></b></p>
+                        <p class="fl" style="line-height:30px;text-align:center;">总金额：<b class="red font18"><strong>￥<?php echo _rmb($_['order']['total']); ?></strong></b></p>
                     </div>
                     <div style="background-color: #ff5656;height:30px;color:#fff;text-align: center;border-radius:3px;line-height:30px;">
                         <?php echo $_['payment_data']; ?>

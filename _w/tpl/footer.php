@@ -2,27 +2,27 @@
 <footer class="aui-nav" id="aui-footer">
     <ul class="aui-bar-tab font_box">
         <li class="" id="tabbar1" >
-            <a href="<?php echo _u('/index/index'); ?>">
+            <a href="<?php echo _u('/index/index'); ?>" style="display: block;">
                 <span class="footer_icon01 <?php if(isset($_['foot_nav']) && $_['foot_nav'] == 1) echo 'footer_bh01'; ?>"></span>
                 <p <?php if(isset($_['foot_nav']) && $_['foot_nav'] == 1) echo 'style="color:rgb(255, 0, 0)"'; ?>>首  页</p>
             </a>
 
         </li>
         <li id="tabbar2" >
-            <a href="<?php echo _u('/shop/index'); ?>">
+            <a href="<?php echo _u('/shop/index'); ?>" style="display: block;">
                 <span class="footer_icon02 <?php if(isset($_['foot_nav']) && $_['foot_nav'] == 2) echo 'footer_bh02'; ?>"></span>
                 <p <?php if(isset($_['foot_nav']) && $_['foot_nav'] == 2) echo 'style="color:rgb(255, 0, 0)"'; ?>>分  类</p>
             </a>
 
         </li>
         <li id="tabbar3" >
-            <a href="<?php echo _u('/cart/index'); ?>">
+            <a href="<?php echo _u('/cart/index'); ?>" style="display: block;">
                 <span class="footer_icon03 <?php if(isset($_['foot_nav']) && $_['foot_nav'] == 3) echo 'footer_bh03'; ?>"></span>
                 <p <?php if(isset($_['foot_nav']) && $_['foot_nav'] == 3) echo 'style="color:rgb(255, 0, 0)"'; ?>>购物车</p>
             </a>
         </li>
         <li id="tabbar4">
-            <a href="<?php echo _u('/person/order'); ?>">
+            <a href="<?php echo _u('/person/order'); ?>" style="display: block;">
                 <span class="footer_icon04 <?php if(isset($_['foot_nav']) && $_['foot_nav'] == 4) echo 'footer_bh04'; ?>"></span>
                 <p <?php if(isset($_['foot_nav']) && $_['foot_nav'] == 4) echo 'style="color:rgb(255, 0, 0)"'; ?>>我的订单</p>
             </a>
@@ -60,12 +60,11 @@ _js('common');
     }
 
     //添加商品到购物车操作
-    function addCart(id, num){
-        var url = "<?php echo _u('/cart/add/'); ?>"+id+"/"+num+"/";
+    function addCart(id, num, option){
+        var url = "<?php echo _u('/cart/add/'); ?>"+id+"/"+num+"/"+option+'/';
         $.get(url, function(data){
             var rs = $.parseJSON(data);
             //console.log(rs);
-            //dialog({title:'温馨提示', buttons:['确定'], content:rs['msg']});
             tips(rs['msg']);
         });
     }

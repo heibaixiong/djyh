@@ -2,7 +2,7 @@ body{
     background-color:#f0f0f0;
 
 }
-/*ç­›é€‰*/
+/*É¸Ñ¡*/
 .list_sx{
     text-align: center;
     overflow: hidden;
@@ -30,7 +30,7 @@ body{
     color:#fb3a3a;
 }
 
-/*mainå•†å“*/
+/*mainÉÌÆ·*/
 .det_img img{
     width:100%;
     display: block;
@@ -106,7 +106,7 @@ body{
     color:#3c3c3c;
     font-size:16px;
 }
-/*ä¸œå®¶è¦è´§è‡ªè¥*/
+/*¶«¼ÒÒª»õ×ÔÓª*/
 .det_zj{
     overflow: hidden;
     border-bottom: solid 1px #c6c6c6;
@@ -196,7 +196,7 @@ body{
     line-height: 1.2rem;
     text-align: center;
 }
-/*çƒ­é—¨æ¨è*/
+/*ÈÈÃÅÍÆ¼ö*/
 .detail_hot{
     margin-top:0.44rem;
 }
@@ -271,7 +271,7 @@ body{
 }
 
 
-/*åº•éƒ¨å¼¹å‡º*/
+/*µ×²¿µ¯³ö*/
 .det_newcont{
     border-bottom:solid 1px #e5e5e5 ;
 }
@@ -371,7 +371,7 @@ body{
 .index_text04 .index_pl span em{
     color: #ea962d;
 }
-/*content-ä¾§è¾¹æ */
+/*content-²à±ßÀ¸*/
 div.slide-mask {
     position:fixed;
     z-index: 998;
@@ -559,7 +559,7 @@ div.slide-mask {
     color: #fff;
     font-size:0.8rem;
 }
-/*è¯¦æƒ…*/
+/*ÏêÇé*/
 
 .d_tab .d_tab_main .d_tab_img{
     margin-top:0.44rem;

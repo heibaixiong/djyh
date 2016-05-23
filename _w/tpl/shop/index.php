@@ -108,7 +108,7 @@
                         <?php
                         foreach($_['oneclass'] as $k1 => $v1) {
                             ?>
-                            <li class="aui-list-view-cell list_boxin">
+                            <li class="aui-list-view-cell list_boxin" data-id="<?php echo $v1['id']; ?>">
                                 <div class="aui-arrow-right aui-ellipsis-1 list_pp">
                                     <?php echo $v1['title']; ?>
                                 </div>
@@ -121,7 +121,7 @@
                                     <?php
                                     foreach($v1['child'] as $k2 => $v2) {
                                         ?>
-                                        <li class="aui-list-view-cell">
+                                        <li class="aui-list-view-cell list_boxin_2" data-id="<?php echo $v2['id']; ?>">
                                             <div class="aui-arrow-right aui-ellipsis-1 list_pp02">
                                                 <?php echo $v2['title']; ?>
                                             </div>
@@ -188,13 +188,10 @@ _js('iscroll');
 
     //pull down to get next page data
     $(document).scroll(function() {
-        alert(1);
         if(page > 0){
-
             if ($(document).scrollTop() + $(window).height() == $(document).height()) {
-                alert();
                 page++;
-                get_goods_list(0, cid, page, paixu, keyword)
+                get_goods_list(0, cid, page, paixu, keyword);
             }
         }
     });
@@ -265,7 +262,7 @@ _js('iscroll');
 
     //goods search
     document.onkeydown = function(e){
-        if(event.keyCode == 13){
+        if(e.keyCode == 13){
             searchGoods();
         }
     }
@@ -283,7 +280,7 @@ _js('iscroll');
 
 
     var myScroll;
-    var a=0;
+    var a= 0, cid1 = 0, cid2 = 0;
     $('.index_car').on('click', function(e){
         var wh = $('div.wrapperhove'+'rtree').height();
         $('div.slide-mask').css('height', wh).show();
@@ -300,15 +297,18 @@ _js('iscroll');
 //         $(".slide-wrapper").hide();
 
     });
-    $(".list_bigbox li").click(function(){
+    //the parent li list event
+    $(".list_bigbox .list_boxin").click(function(e){
+        cid1 = $(this).attr('data-id');
+        //cid2 = 0;
         $(this).css("background","#f0f0f0").siblings("li").css("background","#fff");
         $(this).find("ul").show().siblings("div").hide().parents("li").siblings("li").hide();
         myScroll.refresh();
         myScroll.scrollToElement('li:nth-child(1)', 0);
         a=2;
-
     })
-    $(".list_bigbox02 li").click(function(){
+    $(".list_bigbox02 li").click(function(e){
+        cid2 = $(this).attr('data-id');
         $(this).css("background","#f0f0f0").siblings("li").css("background","#fff");
         $(this).find("div").addClass("list_pp03").parents("li").siblings("li").find("div").removeClass("list_pp03");
         var cc=$(this).find("div").text();
@@ -317,11 +317,13 @@ _js('iscroll');
     $(".list_rest02").click(function(){
         $('div.slide-mask').hide();
         $('aside.slide-wrapper').removeClass('moved');
+        //console.log(cid1+'-'+cid2);
+        cid = (cid1 == 0 ? 0 : (cid2 == 0 ? cid1 : cid2));
+        get_goods_list(1, cid, page, paixu, '');
     })
 
     $(".list_rest").click(function(){
         if(a==1){
-
             $('div.slide-mask').hide();
             $('aside.slide-wrapper').removeClass('moved');
         }else if(a==2){
