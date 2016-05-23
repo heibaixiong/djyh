@@ -10,6 +10,9 @@
 	_css('commons');
 	_css('detail');
 	?>
+	<style>
+		.goods-attr-check{background-color: #eee;color:#f60;border:#f60;}
+	</style>
 </head>
 
 <body>
@@ -244,20 +247,24 @@ _js('iscroll');
 
 		<div class="attr_main" id="wrapper" >
 			<ul>
-				<?php if(!empty($_['attr_info'])){ ?>
+				<?php if(isset($_['attr_info']) && count($_['attr_info']) > 0){ ?>
 				<li>
 					<div class="attr_middle">
-						<dl>
-							<dt>选择套装</dt>
-							<dd>
-								<?php
-								foreach($_['attr_info'] as $k => $v){
-									echo '<a>' . $v['model'] . '</a>';
-								}
-								?>
-								<!-- <a>精品礼盒</a> -->
-							</dd>
-						</dl>
+						<?php
+							foreach ($_['attr_info'] as $k1 => $v1) {
+						?>
+								<dl data-wname="<?php echo $k1; ?>">
+									<dt><?php echo $k1; ?>:</dt>
+									<dd>
+										<?php
+										foreach($v1 as $k2 => $v2){
+											echo '<a class="goods-attr" data-check="0" data-attr="' . $v2['id'] . '">' . $v2['model'] . '</a>';
+										}
+										?>
+										<!-- <a>精品礼盒</a> -->
+									</dd>
+								</dl>
+						<?php } ?>
 					</div>
 				</li>
 				<?php } ?>
@@ -267,7 +274,7 @@ _js('iscroll');
 							<dt>数量</dt>
 							<dd class="detail_sl">
 								<span class="detail_jian"></span>
-								<input type="text" value="1">
+								<input type="text" name="num" value="1">
 								<span class="detail_jia"></span>
 							</dd>
 						</dl>
@@ -279,7 +286,7 @@ _js('iscroll');
 		<li class="attr_bombox">
 			<div class="attr_bottom" style="width:100%;">
 				<a href="#" class="attr_bottom_a01">进  店</a>
-				<a href="#" class="attr_bottom_a02">加入购物车</a>
+				<a href="#" class="attr_bottom_a02 idnex_gw" data-id="<?php echo $_['rs']['id']; ?>">加入购物车</a>
 				<a href="#" class="attr_bottom_a03">立即购买</a>
 			</div>
 		</li>
@@ -310,8 +317,15 @@ _js('iscroll');
 		var tag = is_login();
 		if(tag === true){
 			var id = parseInt($(this).attr('data-id'));
-			var num = 1;
-			addCart(id, num);
+			var num = $("input[name='num']").val();
+			var attr = '';
+			$(".goods-attr").each(function(){
+				if($(this).attr("data-check") == "1"){
+					attr += $(this).attr("data-attr") + ',';
+				}
+			});
+			attr = attr.substring(0, attr.length-1);
+			addCart(id, num, attr);
 		}
 	});
 
@@ -339,7 +353,14 @@ _js('iscroll');
 		$('div.slide-mask').hide();
 		$('.detail_attr').removeClass('moved');
 		$('body').unbind('touchmove');
+	});
 
+	//参数选择
+	$(".goods-attr").click(function(){
+		var ck = parseInt($(this).attr("data-check"));
+		ck = (ck+1)%2;
+		//console.log(ck);
+		ck == 1 ? $(this).attr("data-check", ck).css({"color":"#f60", "border":"1px solid #f60"}).siblings().attr("data-check", 0).css({"color":"#646464", "border":"none"}) : $(this).parent().find("a").attr("data-check", ck).css({"color":"#646464", "border":"none"});
 	});
 </script>
 </body>

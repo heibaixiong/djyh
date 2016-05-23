@@ -177,16 +177,16 @@ function __qrcode() {
 function __add(){
 	$json = array();
 	$webid=_session('webid');
-	$rc=_sqlall('cart','uid='.$webid.' and wid='.floatval(_v(3)).' and (state=0)');	//获取购物车中所有商品信息
+	$rc=_sqlall('cart','uid='.$webid.' and wid='.floatval(_v(3)).' and (state=0)');	//获取购物车中此商品所有列表
 	$rs=_sqlone('ware','id='.floatval(_v(3)).' and state=0');	//获取商品详情
 	$r = array();
 
 	if ($rs) {
-		$attr_info = _sqlall('attri_info', 'wid='.$rs['id'], 'wname,id');	//获取商品附加属性
+		$attr_info = _sqlall('attri_info', 'wid='.$rs['id'], 'wname,id');	//获取商品属性
 		$real_select = array();
 
 		if ($attr_info) {
-			$attr_select = explode(',', _v(5));
+			$attr_select = explode(',', _v(5));	//用户选择的属性ID
 			$attr_types = 0;
 			$group = '';
 
@@ -217,7 +217,7 @@ function __add(){
 				if ($rc) {
 					foreach ($rc as $cart) {
 						$options = unserialize($cart['model']);
-						if ($options && is_array($options) && count($options) == $attr_types) {
+						if ($options && is_array($options) && count($options) == $attr_types) {	//如果添加的商品属性与购物车中某一个有相同的属性数量
 							$check = true;
 							foreach ($options as $option) {
 								$ex = false;
@@ -244,10 +244,10 @@ function __add(){
 		} elseif ($rc) {
 			foreach ($rc as $cart) {
 				if ($r) {
-					_sqldelete('cart', 'state=0 and id='.$cart['id']);	//删除购物车中商品信息
+					_sqldelete('cart', 'state=0 and id='.$cart['id']);	//删除购物车中此种商品多余的商品
 				} else {
 					$r = $cart;
-					_sqldo('update '.PRE.'cart set model = \'\' where state=0 and id = '.$r['id']);
+					_sqldo('update '.PRE.'cart set model = \'\' where state=0 and id = '.$r['id']);	//更新购物车中产品属性信息
 				}
 			}
 		}
