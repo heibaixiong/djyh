@@ -26,6 +26,7 @@ function __address(){
 	$webid=_session('webid');
 	_c('rs',_sqlone('admin','id='.$webid));
 	_c('address',_sqlone('caradd','uid='.$webid));
+	//var_dump(_sqlone('caradd','uid='.$webid));exit;
 	_c('title','收货地址');
 	_tpl();
 }
@@ -261,6 +262,7 @@ function __order_close() {
 
 }
 
+//edit address
 function __addressedit(){
 	$nam=_post('nam');
 	$webid=_session('webid');
@@ -274,14 +276,22 @@ function __addressedit(){
 		$data['adr']=_post('adr');
 		$data['tel']=_post('tel');
 		$addr=_sqlone('caradd','uid='.$webid);
+		$tmp = 0;
 		if(!empty($addr)){
-			_sqlupdate('caradd',$data,'uid='.$webid);
-			_weblogs('修改收货地址 '._post('nam'));
-			_alerturl('成功修改收货地址！',_u('//address/'));
+			if(_sqlupdate('caradd',$data,'uid='.$webid)){
+				_weblogs('修改收货地址 '._post('nam'));
+				$tmp = 1;
+			}
+			//_alerturl('成功修改收货地址！',_u('//address/'));
 		}else{
 			$data['uid']=$webid;
-			_sqlinsert('caradd',$data);
-		}		
+			if(_sqlinsert('caradd',$data)){
+				$tmp = 1;
+			}
+		}
+		header('Content-Type:application/json; charset=utf-8');
+		echo  $tmp == 1 ? json_encode(array('errCode' => 0, 'errMsg' => '成功修改收货地址')) : json_encode(array('errCode' => 1, 'errMsg' => '修改失败，请稍后再试'));
+		exit;
 	}
 }
 function __passedit(){

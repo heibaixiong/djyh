@@ -43,51 +43,79 @@ _css('my_order');
 	<div class="big_main">
 		<div class="aui-content">
 			<?php
-			foreach(Page::$arr as $k1 => $v1){
-			?>
-
-			<div class="aui-content order_content" >
-				<?php
-				foreach($v1['goods'] as $k2 => $v2){
-				?>
-				<div class="detail_home_lin01"><a href="#"><?php echo $v2['company']; ?></a><span><?php echo $v1['status']; ?></span></div>
-				<div class="index_content">
-					<div class="aui-col-xs-4" >
-						<a href="<?php echo _u('/shop/show/'.$v2['wid']); ?>" class="index_pro02">
-							<img src="<?php echo _resize($v2['img'], 300, 300); ?>" >
-						</a>
-					</div>
-					<div class="aui-col-xs-8" >
-						<div class="index_bleft">
-							<p class="index_text01"><a href="<?php echo _u('/shop/show/'.$v2['wid']); ?>"><?php echo $v2['wtitle']; ?></a></p>
-							<p class="index_text02"><?php echo $v2['class1name']; ?></p>
-							<p class="index_text03"><a>￥<?php echo _rmb($v2['mark']/100);?></a><span>x <?php echo $v2['num']; ?></span></p>
-						</div>
-					</div>
-				</div>
-				<?php
-					}
-				?>
-				<ul class="order_linbox">
-					<li class="order_lin01">
-						<a>合计：<em>￥<?php echo $v1['total']; ?></em></a>
-						<a>共计<em><?php echo count($v1['goods']); ?></em>件商品</a>
-					</li>
-					<li class="order_lin02">
-					<?php
-						if($v1['state'] == '1'){
-							echo '<a href="#" data-id="' . $v1['id'] . '" class="pay-now"><span>立即支付</span></a>';
-							echo '<a href="' .  _u('/person/order_close/'.$v1['id'].'/'.Page::$p) . '" class="cancleOrder"><span>取消订单</span></a>';
-						}else if($v1['state'] == '2'){
-							echo '<a href="#"><span>等待发货</span></a>';
-						}else if($v1['state'] == '3'){
-							echo '<a href="' . _u('//order_receipt/'.$v1['id'].'/'.Page::$p.'/'.$v1['seller_id'].'/') . '"><span>确认收货</span></a>';
-						}
+			foreach(Page::$arr as $k1 => $v1) {
+				if (count($v1['goods']) > 0) {
 					?>
-					</li>
-				</ul>
-			</div>
-			<?php
+
+					<div class="aui-content order_content">
+						<?php
+						$wcid = 0;
+						$status = 0;
+						foreach ($v1['goods'] as $k2 => $v2) {
+							if ($wcid != $v2['company_id']) {
+								?>
+								<div class="detail_home_lin01"><a
+											href="#"><?php echo $v2['company']; ?></a><span><?php if ($status == 0) {
+											echo $v1['status'];
+											$status = 1;
+										} ?></span></div>
+								<?php
+							}
+							?>
+							<div class="index_content">
+								<div class="aui-col-xs-4">
+									<a href="<?php echo _u('/shop/show/' . $v2['wid']); ?>" class="index_pro02">
+										<img src="<?php echo _resize($v2['img'], 300, 300); ?>">
+									</a>
+								</div>
+								<div class="aui-col-xs-8">
+									<div class="index_bleft">
+										<p class="index_text01"><a
+													href="<?php echo _u('/shop/show/' . $v2['wid']); ?>"><?php echo $v2['wtitle']; ?></a>
+										</p>
+
+										<p class="index_text02">
+											<?php
+											$model = unserialize($v2['model']);
+											if ($model && count($model > 0)) {
+												foreach ($model as $m) {
+													echo $m['value'] . ' ';
+												}
+											}
+											?>
+										</p>
+
+										<p class="index_text03">
+											<a>￥<?php echo _rmb($v2['mark'] / 100); ?></a><span>x <?php echo $v2['num']; ?></span>
+										</p>
+									</div>
+								</div>
+							</div>
+							<?php
+							$wcid = $v2['company_id'];
+						}
+						?>
+						<ul class="order_linbox">
+							<li class="order_lin01">
+								<a>合计：<em>￥<?php echo $v1['total']; ?></em></a>
+								<a>共计<em><?php echo count($v1['goods']); ?></em>件商品</a>
+							</li>
+							<li class="order_lin02">
+								<?php
+								if ($v1['state'] == '1') {
+									echo '<a href="#" data-id="' . $v1['id'] . '" class="pay-now"><span>立即支付</span></a>';
+									echo '<a href="' . _u('/person/order_close/' . $v1['id'] . '/' . Page::$p) . '" class="cancleOrder"><span>取消订单</span></a>';
+								} else if ($v1['state'] == '2') {
+									echo '<a href="#"><span>等待发货</span></a>';
+								} else if ($v1['state'] == '3') {
+									echo '<a href="' . _u('//order_receipt/' . $v1['id'] . '/' . Page::$p . '/' . $v1['seller_id'] . '/') . '"><span>确认收货</span></a>';
+								}
+								?>
+							</li>
+						</ul>
+					</div>
+					<?php
+				}
 			}
 			?>
 
@@ -123,12 +151,11 @@ _part('footer');
 
 	//pay now
 	$(".pay-now").click(function(){
-		//loading(1);
 		var id = parseInt($(this).attr('data-id'));
 		var url = '<?php echo _u('/person/order_pay/'); ?>' + id;
 		$.post(url, {id:id, payment_method:'weixin'}, function(data){
-			//loading(1);
-			//console.log(data);return false;
+			console.log(data);
+			//return false;
 			if(data != '100' && data != '101' && data != '102'){
 				$(".paybox").append(data);
 				$("#btn-cart-pay").click();
