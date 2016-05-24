@@ -36,14 +36,12 @@ function __new(){
 	if(!_session('webid')){
 		_url(_u('/index/login'));
 	}
-	if(_ftime('temai')>CACHETIME){
-		_f('temai',_sqlall('ware','length(`img`)>3 and hot=1 and state=0','px,id desc',10));
-	}
-	_c('temai',_f('temai'));
+
 	if(_ftime('flash')>CACHETIME){
 		_f('flash',_sqlall('ad','class=1 and state=0','px,id desc',5));
 	}
 	_c('flash',_f('flash'));
+
 	if(_ftime('index')>CACHETIME){
 		$index=_sqlall('class','pid=0 and state=0 and `show`=1', 'px, id desc', 8);
 		foreach($index as $k=>$v){

@@ -1,0 +1,304 @@
+body{
+    background-color:#f0f0f0;
+}
+/*ÄÚÈÝ*/
+.dev_main {
+    margin: auto;
+    width: 15.6rem;
+}
+.order_top_box {
+    padding: 0 0.66rem;
+    background: #fff;
+}
+.order_top_box:after{
+    border-color:  #d2d2d2;
+}
+.order_top_box .order_top_in{
+    background: url('../images/detail_icon02.png') no-repeat left center;
+    background-size: 1.74rem 1rem;
+    padding:1rem 0;
+    padding-left:2.44rem;
+}
+.order_top_box .order_top_in .order_top_tex01{
+    word-break:break-all;
+    font-size:0.53rem;
+    color:#120c0d;
+}
+.order_top_box .order_top_in .order_top_tex02{
+    margin-top:0.66rem;
+    overflow: hidden;
+
+}
+.order_top_box .order_top_in .order_top_tex02 a{
+    font-size:0.6rem;
+    color:#120c0d;
+    float: left;
+}
+.order_top_box02 {
+    padding: 0 0.66rem;
+    background: #fff;
+
+}
+.order_top_box02 .order_top_in02{
+    background: url('../images/detail_icon01.png') no-repeat 0.6rem center;
+    background-size: 0.72rem 1.27rem;
+    padding:0.77rem 0;
+    padding-left:2.44rem;
+}
+.order_top_box02 .order_top_in02 .order_top_tex02 a{
+    font-size:0.6rem;
+    color:#120c0d;
+    float: left;
+}
+
+.order_top_box02 .order_top_in02 .order_top_tex03{
+    overflow: hidden;
+}
+.order_top_box02 .order_top_in02 .order_top_tex03 a{
+    font-size:0.6rem;
+    color:#120c0d;
+}
+.order_top_box02 .order_top_in02 .order_top_tex03 .order_top_t01{
+   float:left;
+}
+.order_top_box02 .order_top_in02 .order_top_tex03 .order_top_t02{
+    float:right;
+}
+.order_top_box02 .order_top_in02 .order_top_tex04{
+     line-height:1.37rem;
+    font-size:0.6rem;
+    color:#120c0d;
+}
+.order_top_box02 .order_top_in02 .order_top_tex05{
+    line-height:1.37rem;
+    font-size:0.6rem;
+    color:#120c0d;
+}
+.cosig_main_list{
+
+    margin:0.66rem 0;
+    background: #fff;
+}
+.cosig_main_list li{
+    padding:0 0.44rem;
+
+}
+.cosig_main_list .cosig_lin01{
+    overflow: hidden;
+    line-height:1.88rem;
+
+}
+
+.cosig_main_list .cosig_lin01 .cosig_lin01_in02{
+    float: left;
+    background: url('../images/det_icon01.png') no-repeat left center;
+    background-size: 0.65rem 0.65rem;
+    padding-left:0.86rem;
+    color:#3c3c3c;
+    font-size:0.53rem;
+}
+.cosig_main_list .cosig_lin02{
+    background: #f0f0f0;
+    padding-top:0.29rem ;
+    padding-bottom:0.29rem ;
+    overflow: hidden;
+}
+.cosig_main_list .cosig_lin02 .cosig_lin02_in01 {
+    float: left;
+
+}
+.cosig_main_list .cosig_lin02 .cosig_lin02_in01 img{
+    width:3.89rem;
+    height:3.89rem;
+}
+.cosig_main_list .cosig_lin02 .cosig_lin02_in02{
+    float: right;
+    width:70%;
+}
+.cosig_main_list .cosig_lin02 .cosig_lin02_in02 .cosig_pro_title{
+    height:2.9rem;
+    overflow: hidden;
+    word-break:break-all;
+
+}
+.cosig_main_list .cosig_lin02 .cosig_lin02_in02 .cosig_pro_title a{
+    font-size:0.4rem;
+    color:#3c3c3c;
+
+}
+.cosig_pro_txt{
+    overflow: hidden;
+
+}
+.cosig_pro_txt a{
+    float: left;
+    font-size:0.4rem;
+    color:#3c3c3c;
+}
+.cosig_pro_txt .cosig_pro_sl{
+    margin-top:0.2rem;
+    float: right;
+}
+.cosig_pro_txt .cosig_pro_sl span{
+    font-size: 0.62rem;
+    color:#646464
+}
+.cosig_pro_txt .cosig_pro_yf{
+    float: left;
+}
+.cosig_pro_txt .cosig_pro_yf span{
+    font-size:0.8rem;
+    color:#ff0000;
+}
+.cosig_main_list .order_lin02{
+    overflow: hidden;
+    line-height: 1.89rem;
+    border-bottom:solid 1px #d2d2d2 ;
+
+}
+.cosig_main_list .order_lin02 a{
+    float: right;
+}
+.cosig_main_list .order_lin02 a:last-child{
+    font-size:0.53rem;
+    color:#b4b4b4;
+    margin-right:1.24rem;
+}
+.cosig_main_list .order_lin02 a:first-child{
+    color:#3c3c3c;
+    font-size:0.67rem;
+}
+.cosig_main_list .order_lin02 a:first-child em{
+    color:#ff0000;
+    font-size:0.8rem;
+    font-weight: bold;
+}
+
+.cosig_main_list .order_lin01{
+    padding:0  0.44rem;
+}
+.order_lin01 p{
+    font-size:0.53rem;
+    color:#8c8c8c;
+    line-height:0.88rem;
+}
+.order_wl_list{
+    background: #fff;
+}
+.order_wl_list .order_wl_title{
+    padding-left:0.44rem;
+    border-bottom: solid 1px #d2d2d2;
+}
+.order_wl_list .order_wl_title a{
+    font-size:0.6rem;
+    color:#3c3c3c;
+    line-height:1.62rem;
+    background: url('../images/detail_icon03.png') no-repeat left center;
+    background-size: 0.85rem 0.49rem;
+    padding-left:1.11rem;
+}
+.order_wl_list{
+
+}
+.order_wl_list .order_big_box{
+    overflow: hidden;
+    padding-left:1.26rem;
+    padding-right:0.75rem;
+
+}
+.order_wl_list ul{
+    float: right;
+    width:89%;
+
+}
+.order_wl_list .order_wl_box{
+    /*overflow: hidden;*/
+    text-align: center;
+}
+.order_wl_list .order_wl_box a{
+    font-size:0.49rem;
+    color:#8c8c8c;
+}
+.order_wl_list .order_wl_time{
+    float: left;
+    width:24%;
+
+}
+.order_wl_list .order_wl_time a{
+    padding:0.5rem 0;
+    display: block;
+    word-break:break-all;
+}
+
+.order_wl_list .order_wl_time02 {
+    float: left;
+    width: 76%;
+}
+.order_wl_list .order_wl_time02 p{
+    position: relative;
+
+
+
+}
+*, *:before, *:after { box-sizing: inherit; }
+.clearFloat:after {height: 0px;content: "." ;clear: both;visibility: hidden;display: block;}
+.clearFloat { zoom: 1; }
+.order_wl_list .order_wl_time02 p span{
+    background: url('../images/detail_icon04.png') no-repeat left center;
+    background-size: 0.45rem 0.47rem;
+    position:absolute;
+    width: 0.45rem;
+    height:0.47rem;
+    left:-4.26rem;
+    top:0.65rem;
+    z-index: 50;
+}
+.order_wl_list .order_wl_time02 .current_zp span{
+    background: url('../images/detail_icon05.png') no-repeat left center;
+    background-size: 0.65rem 0.65rem;
+    width: 0.65rem;
+    height:0.65rem;
+    left:-4.36rem;
+}
+.order_wl_list .order_wl_time02 a{
+    float: left;
+    word-break:break-all;
+}
+
+.order_wl_list .order_wl_time02 p a{
+   padding:0.5rem 0;
+}
+.order_wl_list .order_wl_time02 .wl_time02_in01{
+    width:26%
+}
+.order_wl_list .order_wl_time02 .wl_time02_in02{
+    width:74%;
+    text-align : left;
+    word-break:break-all;
+
+}
+.oreder_bom{
+    border-top: solid 1px #d2d2d2;
+    overflow: hidden;
+    padding:0.44rem 0;
+    background: #fff;
+    margin-bottom:0.75rem;
+}
+.oreder_bom a{
+    float: right;
+    line-height: 0.95rem;
+    font-size:0.4rem;
+    color:#3c3c3c;
+    border:solid 1px #d2d2d2 ;
+    padding:0 0.4rem;
+    margin:0 0.44rem;
+}
+.oreder_bom .current_boma{
+    color:#ff0000;
+    border-color: #ff0000;
+}
+
+
+
+
+

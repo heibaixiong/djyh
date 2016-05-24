@@ -1,10 +1,10 @@
 <?php
-//version 2.0.2
+//version 2.0.2.1
 define('PART',1);
 define('DIR',dirname(__FILE__).'/');
 define('DOSQL','');
 define('APP_PATH','a/');
-define('PROJECT','p,m,d,c');
+define('PROJECT','p,m,d,c,w');  //增加微信端项目w
 define('PROJECT_PRE','_');
 define('PUB','public/');
 define('UPLOAD','upload/');

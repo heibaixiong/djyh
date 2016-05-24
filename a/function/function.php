@@ -473,4 +473,17 @@ function _editor($id,$w='400',$h='600'){
 function _upload($input,$form){
     echo ' <input type="button" value="上传.." style="padding:8px 20px;" onClick="window.open (\''.INDEX.'?upload/'.$input.'/'.$form.'/\',\''.$input.'\',\'resizable=no,scrollbars=no,status=no,toolbar=no,menubar=no,fullscreen=no,top=\'+(screen.height-300)/2+\',left=\'+(screen.width-420)/2+\',width=420,height=150\');"/>';
 }
+
+/**
+ * 是否AJAX请求
+ * @access protected
+ * @return bool
+ */
+function isAjax() {
+    if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) ) {
+        if('xmlhttprequest' == strtolower($_SERVER['HTTP_X_REQUESTED_WITH']))
+            return true;
+    }
+    return false;
+}
 ?>

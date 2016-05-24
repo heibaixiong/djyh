@@ -1,0 +1,157 @@
+body{
+    background-color:#fff ;
+    font-family:"microsoft yahei";
+}
+/*Í·²¿*/
+#top_nav{
+    background: #ff0000;
+    height:45px;
+    padding:2px 0;
+}
+#search{
+    padding:0;
+    margin-top:8px;
+    background: none;
+    margin-left:0;
+    margin-right: 0;
+}
+#search input{
+    background:#ffbfbf;
+    border-radius: 14px;
+    color: #8c8c8c;
+    padding-left:28px;
+}
+#search .search_icon{
+    position:absolute;
+    left:10px;
+    top:1px;
+    color:#8c8c8c;
+}
+.aui-bar .index_car{
+    background: #f0f0f0;
+    color: #ff0000;
+    padding:5px  10px;
+    border-radius: 6px;
+}
+.index_fl {
+    display: block;
+    height:40px;
+    margin-top:5px;
+
+}
+.index_fl img{
+    height: 100%;
+}
+/*footer*/
+.footer_icon01{
+    background:url('../images/foot_icon01.png') no-repeat center bottom ;
+    display:block;
+    width:20px;
+    height:30px;
+    margin:auto;
+    background-size:100%;
+}
+.footer_bh01{
+    background:url('../images/foot_icon02.png') no-repeat center bottom ;
+    background-size:100%;
+}
+.footer_icon02{
+    background:url('../images/foot_icon03.png') no-repeat center bottom ;
+    display:block;
+    width:20px;
+    height:30px;
+    margin:auto;
+    background-size:100%;
+}
+.footer_bh02{
+    background:url('../images/foot_icon04.png') no-repeat center bottom ;
+    background-size:100%;
+}
+.footer_icon03{
+    background:url('../images/foot_icon05.png') no-repeat center bottom ;
+    display:block;
+    width:20px;
+    height:30px;
+    margin:auto;
+    background-size:100%;
+}
+.footer_bh03{
+    background:url('../images/foot_icon06.png') no-repeat center bottom ;
+    background-size:100%;
+}
+.footer_icon04{
+    background:url('../images/foot_icon07.png') no-repeat center bottom ;
+    display:block;
+    width:20px;
+    height:30px;
+    margin:auto;
+    background-size:100%;
+}
+.footer_bh04{
+    background:url('../images/foot_icon08.png') no-repeat center bottom ;
+    background-size:100%;
+}
+.aui-nav .font_box{
+    background: #d3d3d6;
+}
+.font_box li p{
+    color:#3c3c3c;
+}
+@media screen and (min-width:250px) {
+    html { font-size: 15.5px;}
+    body { font-size: 10px; }
+}
+/* set html font-size by width */
+@media screen and (min-width:320px) {
+    html { font-size: 20px; }
+    body { font-size: 12px; }
+}
+@media screen and (min-width:360px) {
+    html { font-size: 22.5px; }
+    body { font-size: 12px; }
+}
+
+@media screen and (min-width:375px) {
+    html { font-size: 23.4375px; }
+    body { font-size: 12px; }
+}
+
+@media screen and (min-width:384px) {
+    html { font-size: 24px; }
+    body { font-size: 14px; }
+}
+
+@media screen and (min-width:400px) {
+    html { font-size: 25px; }
+    body { font-size: 14px; }
+}
+
+@media screen and (min-width:414px) {
+    html { font-size: 25.875px; }
+    body { font-size: 14px; }
+}
+
+@media screen and (min-width:424px) {
+    html { font-size: 26.5px; }
+    body { font-size: 14px; }
+}
+
+@media screen and (min-width:480px) {
+    html { font-size: 30px; }
+    body { font-size: 15.36px; }
+}
+
+@media screen and (min-width:540px) {
+    html { font-size: 33.75px; }
+    body { font-size: 17.28px; }
+}
+
+@media screen and (min-width:640px) {
+    html { font-size: 40px; }
+    body { font-size: 20.48px; }
+}
+
+@media screen and (min-width:700px) {
+    html { font-size: 45px; }
+    body { font-size: 23.04px; }
+}

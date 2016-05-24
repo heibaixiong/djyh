@@ -41,9 +41,19 @@ function __wxpay_openid() {
 
     $openId = $tools->GetOpenid();
 
+    if (empty($openId)) {
+        if (_session('weixin_redirect_url')) {
+            _header(_session('weixin_redirect_url'));
+        } else {
+            _header(_u('/cart/checkout/'));
+        }
+        die();
+    }
+
     _session('weixin_openid', $openId);
 
-    //if (!empty(_session('weixin_redirect_url')) && strpos(_session('weixin_redirect_url'), '/?d/') !== false) {
+    if (!empty(_session('weixin_redirect_url')) && preg_match('/[^?]*\?d\/.*/i', _session('weixin_redirect_url'))) {
+        //if (!empty(_session('weixin_redirect_url')) && strpos(_session('weixin_redirect_url'), '/?d/') !== false) {
         $wx_user = _sqlone('ship_user', 'wx_open_id=\''._escape($openId).'\'');
         if (empty($wx_user)) {
             $data = array(
@@ -67,7 +77,52 @@ function __wxpay_openid() {
             _sqlupdate('ship_user', $data, 'id=\''.$wx_user['id'].'\'');
             _session('wx_uid', $wx_user['id']);
         }
-    //}
+        //}
+    }
+
+    if (!empty(_session('weixin_redirect_url')) && preg_match('/[^?]*\?w\/.*/i', _session('weixin_redirect_url'))) {
+        $wx_user = _sqlone('admin_bind', 'openid=\'' . _escape($openId) . '\'');
+        //var_dump($wx_user);exit;
+        if (empty($wx_user)) {
+            $data1 = array(
+                'openid' => $openId,
+                'from' => 'weixin',
+                'add_time' => time()
+            );
+            $wx_id = _sqlinsert('admin_bind', $data1);  //insert bindinfo to admin_bind
+
+            $data2 = array(
+                'user' => 'w' . _random(8, 'num'),
+                'rank' => '5',
+                'regtime' => time(),
+                'updatetime' => time(),
+                'login' => '1',
+                'state' => '0'
+            );
+            if($user_id = _sqlinsert('admin', $data2)) {  //insert userinfo to admin_bind
+                _sqldo('update ' . _pre('admin_bind') . ' set user_id=' . $user_id . ' where id=' . $wx_id);  //update userinfo to admin_bind
+                _session('webid', $user_id);
+            }
+        } else {
+            //get table admin info
+            $user = _sqlone('admin', 'id = '.$wx_user['user_id']);
+            if(empty($user)){	//add user info to table of admin
+                $data['user'] = 'w' . _random(8, 'num');
+                $data['rank'] = '5';
+                $data['regtime'] = time();
+                $data['updatetime'] = time();
+                $data['login'] = 1;
+                $data['state'] = 0;
+                if($user_id = _sqlinsert('admin', $data)) {  //insert userinfo to admin_bind
+                    _sqldo('update ' . _pre('admin_bind') . ' set user_id=' . $user_id . ' where id=' . $wx_user['id']);  //update userinfo to admin_bind
+                    _session('webid', $user_id);
+                }
+            }else{
+                _sqldo('update ' . _pre('admin') . ' set updatetime=' . time() . ', login = login + 1 where id=' . $user['id']);	//update userinfo(updatetime,login) to admin
+                _session('webid', $wx_user['user_id']);
+            }
+        }
+    }
 
     if (_session('weixin_redirect_url')) {
         _header(_session('weixin_redirect_url'));
