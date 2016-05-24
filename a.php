@@ -1,5 +1,5 @@
 <?php
-//version 2.0.2.1
+//version 2.0.1.2 for wl.
 define('PART',1);
 define('DIR',dirname(__FILE__).'/');
 define('DOSQL','');
