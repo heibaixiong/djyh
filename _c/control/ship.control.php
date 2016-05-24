@@ -14,10 +14,10 @@ function __list(){
 	$key=_post('key');
 	if(!is_null($key)){
 		if (empty($key)) $key = null;
-		_session('key',$key);
+		_session('ship_search_key',$key);
 	}
 
-	$key=_session('key');
+	$key=_session('ship_search_key');
 	$_['key']=$key;
 	$sql = "o.status >= '3' and o.ship_number != ''";
 	if(!empty($key)){
@@ -28,7 +28,7 @@ function __list(){
 	}
 
 	$sql = _pre('ship_order')." as o " .
-		   "left join "._pre('ship_user')." as u on o.wx_open_id=o.rob_open_id " .
+		   "left join "._pre('ship_user')." as u on u.wx_open_id=o.rob_open_id " .
 			"left join "._pre('ship_user_info')." as ui on u.id=ui.uid " .
 			"left join "._pre('ship_to_stowage')." as s2s on o.ship_number=s2s.ship_number " .
 			"left join "._pre('ship_stowage')." as ss on ss.id=s2s.stowage_id " .

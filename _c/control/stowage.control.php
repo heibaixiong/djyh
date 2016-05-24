@@ -91,7 +91,9 @@ function __add() {
     ;
     if (!(strlen(_session('adminrank')) > 0 && _session('adminrank') == '0')) $sql .= "  and (((ui.mid='".floatval(_session('code'))."' OR (o.mid > 0 and o.mid='".floatval(_session('code'))."')) AND ss.mid is null) OR (ss.to_mid='".floatval(_session('code'))."' AND ss.status=3))";
     $sql .= " group by o.ship_number order by o.id desc limit 50";
-    $ship_order = _sqlselect($sql);
+    //$ship_order = _sqlselect($sql);
+    $ship_order = array();
+
     _c('ship_order', $ship_order);
 
     _c('stowage_ship', array());
@@ -131,7 +133,8 @@ function __edit() {
     ;
     if (!(strlen(_session('adminrank')) > 0 && _session('adminrank') == '0')) $sql .= "  and (((ui.mid='".floatval(_session('code'))."' OR (o.mid > 0 and o.mid='".floatval(_session('code'))."')) AND ss.mid is null) OR (ss.to_mid='".floatval(_session('code'))."' AND ss.status=3))";
     $sql .= " group by o.ship_number order by o.id desc limit 50";
-    $ship_order = _sqlselect($sql);
+    //$ship_order = _sqlselect($sql);
+    $ship_order = array();
 
     _c('ship_order', $ship_order);
 

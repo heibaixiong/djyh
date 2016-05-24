@@ -34,7 +34,7 @@
     </div>
     <div class="aui-col-xs-2" style="width:22%;">
         <span class="aui-pull-right" style="padding-right:5px;padding-top:2px;">
-            <a class="index_car" style="background:none;font-size:20px;color:#fff;">筛选</a>
+            <a class="index_car" style="background:none;color:#fff;">筛选</a>
         </span>
     </div>
 </header>
