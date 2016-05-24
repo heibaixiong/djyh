@@ -12,7 +12,7 @@
 				 	alert('支付成功');
 				 }else{
 					 //返回跳转到订单详情页面
-					 alert(支付失败);
+					 alert('支付失败'');
 				 }
 				//alert(res.err_code+res.err_desc+res.err_msg);
 			}
