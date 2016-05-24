@@ -39,30 +39,26 @@ function __index(){
 
 //结算
 function __checkout(){
-/*
-	//如果是微信浏览器，并且不存在微信openid，则转去获取微信openid获取程序
-	if(_isweixin() && is_null(_session('weixin_openid'))) {
-		_session('weixin_redirect_url', _u('/cart/checkout/'));
-		_header('http://'.$_SERVER['HTTP_HOST'] . '/callback/wxpay_openid/index.php');
-		//exit();
-	}
-*/
 	$webid=intval(_session('webid'));
 
-	$comment = _post('comment');
-	if ($comment && is_array($comment)) {
-		foreach ($comment as $id => $content) {
-			_sqlupdate('cart', array('content'=>$content), 'state=0 and uid='.$webid.' and id='.$id);
+	$tmp = explode(',', _v(3));
+	$cids = '';
+	foreach($tmp as $k){
+		if(intval($k) > 0){
+			$cids .= $k . ',';
 		}
 	}
-
+	_session('cart_jiesuan', $cids);
 	$sql = "select og.*, c.id as company_id, c.compony as company, g.uid as seller_id from " . PRE . "cart as og left join " . PRE . "ware as g on og.wid = g.id left join " . PRE . "compony as c on g.uid = c.aid" .
-		" where og.uid = " . $webid . " and og.state = 0 and g.state = 0" .
+		" where og.uid = " . $webid . " and og.state = 0 and og.id in (" . trim($cids, ',') . ") and g.state = 0" .
 		" order by c.id, og.addtime, og.id"
 	;
 
 	$goods = _sqlselect($sql);
-
+	if(empty($goods)){
+		_alerturl('没有选择要结算的商品！',_u('/cart/index/'));
+	}
+//var_dump($goods);exit;
 	$mark=0;
 	$num=0;
 	foreach($goods as $k=>$v){
@@ -74,32 +70,38 @@ function __checkout(){
 	_c('mark', $mark);
 	_c('num', $num);
 	_c('title', '确认订单');
-
+	//var_dump(_sqlone('caradd','uid='.$webid));exit;
 	_c('address', _sqlone('caradd','uid='.$webid));
 
+	_c('foot_nav', 3);	//脚部样式控制
 	_tpl();
 }
 
+//commit orders and pay
 function __submit(){
-	/*_c('title', '提交订单');
-	_c('order', array('total'=>188.9));
-	_fun('wxpay_qrcode');//die(_getPaymentForm(7136));
-	_c('payment_data', _getPaymentForm(7136));
-	_tpl();
-	die;*/
 	global $_wrap;
 
 	$webid=_session('webid');
-	$arr=_sqlall('cart','uid='.$webid.' and (state=0)');
-	//$list=_sqlall('cart','uid='.$webid.' and (state=1 or state=0)');
+	$cids = trim(_session('cart_jiesuan'), ',');
+
+	if(!isset($cids) || $cids == ''){
+		//_alerturl('没有选择要结算的商品！',_u('/cart/index/'));
+		echo 1;
+		exit;
+	}
+	$arr=_sqlall('cart','uid='.$webid.' and (state=0) and id in ('.$cids.')');
 
 	if (empty($arr)) {
-		_alerturl('购物车中没有商品！',_u('/cart/index/'));
+		//_alerturl('没有选择要结算的商品！',_u('/cart/index/'));
+		echo 1;
+		exit;
 	}
 
 	$address = _sqlone('caradd','uid='.$webid);
 	if (empty($address)) {
 		//_alerturl('请先设置收货地址！',_u('/person/address/'));
+		echo 2;
+		exit;
 	}
 
 	$mark=0;
@@ -133,32 +135,26 @@ function __submit(){
 	$order['payment'] = '微信';
 	$order['state'] = 1;
 
-	$order_id = _sqlinsert('order', $order);	//插入订单
+	$order_id = _sqlinsert('order', $order);	//insert record to orders
 	if ($order_id) {
-		_sqldo('update '.PRE.'cart set orderid = '.$order_id.', state = '.$order['state'].', uptime='.time().' where uid='.$webid.' and (state=0)');
+		$content = _post('content');
+		_sqldo('update '.PRE.'cart set orderid = '.$order_id.', state = '.$order['state'].', uptime = '.time().', content = "'.$content.'" where uid='.$webid.' and (state=0) and id in('.$cids.')');
 		if ($order['state'] == 1) {
 			_c('payment_data', '');
 			if (file_exists(APP_PATH.'function/'.$order['payment_code'].'.php')) {
 				_fun($order['payment_code']);
 				if (function_exists('_getPaymentForm')) {
-					_c('payment_data', call_user_func('_getPaymentForm', $order_id));
+					$payment_data = call_user_func('_getPaymentForm', $order_id);
+					echo $payment_data;
+					exit;
 				}
 			}
 		}
 	} else {
-		_alerturl('订单提交失败！', _u('/cart/index/'));
+		//_alerturl('订单提交失败！', _u('/cart/index/'));
 	}
-
-	_c('arr',$arr);
-	_c('mark',$mark);
-	_c('num',$num);
-
-	$order['id'] = $order_id;
-	_c('order', $order);
-
-	_c('title', '提交订单');
-
-	_tpl();
+	echo 3;
+	exit;
 }
 
 function __success() {
@@ -301,5 +297,44 @@ function __del(){
 		_sqlupdate('cart',$data,'id='._v(3));
 	}
 	_url(_u('//index/'));*/
+}
+
+//edit cart
+function __edit(){
+	$id = _post('cid');	//cart id
+	$uid = _session('webid');
+
+	$r = _sqlone('cart','uid=' . $uid . ' and id=' . $id . ' and (state=0)');
+	//echo json_encode($id);exit;
+	$data = array();
+	if(!$r){
+		$data = array('errCode' => 1, 'errMsg' => '购物车中不存在此商品');
+	}else{
+		$type = _post('type');
+
+		if($type == 1){	//add one to cart
+			if(_sqldo('update '.PRE.'cart set num = num + 1, uptime = '. time() .' where id = '.$id)){
+				$data = array('errCode' => 0, 'errMsg' => '修改成功');
+			}else{
+				$data = array('errCode' => -1, 'errMsg' => '修改失败');
+			}
+		}else{	//reduce one to cart
+			if($r['num'] == 1){		//delete from cart
+				if(_sqldelete('cart', 'id='. $id )){
+					$data = array('errCode' => 2, 'errMsg' => '修改成功');
+				}else{
+					$data = array('errCode' => -1, 'errMsg' => '修改失败');
+				}
+			}else{
+				if(_sqldo('update '.PRE.'cart set num = num - 1 and uptime = '.time().' where id = '.$id)){
+					$data = array('errCode' => 0, 'errMsg' => '修改成功');
+				}else{
+					$data = array('errCode' => -1, 'errMsg' => '修改失败');
+				}
+			}
+		}
+	}
+	header('Content-Type:application/json; charset=utf-8');
+	echo json_encode($data);
 }
 ?>

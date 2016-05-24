@@ -51,37 +51,44 @@
                     </div>
                     <div class="aui-col-xs-8" >
                         <div class="index_bleft">
-                            <p class="index_text01"><a href="#"><?php echo $v['wtitle']; ?></a></p>
-                            <p class="index_text02"><?php echo $v['class1name']; ?></p>
+                            <p class="index_text01"><a href="<?php echo _u('/shop/show/'.$v['wid'].'/'); ?>"><?php echo $v['wtitle']; ?></a></p>
+                            <p class="index_text02">
+                                <?php
+                                $model = unserialize($v['model']);
+                                if($model && count($model > 0)){
+                                    foreach($model as $m){
+                                        echo $m['value'] . ' ';
+                                    }
+                                }
+                                ?>
+                            </p>
                             <div class="index_text03">
-                                <a>￥<?php echo _rmb($v['mark']/100);?></a>
-                                <div class="detail_sl">
+                                <a class="mark">￥<?php echo _rmb($v['mark']/100);?></a>
+                                <div class="detail_sl" data-cid="<?php echo $v['id']; ?>">
                                     <span class="detail_jian"></span>
-                                    <input type="text" value="<?php echo $v['num']; ?>">
+                                    <input class="car_inp num" type="text" value="<?php echo $v['num']; ?>">
                                     <span class="detail_jia"></span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <?php
-                }
-                ?>
-                <!-- 购物车商品列表end -->
-
                 <ul class="order_linbox">
                     <li class="order_lin01">
-                        <a>应付：<em>￥<?php echo _rmb($_['mark']/100);?></em></a>
-                        <a>已选<em><?php echo $_['num']; ?></em>件商品</a>
+                        <a>应付：<em>￥<?php echo $v['mark']*$v['num']/100; ?></em></a>
+                        <a>已选<em><?php echo $v['num']; ?></em>件商品</a>
                     </li>
+
                 </ul>
             </div>
+            <?php } ?>
+            <!-- 购物车商品列表end -->
         </div>
         <div class="car_bom">
             <a class="car_bom_qx">全选</a>
             <div class="car_bom_rig">
-                <a>合计：<em>￥<?php echo _rmb($_['mark']/100);?></em></a>
-                <a href="javascript:jiesuan()">结算</a>
+                <a>合计：<em class="gmark">￥<?php echo $_['mark']/100; ?></em></a>
+                <a href="javascript:jiesuan()">结算(<em class="gnum"><?php echo $_['num']; ?></em>件)</a>
             </div>
         </div>
     </div>
@@ -135,7 +142,57 @@ _part('footer');
             cids[i] = $(this).val();
             i++;
         });
-        //console.log(cids);
+        console.log(cids);
+        if(cids.length == 0){
+            alert('请选择要结算的商品');
+            return false;
+        }
+        var url = "<?php echo _u('/cart/checkout/'); ?>"+cids.join(",");
+        //console.log(url);
+        location.href = url;
+    }
+
+    //加减
+    (function shopnum(){
+        var shopnum=$(".detail_sl");
+        shopnum.each(function(){
+            var box=$(this);
+            var cid = box.attr("data-cid");
+            var inp=box.find(".car_inp");
+            var jian=box.find(".detail_jian");
+            var jia=box.find(".detail_jia");
+            jian.click(function(){
+                var num=parseNum(inp.val());
+                num=num-1<=0?1:num-1;
+                inp.val(num);
+            });
+            jia.click(function(){
+                var num=parseNum(inp.val());
+                num=num+1;
+                inp.val(num);
+                edit({cid:cid, type:1}, function(data){
+                    console.log(data);
+                });
+            });
+            inp.keyup(function(){
+                var num=parseNum(inp.val());
+                inp.val(num);
+            });
+            var parseNum=function(num){
+                num=parseInt(num);
+                return isNaN(num)?1:num;
+            };
+
+
+        })
+    }());
+
+    //edit cart num
+    var edit = function(opts, callback){
+        var url = "<?php echo _u('/cart/edit/'); ?>";
+        $.post(url, {cid:opts.cid, type:opts.type}, function(data){
+            callback(data);
+        });
     }
 </script>
 </body>
