@@ -1,0 +1,88 @@
+
+/*main*/
+.pay_box{
+    width:100%;
+    overflow: hidden;
+}
+.pay_box .pay_main{
+    width:120%;
+    overflow:hidden;
+    padding: 0.88rem 2%;
+}
+.pay_box li:after{
+    border-color:#d2d2d2;
+}
+.pay_box li{
+
+    position: relative;
+    width:100%;
+
+}
+.pay_box li .pay_yuan{
+    float: left;
+    height: 100%;
+    vertical-align: middle;
+    position: absolute;
+    top: 50%;
+    margin-top:-9px;
+
+
+
+}
+.pay_box li .pay_yuan span{
+    display: block;
+    width:18px;
+    height: 18px;
+    border-radius: 50%;
+    border: solid 2px #626262;
+
+
+}
+.pay_box li .current_a span{
+    background: #ff0000;
+    border: none;
+}
+.pay_box li .right_wrapper{
+    width:14.7%;
+    height:100%;
+    overflow: hidden;
+    float:left;
+    margin-left:2%;
+    text-align: center;
+    background: red;
+    color: #ffffff;
+    line-height: 3rem;
+
+}
+.pay_box li .pay_text{
+    float: left;
+    width:85%;
+    background: url('../images/pay_xiugai.png') no-repeat right center;
+    background-size: 0.83rem 0.92rem;
+    padding-right: 1.55rem;
+    margin-left:1.5rem;
+}
+.pay_box p{
+    font-size:0.62rem;
+    color:#3c3c3c;
+    overflow: hidden;
+}
+.pay_box .pay_p02{
+    margin-top:0.4rem;
+}
+.pay_box .pay_p02 a{
+    color:#3c3c3c;
+    float: left;
+}
+.pay_box .pay_p02 a:first-child{
+    margin-right: 1.48rem;
+}
+.pay_add{
+    line-height: 3.1rem;
+    padding:0 2%;
+    font-size:0.62rem;
+    color: #3c3c3c;
+    background: url('../images/pay_add.png') no-repeat 98% center;
+    background-size: 0.94rem 0.94rem;
+
+}
