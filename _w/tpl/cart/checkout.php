@@ -35,10 +35,10 @@
                             <p class="pay_p01">
                                 <?php
                                 if($_['address'] && $_['address']['pro_n'] != '' && $_['address']['adr'] != ''){
-                                    echo '<a href="'. _u('/person/address') .'">'.$_['address']['pro_n'].$_['address']['cit_n'].$_['address']['cou_n'].$_['address']['adr'] . '</a>';
+                                    echo '<a href="'. _u('/person/addrlist') .'">'.$_['address']['pro_n'].$_['address']['cit_n'].$_['address']['cou_n'].$_['address']['adr'] . '</a>';
                                     $addr = 1;
                                 }else{
-                                    echo '<a href="'. _u('/person/address/') .'">请选择收货地址</a>';
+                                    echo '<a href="'. _u('/person/addrlist/') .'">请选择收货地址</a>';
                                     $addr = 0;
                                 }
 
@@ -128,7 +128,8 @@ $(".pay_zf").click(function(){
             alert('订单提交失败');
         }else{
             $(".paybox").append();
-            $("#btn-cart-pay").click();
+            //$("#btn-cart-pay").click();
+            //callpay();
         }
     });
 });

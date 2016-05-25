@@ -24,7 +24,7 @@ _css('commons');
     </div>
     <div class="aui-col-xs-8" style="width:62%">
         <div class="aui-searchbar" id="search">
-            <form style="width:100%;">
+            <form action="<?php echo _u('/shop/index/'); ?>" style="width:100%;">
                 <input type="search" placeholder="请输入搜索内容" id="search-input">
                 <a href="#" class="aui-iconfont aui-icon-search search_icon"></a>
             </form>
@@ -172,7 +172,7 @@ _part('footer');
         if(tag === true){
             var id = parseInt($(this).attr('data-id'));
             var num = 1;
-            addCart(id, num);
+            addCart(id, num, '');
         }
     });
     //goods search

@@ -71,7 +71,7 @@ function __checkout(){
 	_c('num', $num);
 	_c('title', '确认订单');
 	//var_dump(_sqlone('caradd','uid='.$webid));exit;
-	_c('address', _sqlone('caradd','uid='.$webid));
+	_c('address', _sqlone('caradd','uid='.$webid.' and def = "1"'));
 
 	_c('foot_nav', 3);	//脚部样式控制
 	_tpl();
@@ -286,8 +286,13 @@ function __add(){
 }
 function __del(){
 	$webid=_session('webid');
-	_sqldelete('cart', 'uid='.$webid.' and id='._v(3).' and (state=0)');
-	_url(_u('//index/'));
+	$id = _post('id');
+	if(_sqldelete('cart', 'uid='.$webid.' and id='.$id.' and (state=0)')){
+		echo 0;
+	}else{
+		echo 1;
+	}
+	exit;
 
 	/*$r=_sqlone('cart','uid='.$webid.' and id='._v(3).' and (state=0)');
 	if($r){
@@ -311,7 +316,6 @@ function __edit(){
 		$data = array('errCode' => 1, 'errMsg' => '购物车中不存在此商品');
 	}else{
 		$type = _post('type');
-
 		if($type == 1){	//add one to cart
 			if(_sqldo('update '.PRE.'cart set num = num + 1, uptime = '. time() .' where id = '.$id)){
 				$data = array('errCode' => 0, 'errMsg' => '修改成功');
@@ -319,18 +323,14 @@ function __edit(){
 				$data = array('errCode' => -1, 'errMsg' => '修改失败');
 			}
 		}else{	//reduce one to cart
-			if($r['num'] == 1){		//delete from cart
-				if(_sqldelete('cart', 'id='. $id )){
-					$data = array('errCode' => 2, 'errMsg' => '修改成功');
-				}else{
-					$data = array('errCode' => -1, 'errMsg' => '修改失败');
-				}
-			}else{
-				if(_sqldo('update '.PRE.'cart set num = num - 1 and uptime = '.time().' where id = '.$id)){
+			if($r['num'] > 1){		//reduce from cart
+				if(_sqldo('update '.PRE.'cart set num = num-1 , uptime = '.time().' where id = '.$id)){
 					$data = array('errCode' => 0, 'errMsg' => '修改成功');
 				}else{
 					$data = array('errCode' => -1, 'errMsg' => '修改失败');
 				}
+			}else{
+				$data = array('errCode' => 0, 'errMsg' => '修改成功');
 			}
 		}
 	}

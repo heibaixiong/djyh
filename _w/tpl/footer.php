@@ -79,5 +79,6 @@ _js('common');
         url += '/'+keyword;
         console.log(url);
         openWin(url, 0);
+        return false;
     }
 </script>

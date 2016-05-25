@@ -62,7 +62,7 @@
 			editAddress();
 		}
 	};
-	
+	callpay();
 	</script>
 
 <p class="fl pay-form-btn"><a class="return-btn" href="javascript:void(0);" onclick="callpay()" id="btn-cart-pay">立即支付</a></p>

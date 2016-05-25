@@ -22,11 +22,38 @@ function __account() {
 	_tpl();
 }
 
+
+function __addrlist(){
+	$webid=_session('webid');
+	_c('address',_sqlall('caradd','uid='.$webid));
+	_c('title','收货地址');
+	_tpl();
+}
+
+function __addrdel(){
+	$webid=_session('webid');
+	$id = _post('id');
+	_sqldelete('caradd', 'uid = '.$webid.' and id = '.$id);
+	echo 0;
+}
+//edit address
+function __addrdef(){
+	$id=_post('id');
+	$webid=_session('webid');
+	_sqldo('update '.PRE.'caradd set def = "0" where uid = '.$webid);
+	_sqldo('update '.PRE.'caradd set def = "1" where uid = '.$webid.' and id = '.$id);
+	echo 1;exit;
+}
+
 function __address(){
 	$webid=_session('webid');
-	_c('rs',_sqlone('admin','id='.$webid));
-	_c('address',_sqlone('caradd','uid='.$webid));
-	//var_dump(_sqlone('caradd','uid='.$webid));exit;
+	$id = _v(3);
+	if($id > 0){
+		//_c('rs',_sqlone('admin','id='.$webid));
+		_c('address',_sqlone('caradd','uid='.$webid));
+	}else{
+		//_c('address', '');
+	}
 	_c('title','收货地址');
 	_tpl();
 }
@@ -259,7 +286,6 @@ function __order_close() {
 	} else {
 		_alerturl('订单关闭失败！请稍后再试！', _u('//order/'._v(4).'/'));
 	}
-
 }
 
 //edit address
@@ -275,10 +301,11 @@ function __addressedit(){
 		$data['cou_n']=_post('cou_n');
 		$data['adr']=_post('adr');
 		$data['tel']=_post('tel');
-		$addr=_sqlone('caradd','uid='.$webid);
+		//$addr=_sqlone('caradd','uid='.$webid);
+		$id = _post('id');
 		$tmp = 0;
-		if(!empty($addr)){
-			if(_sqlupdate('caradd',$data,'uid='.$webid)){
+		if($id > 0){
+			if(_sqlupdate('caradd',$data,'uid='.$webid.' and id = '.$id)){
 				_weblogs('修改收货地址 '._post('nam'));
 				$tmp = 1;
 			}

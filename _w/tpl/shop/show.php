@@ -19,7 +19,7 @@
 <!--头部-->
 <header class="aui-nav aui-bar aui-bar-nav aui-bar-dark" id="top_nav">
 	<div class="aui-col-xs-2" style="width:18%;">
-        <span class="aui-pull-left" style="padding-left: 5px;">
+        <span class="aui-pull-left" style="padding-left: 5px;" onclick="history.go(-1)">
            <span class="aui-iconfont aui-icon-left"></span>
         </span>
 	</div>

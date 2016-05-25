@@ -87,7 +87,7 @@ body{
     display: block;
 }
 .index_pro02 img{
-    width:100%;
+    width:90%;
 }
 .index_pro02 span{
     padding-top:1px;
@@ -156,7 +156,7 @@ body{
     margin-top:-1px;
 }
 .index_bleft{
-    margin-left:0.33rem;
+
     overflow: hidden;
     border-bottom:solid 1px #d2d2d2;
     padding-bottom:0.6rem;
@@ -169,7 +169,7 @@ body{
 .index_text04 .index_pl span em{
     color: #ea962d;
 }
-/*content-²à±ßÀ¸*/
+/*content-ï¿½ï¿½ï¿½ï¿½ï¿½*/
 div.slide-mask {
     position:fixed;
     z-index: 998;

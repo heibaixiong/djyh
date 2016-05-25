@@ -72,7 +72,7 @@
                         <p class="index_text02"><?php echo _left(strip_tags($v['content']), 0, 48, '...'); ?></p>
                         <p class="index_text03">￥<?php echo _rmb($v['mark']/100);?></p>
                         <div class="index_text04">
-                            <div class="idnex_gw">加入购物车</div>
+                            <div class="idnex_gw" data-id="<?php echo $v['id']; ?>">加入购物车</div>
                             <div class="index_pl">
                                 <span>已售<em><?php echo $v['sale']; ?></em>件</span>
                                 <span>好评<em><?php echo $v['sale']; ?></em>条</span>
@@ -273,7 +273,8 @@ _js('iscroll');
         if(tag === true){
             var id = parseInt($(this).attr('data-id'));
             var num = 1;
-            addCart(id, num);
+            addCart(id, num, '');
+            //console.log(id);
         }
     });
 
@@ -320,6 +321,7 @@ _js('iscroll');
         //console.log(cid1+'-'+cid2);
         cid = (cid1 == 0 ? 0 : (cid2 == 0 ? cid1 : cid2));
         get_goods_list(1, cid, page, paixu, '');
+        a=2;
     })
 
     $(".list_rest").click(function(){

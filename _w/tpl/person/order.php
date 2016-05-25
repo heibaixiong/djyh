@@ -31,11 +31,11 @@ _css('my_order');
 
 	<!-- 筛选条件start -->
 	<ul class="aui-content order_sx aui-border-tb" style="margin-bottom:10px;">
-		<li class="list_sxicon00 <?php if (empty(_v(4))) echo 'current_h'; ?>"><a href="<?php echo _u('///'); ?>"><span>全部</span></a></li>
-		<li class="list_sxicon01 <?php if((_v(4)=='1')) echo 'current_h'; ?>"><a href="<?php echo _u('///1/1/'); ?>"><span>待付款</span></a></li>
-		<li class="list_sxicon02 <?php if((_v(4)=='2')) echo 'current_h'; ?>"><a href="<?php echo _u('///1/2/'); ?>"><span>待收货</span></a></li>
-		<li class="list_sxicon03 <?php if((_v(4)=='3')) echo 'current_h'; ?>"><a href="<?php echo _u('///1/3/'); ?>"><span>待评价</span></a></li>
-		<li class="list_sxicon04 <?php if((_v(4)=='4')) echo 'current_h'; ?>"><a href="<?php echo _u('///1/4/'); ?>"><span>已评价</span></a></li>
+		<li class="list_sxicon00 <?php if (empty(_v(4))) echo 'current_h0'; ?>"><a href="<?php echo _u('///'); ?>"><span>全部</span></a></li>
+		<li class="list_sxicon01 <?php if((_v(4)=='1')) echo 'current_h1'; ?>"><a href="<?php echo _u('///1/1/'); ?>"><span>待付款</span></a></li>
+		<li class="list_sxicon02 <?php if((_v(4)=='2')) echo 'current_h2'; ?>"><a href="<?php echo _u('///1/2/'); ?>"><span>待收货</span></a></li>
+		<li class="list_sxicon03 <?php if((_v(4)=='3')) echo 'current_h3'; ?>"><a href="<?php echo _u('///1/3/'); ?>"><span>待评价</span></a></li>
+		<li class="list_sxicon04 <?php if((_v(4)=='4')) echo 'current_h4'; ?>"><a href="<?php echo _u('///1/4/'); ?>"><span>已评价</span></a></li>
 	</ul>
 	<!-- 筛选条件end -->
 
@@ -158,7 +158,8 @@ _part('footer');
 			//return false;
 			if(data != '100' && data != '101' && data != '102'){
 				$(".paybox").append(data);
-				$("#btn-cart-pay").click();
+				//$("#btn-cart-pay").click();
+				//callpay();
 			}else{
 				alert('支付失败，请稍后再试');
 			}
