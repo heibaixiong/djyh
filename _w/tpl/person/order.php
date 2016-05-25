@@ -109,7 +109,7 @@ _css('my_order');
 							<li class="order_lin02">
 								<?php
 								if ($v1['state'] == '1') {
-									echo '<a href="'._u('/person/order_view/'.$v1['id']).'" data-id="' . $v1['id'] . '" class="pay-now1"><span>立即支付</span></a>';
+									echo '<a href="'._u('/person/order_view/'.$v1['id']).'" data-id="' . $v1['id'] . '" class="pay-now1"><span>去支付</span></a>';
 									echo '<a href="' . _u('/person/order_close/' . $v1['id'] . '/' . Page::$p) . '" class="cancleOrder"><span>取消订单</span></a>';
 								} else if ($v1['state'] == '2') {
 									echo '<a href="#"><span>等待发货</span></a>';
