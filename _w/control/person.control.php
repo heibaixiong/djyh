@@ -129,6 +129,7 @@ function __order_view(){
 	global $_;
 	$webid=_session('webid');
 	$order = _sqlone('order', 'id='.intval(_v(3)).' and uid='.$webid);
+	//var_dump($order);exit;
 	if (empty($order)) {
 		_alerturl('订单不存在！', _u('//order/'));
 	}

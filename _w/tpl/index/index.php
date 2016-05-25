@@ -45,7 +45,7 @@ _css('commons');
         <div class="swiper-wrapper">
             <?php
             foreach ($_['flash'] as $k => $v) {
-                echo '<div class="swiper-slide" ><a href="' . ($v['url'] ? _u('/index/ads/' . $v['id'] . '/') : '#') . '" ><img  src="' . _resize($v['img'], 640, 200) . '" /></a></div>';
+                echo '<div class="swiper-slide" ><a href="' . ($v['url'] ? _u('/index/ads/' . $v['id'] . '/') : '#') . '" ><img  src="' . _resize($v['img'], 640, 400) . '" /></a></div>';
             }
             ?>
         </div>

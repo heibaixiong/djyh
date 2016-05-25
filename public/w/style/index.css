@@ -1,5 +1,5 @@
 
-/*ÂÖ²¥*/
+/*ï¿½Ö²ï¿½*/
 .swiper-wrapper a{
 
 }
@@ -19,6 +19,7 @@
     line-height: 20px;
     bottom:0;
     font-size:17px;
+    height:20px;
 }
 .swiper-pagination span{
     width:10px;
@@ -26,6 +27,9 @@
     background: #b4b4b8;
     font-size:17px;
 
+}
+.swiper-container-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet{
+    margin:6px 5px;
 }
 .swiper-pagination .swiper-pagination-bullet-active{
     background:#3c3c3c;

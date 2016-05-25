@@ -241,8 +241,8 @@ _js('iscroll');
                     str += '<div class="index_text04">';
                     str += '<div class="idnex_gw" data-id="'+data[i]['id']+'">加入购物车</div>';
                     str += '<div class="index_pl">';
-                    str += '<span>已售<em>' + (parseInt(data[i]['sale'])*5) + '</em>件</span>';
-                    str += '<span>好评<em>' + (parseInt(data[i]['sale'])*4) + '</em>条</span>';
+                    str += '<span>已售<em>' + data[i]['sale'] + '</em>件</span>';
+                    str += '<span>好评<em>' + data[i]['sale'] + '</em>条</span>';
                     str += '</div>';
                     str += '</div>';
                     str += '</div>';
@@ -268,7 +268,7 @@ _js('iscroll');
     }
 
     //购物车点击操作
-    $(".idnex_gw").click(function(){
+    $(document).delegate('.idnex_gw', 'click', function(){
         var tag = is_login();
         if(tag === true){
             var id = parseInt($(this).attr('data-id'));
