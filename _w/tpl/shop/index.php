@@ -281,7 +281,7 @@ _js('iscroll');
 
 
     var myScroll;
-    var a= 0, cid1 = 0, cid2 = 0;
+    var a= 0,b= 0, cid1 = 0, cid2 = 0;
     $('.index_car').on('click', function(e){
         var wh = $('div.wrapperhove'+'rtree').height();
         $('div.slide-mask').css('height', wh).show();
@@ -307,6 +307,7 @@ _js('iscroll');
         myScroll.refresh();
         myScroll.scrollToElement('li:nth-child(1)', 0);
         a=2;
+        b=1;
     })
     $(".list_bigbox02 li").click(function(e){
         cid2 = $(this).attr('data-id');
@@ -326,14 +327,21 @@ _js('iscroll');
 
     $(".list_rest").click(function(){
         if(a==1){
-            $('div.slide-mask').hide();
-            $('aside.slide-wrapper').removeClass('moved');
+            if(b==1){
+                $(".list_bigbox02").hide().parents(".list_bigbox  li").show().find(".list_pp").show();
+                load();
+                b=2;
+            }
+            else{
+                $('div.slide-mask').hide();
+                $('aside.slide-wrapper').removeClass('moved');
+            }
         }else if(a==2){
+
             $(".list_bigbox02").hide().parents(".list_bigbox  li").show().find(".list_pp").show();
             load();
             a=1;
         }
-
     })
     var myScroll;
     function load(){
