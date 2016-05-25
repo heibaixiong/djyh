@@ -299,15 +299,17 @@ _js('iscroll');
 
     });
     //the parent li list event
-    $(".list_bigbox .list_boxin").click(function(e){
-        cid1 = $(this).attr('data-id');
+    $(".list_bigbox .list_pp").click(function(e){
+        cid1 = $(this).parent().attr('data-id');
         //cid2 = 0;
-        $(this).css("background","#f0f0f0").siblings("li").css("background","#fff");
-        $(this).find("ul").show().siblings("div").hide().parents("li").siblings("li").hide();
+        $(this).css("background","#f0f0f0").parents("li").siblings("li").find(".list_pp").css("background","#fff");
+        $(this).siblings("ul").show().siblings("div").hide().parents("li").siblings("li").hide();
         myScroll.refresh();
-        myScroll.scrollToElement('li:nth-child(1)', 0);
+        myScroll.scrollToElement('.list_bigbox02 div:nth-child(1)', 0);
+
         a=2;
         b=1;
+
     })
     $(".list_bigbox02 li").click(function(e){
         cid2 = $(this).attr('data-id');
