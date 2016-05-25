@@ -86,21 +86,21 @@ function __submit(){
 
 	if(!isset($cids) || $cids == ''){
 		//_alerturl('没有选择要结算的商品！',_u('/cart/index/'));
-		echo 1;
+		echo -1;
 		exit;
 	}
 	$arr=_sqlall('cart','uid='.$webid.' and (state=0) and id in ('.$cids.')');
 
 	if (empty($arr)) {
 		//_alerturl('没有选择要结算的商品！',_u('/cart/index/'));
-		echo 1;
+		echo -1;
 		exit;
 	}
 
 	$address = _sqlone('caradd','uid='.$webid);
 	if (empty($address)) {
 		//_alerturl('请先设置收货地址！',_u('/person/address/'));
-		echo 2;
+		echo -2;
 		exit;
 	}
 
@@ -139,6 +139,8 @@ function __submit(){
 	if ($order_id) {
 		$content = _post('content');
 		_sqldo('update '.PRE.'cart set orderid = '.$order_id.', state = '.$order['state'].', uptime = '.time().', content = "'.$content.'" where uid='.$webid.' and (state=0) and id in('.$cids.')');
+		echo $order_id;exit;
+		/*
 		if ($order['state'] == 1) {
 			_c('payment_data', '');
 			if (file_exists(APP_PATH.'function/'.$order['payment_code'].'.php')) {
@@ -150,10 +152,11 @@ function __submit(){
 				}
 			}
 		}
+		*/
 	} else {
 		//_alerturl('订单提交失败！', _u('/cart/index/'));
 	}
-	echo 3;
+	echo -3;
 	exit;
 }
 

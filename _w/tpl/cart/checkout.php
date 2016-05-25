@@ -120,16 +120,15 @@ $(".pay_zf").click(function(){
     $.post(url, {content:content}, function(data){
         console.log(data);
         //return false;
-        if(data == '1'){
-            alert('请进入订单页支付');
-        }else if(data == "2"){
+        if(data == '-1'){
+            alert('购物车中无商品');
+        }else if(data == "-2"){
             alert('请设置收货地址');
-        }else if(data == "3"){
+        }else if(data == "-3"){
             alert('订单提交失败');
         }else{
-            $(".paybox").append();
-            //$("#btn-cart-pay").click();
-            //callpay();
+            var url = "<?php echo _u('/person/order_view/'); ?>" + data;
+            location.href = url;
         }
     });
 });

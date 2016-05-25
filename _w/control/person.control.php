@@ -79,6 +79,8 @@ function __order(){
 	$where = 'uid='.$webid;
 	if (in_array(_v(4), array(1,2,3,4))) {		//订单状态
 		$where .= ' and state = \''.intval(_v(4)).'\'';
+	}else{
+		$where .= ' and state in(1,2,3,4)';
 	}
 
 	Page::start('order', $p, $where, 'addtime desc, id desc', 10);
@@ -127,25 +129,10 @@ function __order_view(){
 	global $_;
 	$webid=_session('webid');
 	$order = _sqlone('order', 'id='.intval(_v(3)).' and uid='.$webid);
-	if (empty($order) || empty(_v(5))) {
-		_alerturl('订单不存在！', _u('//order/'.intval(_v(4))));
+	if (empty($order)) {
+		_alerturl('订单不存在！', _u('//order/'));
 	}
 
-	//$order['goods'] = _sqlall('cart','orderid='.$order['id']);
-	$order['status'] = $_['user_order_status'][$order['state']];
-
-	$sql = "select og.*, c.id as company_id, c.compony as company, g.uid as seller_id from " . PRE . "cart as og left join " . PRE . "ware as g on og.wid = g.id left join " . PRE . "compony as c on g.uid = c.aid" .
-		" where og.orderid = " . $order['id'] . " and g.uid = " . intval(_v(5)) .
-		" order by c.id, og.addtime, og.id"
-	;
-
-	$order['goods'] = _sqlselect($sql);
-
-	if (empty($order['goods'])) {
-		_alerturl('订单不存在！', _u('//order/'.intval(_v(4))));
-	}
-
-	$order['status'] = $_['user_order_status'][$order['goods'][0]['state']];
 
 	$order['payment_data'] = '';
 	if ($order['state'] == '1' && !empty($order['payment_code'])) {
@@ -157,10 +144,9 @@ function __order_view(){
 		}
 	}
 
+//var_dump($order);exit;
 	_c('order', $order);
-	_c('order_state', $_['user_order_status']);
-	_c('page', intval(_v(4)));
-	_c('title','订单详细');
+	_c('title','立即支付');
 	_tpl();
 }
 

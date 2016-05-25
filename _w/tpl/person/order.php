@@ -11,7 +11,6 @@ _css('aui');
 _css('commons');
 _css('my_order');
 ?>
-
 </head>
 <body>
 <!-- 头部start -->
@@ -54,11 +53,18 @@ _css('my_order');
 						foreach ($v1['goods'] as $k2 => $v2) {
 							if ($wcid != $v2['company_id']) {
 								?>
-								<div class="detail_home_lin01"><a
-											href="#"><?php echo $v2['company']; ?></a><span><?php if ($status == 0) {
+								<div class="detail_home_lin01">
+									<a href="#"><?php echo $v2['company']; ?></a>
+									<span style="position: relative;"><?php if ($status == 0) {
 											echo $v1['status'];
 											$status = 1;
-										} ?></span></div>
+										} ?>
+										<!--
+										&nbsp;&nbsp;
+										<i class="aui-iconfont aui-icon-delete order-delete" data-id="<?php echo $v1['id']; ?>" style="position: absolute;right:-10px;top:0;color:#f00;"></i>
+										-->
+									</span>
+								</div>
 								<?php
 							}
 							?>
@@ -103,7 +109,7 @@ _css('my_order');
 							<li class="order_lin02">
 								<?php
 								if ($v1['state'] == '1') {
-									echo '<a href="#" data-id="' . $v1['id'] . '" class="pay-now"><span>立即支付</span></a>';
+									echo '<a href="'._u('/person/order_view/'.$v1['id']).'" data-id="' . $v1['id'] . '" class="pay-now1"><span>立即支付</span></a>';
 									echo '<a href="' . _u('/person/order_close/' . $v1['id'] . '/' . Page::$p) . '" class="cancleOrder"><span>取消订单</span></a>';
 								} else if ($v1['state'] == '2') {
 									echo '<a href="#"><span>等待发货</span></a>';
@@ -150,7 +156,7 @@ _part('footer');
 	});
 
 	//pay now
-	$(".pay-now").click(function(){
+	$(".pay-now").click(function(){return false;
 		var id = parseInt($(this).attr('data-id'));
 		var url = '<?php echo _u('/person/order_pay/'); ?>' + id;
 		$.post(url, {id:id, payment_method:'weixin'}, function(data){

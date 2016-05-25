@@ -12,7 +12,7 @@
 				 	alert('支付成功');
 				 }else{
 					 //返回跳转到订单详情页面
-					 alert('支付失败'');
+					 alert('支付失败');
 				 }
 				//alert(res.err_code+res.err_desc+res.err_msg);
 			}
@@ -62,7 +62,7 @@
 			editAddress();
 		}
 	};
-	callpay();
+
 	</script>
 
 <p class="fl pay-form-btn"><a class="return-btn" href="javascript:void(0);" onclick="callpay()" id="btn-cart-pay">立即支付</a></p>
