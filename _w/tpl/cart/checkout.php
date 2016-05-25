@@ -121,7 +121,7 @@ $(".pay_zf").click(function(){
         console.log(data);
         //return false;
         if(data == '1'){
-            alert('没有选择要结算的商品');
+            alert('请进入订单页支付');
         }else if(data == "2"){
             alert('请设置收货地址');
         }else if(data == "3"){
