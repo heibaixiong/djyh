@@ -1,11 +1,11 @@
 <?php
 if(!defined('PART'))exit;
 if(!_session('weixin_openid') || !_session('webid')){
-	_session('webid', '84');
-	_session('weixin_openid', 'oivF8wVNcYmaPoOTbX11lgA1oqCo');
-	//_session('weixin_redirect_url', 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);
-	//_header('http://'.$_SERVER['HTTP_HOST'] . '/callback/wxpay_openid/index.php');
-	//exit();
+	//_session('webid', '84');
+	//_session('weixin_openid', 'oivF8wVNcYmaPoOTbX11lgA1oqCo');
+	_session('weixin_redirect_url', 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);
+	_header('http://'.$_SERVER['HTTP_HOST'] . '/callback/wxpay_openid/index.php');
+	exit();
 }
 
 //微信端首页面
