@@ -18,7 +18,7 @@
     <a class="aui-pull-left" onclick="history.go(-1)">
         <span class="aui-iconfont aui-icon-left"></span>
     </a>
-    <div class="aui-title">确认支付</div>
+    <div class="aui-title">确认订单</div>
     <a class="aui-pull-right">
         <span></span>
     </a>
@@ -26,6 +26,7 @@
 <div style="position: absolute;top: 50px;bottom: 55px;overflow-y: scroll;-webkit-overflow-scrolling: touch; width:100%; ">
     <!--main-->
     <div class="big_main">
+        <form action="<?php echo _u('/cart/submit/'); ?>" method="post">
         <ul class="pay_box">
             <li>
                 <div class=" pay_main" >
@@ -43,6 +44,7 @@
                                 }
 
                                 ?>
+                                <input type="hidden" name="address" value="<?php if($_['address']) echo $_['address']['id']; else echo 0; ?>" />
                             </p>
                             <p class="pay_p02">
                                 <a><?php echo $_['address']['nam']; ?></a>
@@ -72,10 +74,12 @@
                             <div class="index_bleft">
                                 <p class="index_text01"><a href="#"><?php echo $v['wtitle']; ?></a></p>
 
-                                <p class="index_text02">数量：<span><?php echo $v['num']; ?></span></p>
-
                                 <p class="index_text02">价格：<span style="color:#ff0000; ">￥<?php echo $v['mark']*$v['num']/100; ?></span></p>
 
+                                <p class="index_text02">数量：<span><?php echo $v['num']; ?></span></p>
+
+                                <p><input type="text" name="content[<?php echo $v['id']; ?>]" placeholder="给卖家留言" style="padding:2px;" /></p>
+                                <input type="hidden" name="cart[<?php echo $v['id']; ?>]" value="<?php echo $v['id']; ?>" />
                             </div>
                         </div>
                     </div>
@@ -89,17 +93,9 @@
                 -->
             </div>
         </div>
-        <!-- 备注-->
-        <ul class="pay_bz">
-            <li class="pay_bz01">
-                备注
-            </li>
-            <li class="pay_bz02">
-                <input type="text" name="content" placeholder="给卖家留言">
-            </li>
-        </ul>
         <div class="pay_zj">总价：<span>￥<?php echo $_['mark']/100; ?></span></div>
-        <div class="pay_zf"><a>微信支付</a></div>
+        <div class="pay_zf"><a>立即下单</a></div>
+        </form>
     </div>
 </div>
 <!--footer-->
@@ -109,30 +105,14 @@ _part('footer');
 <div class="paybox" style="display: none;"></div>
 <script>
 $(".pay_zf").click(function(){
-    var addr = "<?php echo $addr; ?>"
-    console.log(addr);
-    if(addr == '0'){
+    var addr = parseInt($("input[name='address']").val());
+    if(addr == 0){
         alert('请选择收货地址');
         return false;
     }
-    var content = $("input[name='content']").val();
-    var url = '<?php echo _u('/cart/submit/'); ?>';
-    $.post(url, {content:content}, function(data){
-        console.log(data);
-        //return false;
-        if(data == '-1'){
-            alert('购物车中无商品');
-        }else if(data == "-2"){
-            alert('请设置收货地址');
-        }else if(data == "-3"){
-            alert('订单提交失败');
-        }else{
-            var url = "<?php echo _u('/person/order_view/'); ?>" + data;
-            location.href = url;
-        }
-    });
+    console.log($("form").serialize());
+    $("form").submit();
 });
 </script>
-
 </body>
 </html>

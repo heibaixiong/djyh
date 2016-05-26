@@ -12,18 +12,20 @@
 	?>
 	<style>
 		body{background-color: #f9f9f9;}
-		.state{margin:10px auto;font-size:14px;padding:0 10px;border-bottom:1px solid #eee;line-height:24px;}
+		.state{margin:10px auto;font-size:14px;padding:0 10px;border-bottom:1px solid #eee;line-height:24px;font-size:12px;background-color: #fff;}
+		.state p{font-size:12px;}
 		.state span{color:#333;}
 		.pay-form-btn{margin:15px 0;}
-		.return-btn{background-color: darkred;color:#fff;width:100%;text-align: center;border-radius:3px;display: block;padding:5px 0;}
+		.return-btn{background-color:#f03232;color:#fff;text-align: center;border-radius:3px;display: block;padding:5px 0;font-size:14px;}
 
 		.detail{border-bottom:1px solid #eee;border-top:1px solid #eee;padding:10px;background-color: #fff;line-height:24px;}
+		.detail p{font-size:12px;}
 		.detail span{color:#333;}
 	</style>
 </head>
 <body>
 <div class="state">
-	<p>订单状态：<span style="color:dodgerblue;">待支付</span></p>
+	<p>订单状态：<span style="color:dodgerblue;"><?php echo $_['user_order_status'][$_['order']['state']]; ?></span></p>
 	<p>订单编号：<span><?php echo $_['order']['id']; ?></span></p>
 	<p>下单时间：<span><?php echo date('Y-m-d H:i:s', $_['order']['addtime']); ?></span></p>
 

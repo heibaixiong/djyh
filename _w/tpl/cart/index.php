@@ -51,8 +51,7 @@
                         <div class="aui-col-xs-4">
                             <a href="#" class="index_pro02">
                                 <img src="<?php echo _resize($v['img'], 210, 210); ?>">
-                                <input type="checkbox" value="<?php echo $v['id']; ?>" name="cids[]"
-                                       style="display: none;"/>
+                                <input type="checkbox" value="<?php echo $v['id']; ?>" name="cids[]" style="display: none;"/>
                             </a>
                         </div>
                         <div class="aui-col-xs-8">
@@ -74,7 +73,7 @@
                                 <div class="index_text03">
                                     <a class="mark">￥<?php echo _rmb($v['mark'] / 100); ?></a>
 
-                                    <div class="detail_sl" data-cid="<?php echo $v['id']; ?>">
+                                    <div class="detail_sl" data-cid="<?php echo $v['id']; ?>" data-price="<?php echo _rmb($v['mark'] / 100); ?>">
                                         <span class="detail_jian"></span>
                                         <input class="car_inp num" type="text" value="<?php echo $v['num']; ?>">
                                         <span class="detail_jia"></span>
@@ -103,7 +102,7 @@
             <a class="car_bom_qx">全选</a>
 
             <div class="car_bom_rig">
-                <a>合计：<em class="gmark">￥<?php echo $_['mark'] / 100; ?></em></a>
+                <a>合计：<em class="gmark">￥<span><?php echo _rmb($_['mark'] / 100); ?></span></em></a>
                 <a href="javascript:jiesuan()">结算(<em class="gnum"><?php echo $_['num']; ?></em>件)</a>
             </div>
         </div>
@@ -184,7 +183,9 @@ _part('footer');
             var inp=box.find(".car_inp");
             var jian=box.find(".detail_jian");
             var jia=box.find(".detail_jia");
+
             jian.click(function(){
+                var th = $(this);
                 var num=parseNum(inp.val());
                 num=num-1<=0?1:num-1;
                 inp.val(num);
@@ -193,11 +194,12 @@ _part('footer');
                 });
             });
             jia.click(function(){
+                var th = $(this);
                 var num=parseNum(inp.val());
                 num=num+1;
                 inp.val(num);
                 edit({cid:cid, type:1}, function(data){
-                    console.log(data);
+
                 });
             });
             inp.keyup(function(){
@@ -208,8 +210,6 @@ _part('footer');
                 num=parseInt(num);
                 return isNaN(num)?1:num;
             };
-
-
         })
     }());
 
@@ -217,6 +217,17 @@ _part('footer');
     var edit = function(opts, callback){
         var url = "<?php echo _u('/cart/edit/'); ?>";
         $.post(url, {cid:opts.cid, type:opts.type}, function(data){
+            var gnum = 0;   //total num
+            var gmark = 0;    //total price
+            $(".detail_sl").each(function(){
+                var box = $(this);
+                var nm = parseInt(box.find(".car_inp").val());
+                var pc = parseFloat(box.attr("data-price"));
+                gnum = gnum + nm;
+                gmark = gmark + pc*nm;
+            });
+            $(".gmark span").text(Math.round(gmark*100)/100);
+            $(".gnum").text(gnum);
             callback(data);
         });
     }

@@ -79,22 +79,23 @@ function __checkout(){
 
 //commit orders and pay
 function __submit(){
-	global $_wrap;
-
 	$webid=_session('webid');
-	$cids = trim(_session('cart_jiesuan'), ',');
 
-	if(!isset($cids) || $cids == ''){
-		//_alerturl('没有选择要结算的商品！',_u('/cart/index/'));
-		echo -1;
-		exit;
+	$cids = _post('cart');
+	if(!is_array($cids) || empty($cids)){
+		_alerturl('没有选择要结算的商品！',_u('/cart/index/'));
 	}
-	$arr=_sqlall('cart','uid='.$webid.' and (state=0) and id in ('.$cids.')');
+
+	$arr=_sqlall('cart','uid='.$webid.' and (state=0) and id in (' . implode(',', $cids) . ')');
 
 	if (empty($arr)) {
-		//_alerturl('没有选择要结算的商品！',_u('/cart/index/'));
-		echo -1;
+		_alerturl('没有选择要结算的商品！',_u('/cart/index/'));
 		exit;
+	}
+
+	$addr = intval(_post('address'));
+	if($addr == 0){
+		_alerturl('请先设置收货地址！',_u('/cart/checkout/'));
 	}
 
 	$address = _sqlone('caradd','uid='.$webid);
@@ -135,29 +136,32 @@ function __submit(){
 	$order['payment'] = '微信';
 	$order['state'] = 1;
 
+	//$order['id'] =12321321;
+
 	$order_id = _sqlinsert('order', $order);	//insert record to orders
 	if ($order_id) {
+		$i = 0;
 		$content = _post('content');
-		_sqldo('update '.PRE.'cart set orderid = '.$order_id.', state = '.$order['state'].', uptime = '.time().', content = "'.$content.'" where uid='.$webid.' and (state=0) and id in('.$cids.')');
-		echo $order_id;exit;
-		/*
-		if ($order['state'] == 1) {
-			_c('payment_data', '');
-			if (file_exists(APP_PATH.'function/'.$order['payment_code'].'.php')) {
-				_fun($order['payment_code']);
-				if (function_exists('_getPaymentForm')) {
-					$payment_data = call_user_func('_getPaymentForm', $order_id);
-					echo $payment_data;
-					exit;
-				}
+		foreach($cids as $k){
+			_sqldo('update '.PRE.'cart set orderid = '.$order_id.', state = '.$order['state'].', uptime = '.time().', content = "'._escape($content[$k]).'" where uid='.$webid.' and (state=0) and id in('.intval($k).')');
+		}
+	} else {
+		_alerturl('订单提交失败！', _u('/cart/index/'));
+	}
+	$order['id'] = $order_id;
+	$order['payment_data'] = '';
+	if ($order['state'] == '1' && !empty($order['payment_code'])) {
+		if (file_exists(APP_PATH.'function/'.$order['payment_code'].'.php')) {
+			_fun($order['payment_code']);
+			if (function_exists('_getPaymentForm')) {
+				$order['payment_data'] = call_user_func('_getPaymentForm', $order['id']);
 			}
 		}
-		*/
-	} else {
-		//_alerturl('订单提交失败！', _u('/cart/index/'));
 	}
-	echo -3;
-	exit;
+
+	_c('title', '提交订单');
+	_c('order', $order);
+	_tpl();
 }
 
 function __success() {

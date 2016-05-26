@@ -26,10 +26,10 @@
     </div>
     <div class="aui-col-xs-8" style="width:60%">
         <div class="aui-searchbar" id="search">
-            <form style="width:100%;">
+            <div style="width:100%;">
                 <input type="search" placeholder="请输入搜索内容" id="search-input">
                 <a href="#" class="aui-iconfont aui-icon-search search_icon" ></a>
-            </form>
+            </div>
         </div>
     </div>
     <div class="aui-col-xs-2" style="width:22%;">

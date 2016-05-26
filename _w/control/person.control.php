@@ -7,12 +7,13 @@ if(empty($webid)){
 	exit();
 }
 function __index(){
-	/*$webid=_session('webid');
+	$webid=_session('webid');
 	_c('rs',_sqlone('admin','id='.$webid));
-	_c('address',_sqlone('caradd','uid='.$webid));
+	//_c('address',_sqlone('caradd','uid='.$webid));
+	_c('goods', _sqlall('ware','length(`img`)>3 and state=0 and (hot = 1 or recommend = 1)', 'px,id desc', 4));
 	_c('title','个人中心');
-	_tpl();*/
-	_header(_u('/person/account/'));
+	_c('foot_nav', 4);	//脚部样式控制
+	_tpl();
 }
 
 function __account() {
@@ -151,6 +152,33 @@ function __order_view(){
 	_tpl();
 }
 
+function __order_detail(){
+	$id = intval(_v(3));
+	if($id == 0){
+		_alerturl('订单不存在！', _u('//order/'));
+	}
+
+	$order['detail'] = _sqlone('order', 'id = '.$id);
+	if(empty($order['detail'])){
+		_alerturl('订单不存在！', _u('//order/'));
+	}
+
+	$sql = "select og.*, c.id as company_id, c.compony as company, g.uid as seller_id from " . PRE . "cart as og left join " . PRE . "ware as g on og.wid = g.id left join " . PRE . "compony as c on g.uid = c.aid" . " where og.orderid = " . $id . " order by c.id, og.addtime, og.id";
+
+	$order['goods'] = _sqlselect($sql);
+	if(empty($order['detail'])){
+		_alerturl('订单不存在！', _u('//order/'));
+	}
+
+	//echo '<pre>';
+	//print_r($order);exit;
+
+	_c('title', '订单详情');
+	_c('order', $order);
+	_tpl();
+}
+
+//confirm order
 function __order_receipt() {
 	global $_;
 	$webid=_session('webid');
@@ -198,64 +226,6 @@ function __order_receipt() {
 	}
 
 	_header( _u('//order/'.intval(_v(4))));
-}
-
-//微信支付部分 -- 公众号支付
-function __order_pay(){
-	global $_;
-	global $_wrap;
-
-	$webid=_session('webid');
-
-	$id = $_POST['id'];
-	$order = _sqlone('order', 'state=1 and id='.intval($id).' and uid='.$webid);	//查询订单
-	if (empty($order)) {
-		exit(json_encode(100));	//订单不存在
-	}
-
-	$order['goods'] = _sqlall('cart','orderid='.$order['id']);	//查询订单中的商品列表
-	$order['status'] = $_['user_order_status'][$order['state']];
-
-	if (empty($order['goods'])) {
-		exit(json_encode(100));	//订单不存在
-	}
-
-	//$order['status'] = $_['user_order_status'][$order['state']];
-
-	$order['payment_data'] = '';
-	if ($order['state'] == '1' && !is_null(_post('payment_method')) && array_key_exists(_post('payment_method'), $_wrap['payment_method'])) {
-		if (file_exists(APP_PATH.'function/'.$_wrap['payment_method'][_post('payment_method')]['code'].'.php')) {
-			_fun($_wrap['payment_method'][_post('payment_method')]['code']);
-			if (function_exists('_getPaymentForm')) {
-				$order['payment_data'] = call_user_func('_getPaymentForm', $order['id']);
-			}
-		} else {
-			if ($_wrap['payment_method'][_post('payment_method')]['code'] == 'cod') {
-				$data = array();
-				$data['payment_code'] = $_wrap['payment_method'][_post('payment_method')]['code'];
-				$data['payment'] = $_wrap['payment_method'][_post('payment_method')]['title'];
-				$data['state'] = 2;
-				$data['pay_time'] = time();
-				if (_sqlupdate('order', $data, 'state=1 and id='.intval(_v(3)).' and uid='.$webid)) {
-					_sqldo('update '.PRE.'cart set state = 2, uptime='.time().' where orderid='.intval(_v(3)).' and (state=1)');
-					_alertclose('支付成功！');
-				}
-			}
-		}
-	}
-
-	if (empty($order['payment_data'])) {
-		exit(json_encode(101));		//支付方式异常，请选择其它支付方式或稍后再试！
-	} else {
-		$data = array();
-		$data['payment_code'] = $_wrap['payment_method'][_post('payment_method')]['code'];
-		$data['payment'] = $_wrap['payment_method'][_post('payment_method')]['title'];
-		$data['uptime'] = time();
-		if (!_sqlupdate('order', $data, 'state=1 and id='.intval(_v(3)).' and uid='.$webid)) {
-			exit(json_encode(102));		//支付方式更新异常，请稍后再试！
-		}
-	}
-	echo ($order['payment_data']);exit;
 }
 
 function __order_close() {

@@ -7,6 +7,7 @@
 			<?php echo $jsApiParameters; ?>,
 			function(res){
 				WeixinJSBridge.log(res.err_msg);
+				console.log(res);
 			   if(res.err_msg == "get_brand_wcpay_request:ok"){
 				 //alert(res.err_code+res.err_desc+res.err_msg);
 				 	alert('支付成功');
@@ -35,6 +36,7 @@
 	//获取共享地址
 	function editAddress()
 	{
+		return false;
 		WeixinJSBridge.invoke(
 			'editAddress',
 			<?php echo $editAddress; ?>,
@@ -44,22 +46,23 @@
 				var value3 = res.addressCountiesThirdStageName;
 				var value4 = res.addressDetailInfo;
 				var tel = res.telNumber;
-				
+				console.log(res);
 				alert(value1 + value2 + value3 + value4 + ":" + tel);
 			}
 		);
 	}
-	
+
 	window.onload = function(){
+		return false;
 		if (typeof WeixinJSBridge == "undefined"){
 		    if( document.addEventListener ){
 		        document.addEventListener('WeixinJSBridgeReady', editAddress, false);
 		    }else if (document.attachEvent){
-		        document.attachEvent('WeixinJSBridgeReady', editAddress); 
+		        document.attachEvent('WeixinJSBridgeReady', editAddress);
 		        document.attachEvent('onWeixinJSBridgeReady', editAddress);
 		    }
 		}else{
-			editAddress();
+			//editAddress();
 		}
 	};
 

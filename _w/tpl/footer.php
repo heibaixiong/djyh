@@ -22,9 +22,9 @@
             </a>
         </li>
         <li id="tabbar4">
-            <a href="<?php echo _u('/person/order'); ?>" style="display: block;">
+            <a href="<?php echo _u('/person/index'); ?>" style="display: block;">
                 <span class="footer_icon04 <?php if(isset($_['foot_nav']) && $_['foot_nav'] == 4) echo 'footer_bh04'; ?>"></span>
-                <p <?php if(isset($_['foot_nav']) && $_['foot_nav'] == 4) echo 'style="color:rgb(255, 0, 0)"'; ?>>我的订单</p>
+                <p <?php if(isset($_['foot_nav']) && $_['foot_nav'] == 4) echo 'style="color:rgb(255, 0, 0)"'; ?>>个人中心</p>
             </a>
         </li>
     </ul>

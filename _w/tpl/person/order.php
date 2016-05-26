@@ -32,9 +32,9 @@ _css('my_order');
 	<ul class="aui-content order_sx aui-border-tb" style="margin-bottom:10px;">
 		<li class="list_sxicon00 <?php if (empty(_v(4))) echo 'current_h0'; ?>"><a href="<?php echo _u('///'); ?>"><span>全部</span></a></li>
 		<li class="list_sxicon01 <?php if((_v(4)=='1')) echo 'current_h1'; ?>"><a href="<?php echo _u('///1/1/'); ?>"><span>待付款</span></a></li>
-		<li class="list_sxicon02 <?php if((_v(4)=='2')) echo 'current_h2'; ?>"><a href="<?php echo _u('///1/2/'); ?>"><span>待收货</span></a></li>
-		<li class="list_sxicon03 <?php if((_v(4)=='3')) echo 'current_h3'; ?>"><a href="<?php echo _u('///1/3/'); ?>"><span>待评价</span></a></li>
-		<li class="list_sxicon04 <?php if((_v(4)=='4')) echo 'current_h4'; ?>"><a href="<?php echo _u('///1/4/'); ?>"><span>已评价</span></a></li>
+		<li class="list_sxicon02 <?php if((_v(4)=='2')) echo 'current_h2'; ?>"><a href="<?php echo _u('///1/2/'); ?>"><span>待发货</span></a></li>
+		<li class="list_sxicon03 <?php if((_v(4)=='3')) echo 'current_h3'; ?>"><a href="<?php echo _u('///1/3/'); ?>"><span>待收货</span></a></li>
+		<li class="list_sxicon04 <?php if((_v(4)=='4')) echo 'current_h4'; ?>"><a href="<?php echo _u('///1/4/'); ?>"><span>已完成</span></a></li>
 	</ul>
 	<!-- 筛选条件end -->
 
@@ -59,10 +59,6 @@ _css('my_order');
 											echo $v1['status'];
 											$status = 1;
 										} ?>
-										<!--
-										&nbsp;&nbsp;
-										<i class="aui-iconfont aui-icon-delete order-delete" data-id="<?php echo $v1['id']; ?>" style="position: absolute;right:-10px;top:0;color:#f00;"></i>
-										-->
 									</span>
 								</div>
 								<?php
@@ -76,8 +72,8 @@ _css('my_order');
 								</div>
 								<div class="aui-col-xs-8">
 									<div class="index_bleft">
-										<p class="index_text01"><a
-													href="<?php echo _u('/shop/show/' . $v2['wid']); ?>"><?php echo $v2['wtitle']; ?></a>
+										<p class="index_text01">
+											<a href="<?php echo _u('/shop/show/' . $v2['wid']); ?>"><?php echo $v2['wtitle']; ?></a>
 										</p>
 
 										<p class="index_text02">
@@ -112,9 +108,11 @@ _css('my_order');
 									echo '<a href="'._u('/person/order_view/'.$v1['id']).'" data-id="' . $v1['id'] . '" class="pay-now1"><span>去支付</span></a>';
 									echo '<a href="' . _u('/person/order_close/' . $v1['id'] . '/' . Page::$p) . '" class="cancleOrder"><span>取消订单</span></a>';
 								} else if ($v1['state'] == '2') {
-									echo '<a href="#"><span>等待发货</span></a>';
+									echo '<a href="javascript:void(0)"><span>等待发货</span></a>';
+									echo '<a href="' . _u('//order_detail/').$v1['id'] . '"><span>查看详情</span></a>';
 								} else if ($v1['state'] == '3') {
-									echo '<a href="' . _u('//order_receipt/' . $v1['id'] . '/' . Page::$p . '/' . $v1['seller_id'] . '/') . '"><span>确认收货</span></a>';
+									echo '<a href="' . _u('//order_receipt/' . $v1['id'] . '/' . Page::$p . '/' . $v2['seller_id'] . '/') . '"><span>确认收货</span></a>';
+									echo '<a href="' . _u('//order_detail/').$v1['id'] . '"><span>查看详情</span></a>';
 								}
 								?>
 							</li>
