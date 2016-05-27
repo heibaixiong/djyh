@@ -55,7 +55,7 @@ _css('my_order');
 								?>
 								<div class="detail_home_lin01">
 									<a href="#"><?php echo $v2['company']; ?></a>
-									<span style="position: relative;"><?php if ($status == 0) {
+									<span style="position: relative;" onclick="openWin('<?php echo _u('/person/order_detail/'.$v1['id']); ?>', 0)"><?php if ($status == 0) {
 											echo $v1['status'];
 											$status = 1;
 										} ?>
@@ -99,7 +99,7 @@ _css('my_order');
 						?>
 						<ul class="order_linbox">
 							<li class="order_lin01">
-								<a>合计：<em>￥<?php echo $v1['total']; ?></em></a>
+								<a>合计：<em>￥<?php echo _rmb($v1['total']); ?></em></a>
 								<a>共计<em><?php echo count($v1['goods']); ?></em>件商品</a>
 							</li>
 							<li class="order_lin02">

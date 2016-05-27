@@ -72,8 +72,8 @@
                         <p class="index_text02"><?php echo _left(strip_tags($v['content']), 0, 48, '...'); ?></p>
                         <p class="index_text03">￥<?php echo _rmb($v['mark']/100);?></p>
                         <div class="index_text04">
-                            <div class="idnex_gw" data-id="<?php echo $v['id']; ?>">加入购物车</div>
-                            <div class="index_pl">
+                            <div class="idnex_gw" data-id="<?php echo $v['id']; ?>" style="margin-top:5px;">加入购物车</div>
+                            <div class="index_pl" style="margin-top:0;padding-left:1rem;">
                                 <span>已售<em><?php echo $v['sale']; ?></em>件</span>
                                 <span>好评<em><?php echo $v['sale']; ?></em>条</span>
                             </div>
@@ -187,7 +187,8 @@ _js('iscroll');
     });
 
     //pull down to get next page data
-    $(document).scroll(function() {
+    $(window).scroll(function() {
+        console.log(123);
         if(page > 0){
             if ($(document).scrollTop() + $(window).height() == $(document).height()) {
                 page++;
@@ -239,8 +240,8 @@ _js('iscroll');
                     str += '<p class="index_text02">' + data[i]['short_desc'] + '</p>';
                     str += '<p class="index_text03">￥' + (data[i]['mark_price']) + '</p>';
                     str += '<div class="index_text04">';
-                    str += '<div class="idnex_gw" data-id="'+data[i]['id']+'">加入购物车</div>';
-                    str += '<div class="index_pl">';
+                    str += '<div class="idnex_gw" data-id="'+data[i]['id']+'" style="margin-top:5px;">加入购物车</div>';
+                    str += '<div class="index_pl" style="margin-top:0;padding-left:1rem;">';
                     str += '<span>已售<em>' + data[i]['sale'] + '</em>件</span>';
                     str += '<span>好评<em>' + data[i]['sale'] + '</em>条</span>';
                     str += '</div>';
@@ -257,7 +258,7 @@ _js('iscroll');
                 }
             }
         });
-        loading(0); //关闭加载效果
+        loading(0);  //关闭加载效果
     }
 
     //goods search

@@ -129,12 +129,15 @@ function __order(){
 function __order_view(){
 	global $_;
 	$webid=_session('webid');
-	$order = _sqlone('order', 'id='.intval(_v(3)).' and uid='.$webid);
+	$order = _sqlone('order', 'id = ' . intval(_v(3)) . ' and uid = ' . $webid . ' and state = 1');
 	//var_dump($order);exit;
 	if (empty($order)) {
 		_alerturl('订单不存在！', _u('//order/'));
 	}
 
+	if($order['state'] != ''){
+		_alerturl('已支付！', _u('//order/'));
+	}
 
 	$order['payment_data'] = '';
 	if ($order['state'] == '1' && !empty($order['payment_code'])) {
@@ -209,7 +212,6 @@ function __order_receipt() {
 			if ($goods['state'] <> '3') continue;
 			$ids[] = $goods['id'];
 		}
-
 		if (_sqldo("update ".PRE."cart set state='4', receipt_time='".time()."' where id in ('".join("','", $ids)."')")) {
 			//$shiped = _sqlnum('cart', "orderid='".$order['id']."' and state='4'");
 			$shiped = count($ids) + $order['receipt_cates'];

@@ -362,6 +362,37 @@ _js('iscroll');
 		//console.log(ck);
 		ck == 1 ? $(this).attr("data-check", ck).css({"color":"#f60", "border":"1px solid #f60"}).siblings().attr("data-check", 0).css({"color":"#646464", "border":"none"}) : $(this).parent().find("a").attr("data-check", ck).css({"color":"#646464", "border":"none"});
 	});
+
+
+	//加减
+	(function shopnum(){
+		var shopnum=$(".detail_sl");
+		var cid = shopnum.attr("data-cid");
+		var inp=shopnum.find("input[name='num']");
+		var jian=shopnum.find(".detail_jian");
+		var jia=shopnum.find(".detail_jia");
+
+		jian.click(function(){
+			var th = $(this);
+			var num=parseNum(inp.val());
+			num=num-1<=0?1:num-1;
+			inp.val(num);
+		});
+		jia.click(function(){
+			var th = $(this);
+			var num=parseNum(inp.val());
+			num=num+1;
+			inp.val(num);
+		});
+		inp.keyup(function(){
+			var num=parseNum(inp.val());
+			inp.val(num);
+		});
+		var parseNum=function(num){
+			num=parseInt(num);
+			return isNaN(num)?1:num;
+		};
+	}());
 </script>
 </body>
 </html>
