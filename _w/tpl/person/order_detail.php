@@ -48,16 +48,22 @@
             <ul class="cosig_main_list">
                 <?php
                 $com_id = 0;
+                $btn = 0;
                 foreach($_['order']['goods'] as $k => $v) {
                     if ($v['company_id'] != $com_id){
                         ?>
                         <li class="cosig_lin01">
                             <a class="cosig_lin01_in02" href="javascript:void(0)"><?php echo $v['company']; ?></a>
+                            <?php
+                            if($btn == 0){
+                                echo '<a class="aui-pull-right" href="javascript:void(0)">' . $_['user_order_status'][$_['order']['detail']['state']] . '</a>';
+                            }
+                            ?>
                         </li>
                 <?php
                     }
                 ?>
-                <li class="cosig_lin02">
+                <li class="cosig_lin02" style="border-bottom:1px solid #fff;">
                     <a class="cosig_lin02_in01" href="<?php echo _u('/shop/show/').$v['wid'].'/'; ?>"><img src="<?php echo _resize($v['img'], 200, 200) ?>"></a>
                     <div class="cosig_lin02_in02">
                         <p class="cosig_pro_title"><a href="<?php echo _u('/shop/show/').$v['wid'].'/'; ?>"><?php echo $v['wtitle']; ?></a></p>
@@ -66,6 +72,12 @@
                             <a class="cosig_pro_sl"><span>x <?php echo $v['num']; ?> </span></a>
                         </p>
                     </div>
+
+                    <?php
+                    if($v['content'] != ''){
+                        echo '<p style="font-size:0.4rem;">留言：<font color="#ff855b">' . $v['content'] . '</font></p>';
+                    }
+                    ?>
                 </li>
                 <?php
                     $com_id = $v['company_id'];
@@ -75,11 +87,11 @@
                     <a>合计：<em>￥<?php echo _rmb($_['order']['detail']['total']); ?></em></a>
                     <a>共计<em><?php echo $_['order']['detail']['cates']; ?></em>件商品</a>
                 </div>
-                <li class="order_lin01">
-                    <p>订单编号：<em><?php echo $_['order']['detail']['id']; ?></em></p>
+                <li class="order_lin01" style="padding:10px 0;">
+                    <p style="line-height:1.2rem;">订单编号：<em><?php echo $_['order']['detail']['id']; ?></em></p>
                     <!-- <p>物流单号：<em>222222222222222</em></p> -->
-                    <p>创建时间：<em><?php echo date('Y-m-d H:i:s', $_['order']['detail']['addtime']); ?></em></p>
-                    <p>付款时间：<em><?php echo date('Y-m-d H:i:s', $_['order']['detail']['pay_time']); ?></em></p>
+                    <p style="line-height:1.2rem;">创建时间：<em><?php echo date('Y-m-d H:i:s', $_['order']['detail']['addtime']); ?></em></p>
+                    <p style="line-height:1.2rem;">付款时间：<em><?php echo date('Y-m-d H:i:s', $_['order']['detail']['pay_time']); ?></em></p>
                     <!-- <p>发货时间：<em>2016-04-06  12:12:12</em></p> -->
                 </li>
             </ul>
@@ -125,7 +137,13 @@
         </div>
 
         <div class="oreder_bom">
-            <!-- <a href="<?php echo _u('/shop/show/').$v['wid'].'/'; ?>" class="current_boma">再次购买</a> -->
+            <?php
+            if($_['order']['detail']['state'] == 1){
+                echo '<a href="'. _u('/shop/order_view/'). $_['order']['id'].'" class="current_boma">去支付</a>';
+            }else if($_['order']['detail']['state'] == 3){
+                echo ' <a href="'. _u('/shop/show/'.$_['order']['detail']['id'].'/1/'.$_['order']['goods'][0]['seller_id']) .'/" class="current_boma">确认收货</a>';
+            }
+            ?>
             <!-- <a href="#">删除订单</a> -->
         </div>
     </div>

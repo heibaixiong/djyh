@@ -11,6 +11,8 @@
 			   if(res.err_msg == "get_brand_wcpay_request:ok"){
 				 //alert(res.err_code+res.err_desc+res.err_msg);
 				 	alert('支付成功');
+				   var url = '?w/person/order/';
+				   loaction.href = url;
 				 }else{
 					 //返回跳转到订单详情页面
 					 alert('支付失败');

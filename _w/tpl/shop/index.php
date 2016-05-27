@@ -274,8 +274,9 @@ _js('iscroll');
         if(tag === true){
             var id = parseInt($(this).attr('data-id'));
             var num = 1;
-            addCart(id, num, '');
-            //console.log(id);
+            addCart({id:id, num:num, option:''}, function(data){
+                alert(data.msg);
+            });
         }
     });
 

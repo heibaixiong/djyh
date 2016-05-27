@@ -210,9 +210,9 @@
 		<!--逛逛-->
 		<div class="detail_attr det_yem" style="position: inherit;">
 			<div class="attr_bottom" style="margin:0.44rem 0;">
-				<a href="#" class="attr_bottom_a01">进  店</a>
-				<a href="#" class="attr_bottom_a02 idnex_gw" data-id="<?php echo $_['rs']['id']; ?>">加入购物车</a>
-				<a href="#" class="attr_bottom_a03">立即购买</a>
+				<a href="javascript:void(0)" class="attr_bottom_a01">进  店</a>
+				<a href="javascript:void(0)" class="attr_bottom_a02 idnex_gw" data-id="<?php echo $_['rs']['id']; ?>" data-buy="0">加入购物车</a>
+				<a href="javascript:void(0)" class="attr_bottom_a03 idnex_gw" data-id="<?php echo $_['rs']['id']; ?>" data-buy="1">立即购买</a>
 			</div>
 		</div>
 	</div>
@@ -285,9 +285,9 @@ _js('iscroll');
 		</div>
 		<li class="attr_bombox">
 			<div class="attr_bottom" style="width:100%;">
-				<a href="#" class="attr_bottom_a01">进  店</a>
-				<a href="#" class="attr_bottom_a02 idnex_gw" data-id="<?php echo $_['rs']['id']; ?>">加入购物车</a>
-				<a href="#" class="attr_bottom_a03">立即购买</a>
+				<a href="javascript:void(0)" class="attr_bottom_a01">进  店</a>
+				<a href="javascript:void(0)" class="attr_bottom_a02 idnex_gw" data-id="<?php echo $_['rs']['id']; ?>" data-buy="0">加入购物车</a>
+				<a href="javascript:void(0)" class="attr_bottom_a03" data-id="<?php echo $_['rs']['id']; ?>" data-buy="1">立即购买</a>
 			</div>
 		</li>
 	</ul>
@@ -325,7 +325,16 @@ _js('iscroll');
 				}
 			});
 			attr = attr.substring(0, attr.length-1);
-			addCart(id, num, attr);
+			var buy_now = parseInt($(this).attr("data-buy"));
+			addCart({id:id, num:num, attr:attr}, function(data){
+				//console.log(data);
+				if(buy_now == 1){
+					var url = "<?php echo _u('/cart/index/'); ?>"
+					location.href = url;
+				}else{
+					alert(data.msg);
+				}
+			});
 		}
 	});
 

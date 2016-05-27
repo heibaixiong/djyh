@@ -60,12 +60,11 @@ _js('common');
     }
 
     //添加商品到购物车操作
-    function addCart(id, num, option){
-        var url = "<?php echo _u('/cart/add/'); ?>"+id+"/"+num+"/"+option+'/';
+    var addCart = function(opts, callback){
+        var url = "<?php echo _u('/cart/add/'); ?>" + opts.id + "/" + opts.num + "/" + opts.option + '/';
         $.get(url, function(data){
             var rs = $.parseJSON(data);
-            //console.log(rs);
-            tips(rs['msg']);
+            callback(rs);
         });
     }
 
