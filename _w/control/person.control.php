@@ -135,7 +135,7 @@ function __order_view(){
 		_alerturl('订单不存在！', _u('//order/'));
 	}
 
-	if($order['state'] != ''){
+	if($order['state'] == '2'){
 		_alerturl('已支付！', _u('//order/'));
 	}
 
