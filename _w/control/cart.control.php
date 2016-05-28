@@ -90,7 +90,6 @@ function __submit(){
 
 	if (empty($arr)) {
 		_alerturl('没有选择要结算的商品！',_u('/cart/index/'));
-		exit;
 	}
 
 	$addr = intval(_post('address'));
@@ -100,9 +99,7 @@ function __submit(){
 
 	$address = _sqlone('caradd','uid='.$webid);
 	if (empty($address)) {
-		//_alerturl('请先设置收货地址！',_u('/person/address/'));
-		echo -2;
-		exit;
+		_alerturl('请先设置收货地址！',_u('/cart/checkout/'));
 	}
 
 	$mark=0;
@@ -156,6 +153,10 @@ function __submit(){
 			if (function_exists('_getPaymentForm')) {
 				$order['payment_data'] = call_user_func('_getPaymentForm', $order['id']);
 			}
+		}
+
+		if($order['payment_data'] = ''){
+			_alerturl('支付异常，请稍后再试！', _u('/person/order/'));
 		}
 	}
 

@@ -122,7 +122,7 @@ _css('commons');
                                 <div class="index_text04">
                                     <div class="idnex_gw" data-id="<?php echo $v['id']; ?>">加入购物车</div>
                                     <div class="index_pl">
-                                        <span>好评<em>5000</em>条</span>
+                                        <span>好评<em><?php echo $v['sale']; ?></em>条</span>
                                         <span>已售<em><?php echo $v['sale']; ?></em>件</span>
                                     </div>
                                 </div>
