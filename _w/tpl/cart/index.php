@@ -31,10 +31,10 @@
 <div>
 <!-- 头部end -->
 <form>
-<div style="position: absolute;top: 50px;bottom: 55px;overflow-y: scroll;-webkit-overflow-scrolling: touch; width:100%; ">
+<div class="scro" style="position: absolute;top: 50px;bottom: 55px;overflow-y: scroll;-webkit-overflow-scrolling: touch; width:100%; ">
     <!--main-->
     <div class="big_main">
-        <div class="aui-content">
+        <div class="aui-content order_list">
             <!-- 购物车商品列表start -->
             <?php
             if(count($_['arr']) > 0){
@@ -233,7 +233,7 @@ _part('footer');
     }
 
     //delete goods
-    $(".good-delete").click(function(){
+    $(document).delegate(".good-delete",'click', function(){
         var id = $(this).attr('data-id');
         $.post("<?php echo _u('/cart/del'); ?>", {id : id}, function(data){
             if(data == '0'){

@@ -204,7 +204,6 @@ _js('iscroll');
      * paixu排序方式
      */
     function get_goods_list(type, cid, pages, paixu, keyword){
-        loading(1); //打开加载效果
         ajaxP = false;
         var url = '<?php echo $_['ajax_url']; ?>';
         url += '?/' + cid + '/' + pages + '/' + paixu + '/' + keyword;
@@ -213,13 +212,8 @@ _js('iscroll');
             data : '',
             type : 'post',
             success : function(data){
-                //console.log(data);
+                console.log(data);
                 //return false;
-                if(data == false){
-                    tips('已是最后一页');
-                    page = 0;
-                    return false;
-                }
                 var str = '';
                 for(var i = 0; i < data.length; i++){
                     str += '<div class="aui-content index_content">';
@@ -252,13 +246,16 @@ _js('iscroll');
                     str += '</div>';
                     //console.log(str);
                 }
+                if(str == ''){
+                    str = '已是最后一页';
+                    page = 0;
+                }
                 if(type == 0){
                     $(".big_main .list-box").append(str);
                 }else{
                     $(".big_main .list-box").html(str);
                 }
                 ajaxP = true;
-                loading(0);  //关闭加载效果
             }
         });
     }
