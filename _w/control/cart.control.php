@@ -147,19 +147,15 @@ function __submit(){
 	}
 	$order['id'] = $order_id;
 	$order['payment_data'] = '';
-	if ($order['state'] == '1' && !empty($order['payment_code'])) {
-		if (file_exists(APP_PATH.'function/'.$order['payment_code'].'.php')) {
-			_fun($order['payment_code']);
-			if (function_exists('_getPaymentForm')) {
-				$order['payment_data'] = call_user_func('_getPaymentForm', $order['id']);
-			}
-		}
-
-		if($order['payment_data'] = ''){
-			_alerturl('支付异常，请稍后再试！', _u('/person/order/'));
+	if (file_exists(APP_PATH.'function/'.$order['payment_code'].'.php')) {
+		_fun($order['payment_code']);
+		if (function_exists('_getPaymentForm')) {
+			$order['payment_data'] = call_user_func('_getPaymentForm', $order['id']);
 		}
 	}
-
+	if($order['payment_data'] == ''){
+		_alerturl('支付异常，请稍后再试！', _u('/person/order/'));
+	}
 	_c('title', '提交订单');
 	_c('order', $order);
 	_tpl();
