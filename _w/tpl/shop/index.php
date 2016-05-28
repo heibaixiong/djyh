@@ -38,7 +38,7 @@
         </span>
     </div>
 </header>
-<div style="position: absolute;top: 50px;bottom: 55px;overflow-y: scroll;-webkit-overflow-scrolling: touch; width:100%; ">
+<div class="scro" style="position: absolute;top: 50px;bottom: 55px;overflow-y: scroll;-webkit-overflow-scrolling: touch; width:100%; ">
 
     <!-- search condition start -->
     <ul class="aui-content list_sx aui-border-tb" style="margin-bottom:0;">
@@ -187,10 +187,10 @@ _js('iscroll');
     });
 
     //pull down to get next page data
-    $(window).scroll(function() {
-        console.log(123);
-        if(page > 0){
-            if ($(document).scrollTop() + $(window).height() == $(document).height()) {
+    var ajaxP = true;
+    $(".scro").scroll(function() {
+        if(page > 0 && ajaxP == true){
+            if ($(".scro").scrollTop() + $(window).height() > $(".big_main").height()) {
                 page++;
                 get_goods_list(0, cid, page, paixu, keyword);
             }
@@ -205,6 +205,7 @@ _js('iscroll');
      */
     function get_goods_list(type, cid, pages, paixu, keyword){
         loading(1); //打开加载效果
+        ajaxP = false;
         var url = '<?php echo $_['ajax_url']; ?>';
         url += '?/' + cid + '/' + pages + '/' + paixu + '/' + keyword;
         $.ajax({
@@ -256,9 +257,10 @@ _js('iscroll');
                 }else{
                     $(".big_main .list-box").html(str);
                 }
+                ajaxP = true;
+                loading(0);  //关闭加载效果
             }
         });
-        loading(0);  //关闭加载效果
     }
 
     //goods search
