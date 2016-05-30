@@ -136,6 +136,11 @@ if(!defined('PART'))exit;
                         <p style="padding-top: 10px;">
                             <select name="status">
                                 <?php foreach ($_['stowage_status'] as $key => $status) { ?>
+                                <?php
+                                if (!isset($_['driver']['id']) && $key > 1) {
+                                    continue;
+                                }
+                                ?>
                                     <option value="<?php echo $key; ?>"<?php echo isset($_['driver']['status'])&&$_['driver']['status']==$key?' selected="selected"':''; ?>><?php echo $status; ?></option>
                                 <?php } ?>
                             </select>

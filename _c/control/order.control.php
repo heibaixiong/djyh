@@ -179,10 +179,10 @@ function __save() {
 	} elseif (empty(_post('ship_desc'))) {
 		_alertback('请输入货物内容描述！');
 		die();
-	} elseif (empty(_post('ship_image')) || (empty(_post('ship_image')[0]) && empty(_post('ship_image')[1]) && empty(_post('ship_image')[2]))) {
+	}/* elseif (empty(_post('ship_image')) || (empty(_post('ship_image')[0]) && empty(_post('ship_image')[1]) && empty(_post('ship_image')[2]))) {
 		_alertback('请至少上传一张货物照片！');
 		die();
-	} elseif (empty(_post('ship_amount')) || floatval(_post('ship_amount')) <> _post('ship_amount')) {
+	}*/ elseif (empty(_post('ship_amount')) || floatval(_post('ship_amount')) <> _post('ship_amount')) {
 		_alertback('请正确输入运费！');
 		die();
 	}

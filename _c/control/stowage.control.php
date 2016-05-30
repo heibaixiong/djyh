@@ -257,7 +257,7 @@ function __save() {
                     if ($data['status'] == '3') {
                         $done = _sqlupdate('ship_order', array(
                             //'status' => 5,
-                            'mid' => floatval($data['to_mid']),
+                            //'mid' => floatval($data['to_mid']),
                             'arrive_time' => time()
                         ), 'status=4 and ship_number=\''.floatval($value).'\'');
                         if ($done) {
