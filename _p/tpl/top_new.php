@@ -55,7 +55,7 @@ $key=explode(',',$_['config']['search']);
                 </ul>
             </li>
             <li class="nav_line03 new_nav_line03">
-                <input type="text" value="<?php echo $key[0];?>" name="key" />
+                <input type="text" value="" name="key" placeholder="<?php echo $key[0];?>" />
                 <a href="javascript:void(0);" onclick="$(this).closest('form').submit();">搜 索</a>
             </li>
 

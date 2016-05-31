@@ -112,7 +112,7 @@ _part('nav');
                                         <div class="search_item_box">
                                             <div class="prod_img">
                                                 <a target="_blank" href="<?php echo _u('/shop/show/'.$v['id'].'/');?>">
-                                                    <img class="imgload lazy" src="<?php echo $v['img']?>" width="200" height="200" alt="" />
+                                                    <img class="imgload lazy" src="<?php echo _resize($v['img'], 224, 224); ?>" width="200" height="200" alt="" />
                                                 </a>
                                             </div>
                                             <div style="position: relative;">

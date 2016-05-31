@@ -78,7 +78,7 @@ _part('top_new');
                 <?php } ?>
             </div>
             <div class="banner_sy_bg">
-                <div class="banner_sy" style="min-height: 440px;">
+                <div class="banner_sy" style="min-height: 440px; visibility: hidden;">
                     <div class="banner_sy_top">
                         <a>新闻公告</a>
                         <a href="<?php echo _u('/news/index/'); ?>" class="banner_sy_mor">更多</a>

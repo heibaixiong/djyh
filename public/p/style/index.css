@@ -331,11 +331,13 @@ a, a:focus, a:hover, a:active {
     width:230px;
     background:#f0f0ef;
     padding:0;
+    height: 600px;
+    overflow: hidden;
 }
 #nav .mainCate {
     padding:10px 20px;
     zoom:1;
-    height:76px;
+    /*height:76px;*/
 }
 
 
@@ -391,7 +393,7 @@ a, a:focus, a:hover, a:active {
     margin-top:5px;
     line-height:28px;
     overflow: hidden;
-    height:28px;
+    /*height:28px;*/
 }
 #nav p a {
     margin-right:10px;

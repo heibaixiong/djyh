@@ -280,11 +280,11 @@ _part('top_new');
                     <?php foreach (Page::$arr as $v) { ?>
                         <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 list_bigbox" style="padding:0;  position: relative;">
                             <ul class="list_main_list">
-                                <li class="list_main_photo" style=""><a href="<?php echo _u('//show/'.$v['id'].'/');?>"><img src="<?php echo _resize($v['img'], 224, 224); ?>"></a></li>
+                                <li class="list_main_photo" style=""><a href="<?php echo _u('//show/'.$v['id'].'/');?>" target="_blank"><img src="<?php echo _resize($v['img'], 224, 224); ?>"></a></li>
                                 <li class="list_main_text" >
                                     <div>
                                         <p class="list_text06"><a>￥<?php echo _rmb($v['mark']/100); ?></a></p>
-                                        <p class="list_text01" style="overflow: hidden;"><a href="<?php echo _u('//show/'.$v['id'].'/');?>"><?php echo _left($v['title'], 0, 34); ?></a></p>
+                                        <p class="list_text01" style="overflow: hidden;"><a href="<?php echo _u('//show/'.$v['id'].'/');?>" target="_blank"><?php echo _left($v['title'], 0, 34); ?></a></p>
                                         <p class="list_text02" style="height:32px; overflow: hidden;"><a><?php echo _left(strip_tags($v['content']), 0, 62, '...'); ?></a></p>
                                         <div class="list_text05">
 
