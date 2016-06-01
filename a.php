@@ -4,7 +4,7 @@ define('PART',1);
 define('DIR',dirname(__FILE__).'/');
 define('DOSQL','');
 define('APP_PATH','a/');
-define('PROJECT','p,m,d,c,w');  //增加微信端项目w
+define('PROJECT','d,c');
 define('PROJECT_PRE','_');
 define('PUB','public/');
 define('UPLOAD','upload/');
@@ -66,15 +66,15 @@ $_wrap['alipay_config'] = array(
     'sign_type' => strtoupper('MD5'),
     'input_charset' => strtolower('utf-8'),
     'cacert' => getcwd().'\\cacert.pem',
-    'transport' => 'http://www.dongjiayaohuo.com/',
+    'transport' => 'http://lgs.dongjiayaohuo.com/',
     'seller_email' => 'm18503781888@163.com'
 );
 
 $_wrap['wxpay_config'] = array(
-    'wxpay_appid' => 'wx0ef6fc99d449bfe6',
-    'wxpay_mchid' => '1319862501',
+    'wxpay_appid' => 'wx8998712bfee215e7',
+    'wxpay_mchid' => '1346867401',
     'wxpay_key' => 'c8564671e3ef3dtd7fb6262a5da56698',
-    'wxpay_appsecret' => 'd8568671e3ef3ded7fb6265a5da56691',
+    'wxpay_appsecret' => '7c0d39bfe295a119bd29f29b8171e166',
     'sslcert_path' => DIR . APP_PATH . 'cert/apiclient_cert.pem',
     'sslkey_path' => DIR . APP_PATH . 'cert/apiclient_key.pem',
     'curl_proxy_host' => '',
