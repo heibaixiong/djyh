@@ -94,7 +94,14 @@ _part('nav');
 				</form>
 				<div style="float: right" class="pageWrap">
 					<div class='turn_page clearfix'>
-						<div class="fr"><a disabled="disabled" href="<?php echo _u('///1/');?>">首页</a><a disabled="disabled" href="<?php echo _u('///'.Page::$pre.'/');?>">上一页</a><a class="page_cur"><?php echo Page::$p.'/'.Page::$pnum;?></a><a href="<?php echo _u('///'.Page::$next.'/');?>">下一页</a><a href="<?php echo _u('///'.Page::$pnum.'/');?>">尾页</a></div>
+						<form action="<?php echo _u('//goods/'); ?>" method="post" id="page-form">
+							<div class="fr">
+								<a disabled="disabled" href="<?php echo _u('///1/');?>">首页</a><a disabled="disabled" href="<?php echo _u('///'.Page::$pre.'/');?>">上一页</a><a class="page_cur"><?php echo Page::$p.'/'.Page::$pnum;?></a><a href="<?php echo _u('///'.Page::$next.'/');?>">下一页</a><a href="<?php echo _u('///'.Page::$pnum.'/');?>">尾页</a>
+								<input type="text" name="page_go" value="<?php echo Page::$p; ?>" style="line-height: 25px; margin-top: -25px; margin-left: 5px; width: 30px; text-align: center;" />
+								<a href="javascript:void(0);" id="btn-page-jump">跳转</a>
+								<input type="submit" style="display: none;" />
+							</div>
+						</form>
 					</div>
 				</div>
 
@@ -124,6 +131,18 @@ _part('nav');
 	$('#btn-seller-search').on('click', function(){
 		$(this).closest('form').attr('action', '<?php echo _u('//goods/'); ?>');
 		$(this).closest('form').submit();
+	});
+	$('#btn-page-jump').on('click', function(){
+		var _p = $('#page-form input[name="page_go"]').val();
+		if (isNaN(_p)) {
+			$('#page-form input[name="page_go"]').focus();
+			return false;
+		}
+		window.location.href = '<?php echo _u('//goods/'); ?>'+_p+'/';
+	});
+	$('#page-form').on('submit', function(){
+		$('#btn-page-jump').trigger('click');
+		return false;
 	});
 </script>
 <!-- //主体 -->

@@ -73,7 +73,7 @@ _part('top_new');
                 <?php foreach($_['indexad']['index_top_1'] as $k => $ad) { ?>
                     <?php if (!is_file(DIR.$ad['img'])) continue; ?>
                     <?php if ($i > 2) break; ?>
-                    <a href="<?php echo $ad['url']?$ad['url']:'javascript:void(0);'; ?>" ><img src="<?php echo _resize($ad['img'], 238, 140); ?>"></a>
+                    <a href="<?php echo $ad['url']?$ad['url']:'javascript:void(0);'; ?>" target="_blank"><img src="<?php echo _resize($ad['img'], 238, 140); ?>"></a>
                     <?php $i++; ?>
                 <?php } ?>
             </div>
@@ -107,7 +107,7 @@ _part('top_new');
                 </ul>
                 <div style="margin-top:11px;">
                     <?php if (isset($_['indexad']['index_top_1'][$i]) && is_file(DIR.$_['indexad']['index_top_1'][$i]['img'])) { ?>
-                    <a href="<?php echo $_['indexad']['index_top_1'][$i]['url']?$_['indexad']['index_top_1'][$i]['url']:'javascript:void(0);'; ?>"><img src="<?php echo _resize($_['indexad']['index_top_1'][$i]['img'], 238, 140); ?>"></a>
+                    <a href="<?php echo $_['indexad']['index_top_1'][$i]['url']?$_['indexad']['index_top_1'][$i]['url']:'javascript:void(0);'; ?>" target="_blank"><img src="<?php echo _resize($_['indexad']['index_top_1'][$i]['img'], 238, 140); ?>"></a>
                     <?php } ?>
                 </div>
             </div>
@@ -269,10 +269,10 @@ _part('top_new');
                         <li class="list-tittle">最新热卖</li>
                         <?php foreach ($v['goods_hot'] as $hot) { ?>
                             <li class="store_box">
-                                <a href="<?php echo _u('/shop/show/'.$hot['id'].'/'); ?>" class="store_photo"><img src="<?php echo _resize($hot['img'], 75, 75); ?>"></a>
+                                <a href="<?php echo _u('/shop/show/'.$hot['id'].'/'); ?>" class="store_photo" target="_blank"><img src="<?php echo _resize($hot['img'], 75, 75); ?>"></a>
                                 <div class="store_sm">
                                     <p class="store_sm_text01">
-                                        <a href="<?php echo _u('/shop/show/'.$hot['id'].'/'); ?>"><?php echo _left($hot['title'], 0, 26); ?></a>
+                                        <a href="<?php echo _u('/shop/show/'.$hot['id'].'/'); ?>" target="_blank"><?php echo _left($hot['title'], 0, 26); ?></a>
                                     </p>
                                     <p class="store_sm_text02">
                                         <a class="pice_01">￥<?php echo _rmb($hot['mark']/100);?></a>
@@ -290,10 +290,10 @@ _part('top_new');
             <?php foreach ($v['goods_rec'] as $rec) { ?>
             <div class="col-md-6 col-lg-3 col-sm-6" style="padding:0 5px;">
                 <ul>
-                    <li class="lou_01_bom_line01"><a href="<?php echo _u('/shop/show/'.$rec['id'].'/'); ?>" style="height:282.5px;width:282.5px;margin:auto;display: block;"><img style="width:100%" class="img-responsive" src="<?php echo _resize($rec['img'], 300, 300); ?>"></a></li>
+                    <li class="lou_01_bom_line01"><a href="<?php echo _u('/shop/show/'.$rec['id'].'/'); ?>" target="_blank" style="height:282.5px;width:282.5px;margin:auto;display: block;"><img style="width:100%" class="img-responsive" src="<?php echo _resize($rec['img'], 300, 300); ?>"></a></li>
                     <li class="big_text_box">
                         <div class="text_box01">
-                            <p class="lou_01_bom_text01"><a href="<?php echo _u('/shop/show/'.$rec['id'].'/'); ?>"><?php echo _left($rec['title'], 0, 40); ?></a></p>
+                            <p class="lou_01_bom_text01"><a href="<?php echo _u('/shop/show/'.$rec['id'].'/'); ?>" target="_blank"><?php echo _left($rec['title'], 0, 40); ?></a></p>
                             <p class="lou_01_bom_text02"><a><?php echo _left(strip_tags($rec['content']), 0, 68, '...'); ?></a></p>
                             <p class="lou_01_bom_text05"><a style="float: left;">￥<?php echo _rmb($rec['mark']/100);?></a><a class="lou_01_bom_text03" style="float: left;">￥<?php echo _rmb($rec['mark']*1.24/100);?></a></p>
                             <p class="lou_01_bom_text04"><a>已售<?php echo $rec['sale'];?>件</a></p>
