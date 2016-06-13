@@ -797,24 +797,21 @@ a, a:focus, a:hover, a:active {
      text-decoration: line-through;
 }
 .lou_big_box .lou_01_bom{
-    margin-top:10px;
-
-
+    margin:0 -10px;
+    margin-top:1px;
 }
 .lou_01_bom ul{
-    height:auto;
+    height:300px;
     border-bottom: solid 3px #fff;
     position: relative;
     background:#fff;
-
-
 }
 .lou_01_bom ul:hover{
     border-color:red;
 
 }
 .lou_01_bom .col-md-6{
-    margin-bottom:10px;
+    margin-bottom:1px;
 
 }
 .lou_01_bom ul .store_one{
@@ -826,11 +823,45 @@ a, a:focus, a:hover, a:active {
     font-weight: bold;
     padding-top:6px;
     position: absolute;
-    right: 0;
+    right: 10px;
     top:0;
 }
 .lou_01_bom .lou_01_bom_line01{
-    height:263px;
+    position:absolute;
+    bottom:0;
+    left:50%;
+    margin-left:-100px;
+    height:200px;
+    width:200px;
+}
+.lou_01_bom .new_title_01{
+    font-size:20px;
+    color:#3c3c3c;
+    line-height: 40px;
+    padding-top:10px;
+    padding-left:20px;
+}
+.new_big_pr{
+    display: block;
+}
+
+.lou_01_bom .new_title_02{
+    font-size:15px;
+    color:#ff0000;
+    padding-left:20px;
+}
+.lou_01_bom_text05 a{
+    color:#ff0000;
+    font-size:28px;
+    font-weight: bold;
+}
+.new_pro01{
+    margin:0 -10px;
+    margin-top:10px;
+}
+.new_pro01 img{
+    display: block;
+    width:100%;
 }
 .big_text_box{
     overflow: hidden;

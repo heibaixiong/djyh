@@ -286,28 +286,28 @@ _part('top_new');
             </div>
         </div>
 
-        <div class="row lou_01_bom" >
-            <?php foreach ($v['goods_rec'] as $rec) { ?>
-            <div class="col-md-6 col-lg-3 col-sm-6" style="padding:0 5px;">
-                <ul>
-                    <li class="lou_01_bom_line01"><a href="<?php echo _u('/shop/show/'.$rec['id'].'/'); ?>" target="_blank" style="height:282.5px;width:282.5px;margin:auto;display: block;"><img style="width:100%" class="img-responsive" src="<?php echo _resize($rec['img'], 300, 300); ?>"></a></li>
-                    <li class="big_text_box">
-                        <div class="text_box01">
-                            <p class="lou_01_bom_text01"><a href="<?php echo _u('/shop/show/'.$rec['id'].'/'); ?>" target="_blank"><?php echo _left($rec['title'], 0, 40); ?></a></p>
-                            <p class="lou_01_bom_text02"><a><?php echo _left(strip_tags($rec['content']), 0, 68, '...'); ?></a></p>
-                            <p class="lou_01_bom_text05"><a style="float: left;">￥<?php echo _rmb($rec['mark']/100);?></a><a class="lou_01_bom_text03" style="float: left;">￥<?php echo _rmb($rec['mark']*1.24/100);?></a></p>
-                            <p class="lou_01_bom_text04"><a>已售<?php echo $rec['sale'];?>件</a></p>
-                        </div>
-                        <div class="text_box02" style="display: none;">
-                            <!--<p class="lou_01_bom_text05"><a>￥39</a></p>-->
-                            <p class="lou_01_bom_text06"><a href="#"></a></p>
-                        </div>
-                    </li>
-                    <li class="store_one">推荐<br>商品</li>
-                </ul>
-            </div>
+        <?php foreach ($v['cate_rec'] as $cate) { ?>
+            <?php if (is_file(DIR.$cate['img_ad_2'])) { ?>
+            <div class="new_pro01"><a href="<?php echo empty($cate['url_ad_2']) ? 'javascript:void(0);':$cate['url_ad_2']; ?>"><img src="<?php echo _resize($cate['img_ad_2'], 1200, 180); ?>" /></a></div>
             <?php } ?>
-        </div>
+            <?php if (!empty($cate['goods_rec'])) { ?>
+                <div class="row lou_01_bom" style="margin-top: 10px;">
+                    <?php foreach ($cate['goods_rec'] as $rec) { ?>
+                        <div class="col-md-6 col-lg-3 col-sm-6" style="padding:0 1px 0 0;">
+                            <a href="<?php echo _u('/user/index/'.$rec['uid'].'/'); ?>" class="new_big_pr" target="_blank">
+                                <ul style="position: relative;">
+                                    <li class="new_title_01"><?php echo _left($rec['title'], 0, 20); ?></li>
+                                    <li class="new_title_02"><?php echo _left(strip_tags($rec['content']), 0, 40, '...'); ?></li>
+                                    <li class="lou_01_bom_line01"><img style="width:100%" class="img-responsive" src="<?php echo _resize($rec['img'], 240, 240); ?>" /></li>
+                                    <li class="store_one">热门<br>推荐</li>
+                                </ul>
+                            </a>
+                        </div>
+                    <?php } ?>
+                </div>
+            <?php } ?>
+        <?php } ?>
+
     </div>
     <?php } ?>
 </div>
